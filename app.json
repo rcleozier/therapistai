@@ -1,0 +1,99 @@
+{
+  "expo": {
+    "name": "TherapistAI",
+    "slug": "therapistai",
+    "newArchEnabled": true,
+    "privacy": "public",
+    "jsEngine": "jsc",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icons/icon.png",
+    "splash": {
+      "image": "./assets/splash/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#0a0a0a"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/95968c5b-512b-4212-a8de-4764cea7fad7"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.therapistai.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        },
+        "ITSAppUsesNonExemptEncryption": false,
+      }
+    },
+    "android": {
+      "package": "com.therapistai.app",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.VIBRATE",
+      ]
+    },
+    "description": "TherapistAI | A psychological horror narrative game",
+    "extra": {
+      "eas": {
+        "projectId": "934d172a-af39-4044-939d-9e6a1c3643c7"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0",
+            "usesCleartextTraffic": true
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icons/notification-icon.png",
+          "color": "#8B0000",
+          "androidMode": "default",
+          "androidCollapsedTitle": "TherapistAI",
+          "androidChannelId": "therapistai-default",
+          "androidChannelName": "TherapistAI Notifications",
+          "androidChannelDescription": "Your therapy session awaits",
+          "androidChannelImportance": "high",
+          "androidShowBadge": true,
+          "androidVibrate": true,
+          "androidPriority": "high"
+        }
+      ],
+    ],
+    "notification": {
+      "icon": "./assets/icons/notification-icon.png",
+      "color": "#8B0000",
+      "iosDisplayInForeground": true,
+      "androidMode": "default",
+      "androidCollapsedTitle": "TherapistAI",
+      "androidChannelId": "therapistai-default",
+      "androidChannelName": "TherapistAI Notifications",
+      "androidChannelDescription": "Your therapy session awaits",
+      "androidChannelImportance": "high",
+      "androidShowBadge": true,
+      "androidVibrate": true,
+      "androidPriority": "high"
+    }
+  }
+}
