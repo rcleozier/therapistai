@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   Animated,
+  TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -83,8 +84,11 @@ const GameScreen = ({ route, navigation }) => {
             nodeVisitCountRef.current = 1;
           }
 
-          // Process interactive elements for initial node
-          await processNodeInteractiveElements(initialNode, 2000);
+          // Process interactive elements for initial node (reduced delay for better UX)
+          // Process after a short delay so user sees the first message first
+          setTimeout(() => {
+            processNodeInteractiveElements(initialNode, 500);
+          }, 1000);
 
           // Save initial state
           await storyEngine.saveGameState();
@@ -187,7 +191,10 @@ const GameScreen = ({ route, navigation }) => {
         }
 
         // Process interactive elements for the new node (after a short delay)
-        await processNodeInteractiveElements(nextNode, 1500);
+        // Process after messages start appearing
+        setTimeout(() => {
+          processNodeInteractiveElements(nextNode, 500);
+        }, 800);
 
         // Save game state after making a choice
         await storyEngine.saveGameState();

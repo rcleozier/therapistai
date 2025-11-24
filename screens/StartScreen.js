@@ -10,16 +10,32 @@ import { initializeAudio, playBackgroundMusic, stopBackgroundMusic, getAudioEnab
 import SettingsButton from '../components/SettingsButton';
 
 // Local theme tokens specific to the start screen.
-// We keep them close to the design spec without impacting the rest of the app.
+// Consolidated design values for consistency and easy maintenance.
 const START_THEME = {
+  // Colors
   background: '#050608',
   headerGradientStart: '#0A1114',
   headerGradientEnd: '#050608',
   accent: '#F45C4E', // Desaturated red–orange for clinical-but-unsettling CTA
-  accentBorder40: 'rgba(244, 92, 78, 0.4)',
+  accentBorderSoft: 'rgba(244, 92, 78, 0.4)',
   primaryText: '#F5F3EE',
   secondaryText: 'rgba(154, 158, 164, 0.6)',
-  footerText: 'rgba(245, 243, 238, 0.45)',
+  footerText: 'rgba(245, 243, 238, 0.54)', // Increased from 0.42 for better readability
+  focalTeal: '#0D1A1C', // Deep slate/teal for background focal point
+  
+  // Opacities
+  dataLineOpacity: 0.52, // 45-55% range for microcopy readability
+  dividerOpacity: 0.14, // 12-16% for intentional divider line
+  focalGradientOpacity: 0.65, // Slightly strengthened for presence
+  
+  // Spacing
+  headerBlockOffset: 14, // 12-16px shift down for better balance
+  taglineTighten: 5, // 4-6px closer to line above
+  buttonPaddingHorizontal: SPACING.xl + SPACING.md, // Increased for premium feel
+  
+  // Typography
+  logoTitleLetterSpacing: 1.0, // Increased for more clinical feel
+  footerLineHeight: 14, // Tightened for stronger legibility
 };
 
 const StartScreen = ({ navigation }) => {
@@ -29,6 +45,7 @@ const StartScreen = ({ navigation }) => {
   const screenOpacity = useRef(new Animated.Value(0)).current;
   const primaryButtonScale = useRef(new Animated.Value(1)).current;
   const secondaryButtonScale = useRef(new Animated.Value(1)).current;
+  const logoPulse = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const setupAudio = async () => {
@@ -43,10 +60,26 @@ const StartScreen = ({ navigation }) => {
       useNativeDriver: true,
     }).start();
 
+    // Very subtle breathing animation on the logo block to keep the screen alive.
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(logoPulse, {
+          toValue: 1.02,
+          duration: 2200,
+          useNativeDriver: true,
+        }),
+        Animated.timing(logoPulse, {
+          toValue: 1,
+          duration: 2200,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
     return () => {
       stopBackgroundMusic();
     };
-  }, [screenOpacity]);
+  }, [screenOpacity, logoPulse]);
 
   // Check for saved game and gently resume music when returning to this screen.
   useFocusEffect(
@@ -124,79 +157,124 @@ const StartScreen = ({ navigation }) => {
           <SettingsButton style={styles.settingsButton} />
         </View>
 
-        {/* Logo row: small, official-looking identity instead of a giant mascot */}
-        <View style={styles.logoRow}>
-          <View style={styles.logoIconWrapper}>
-            <Image
-              source={require('../assets/character-removebg.png')}
-              style={styles.logoIcon}
-              resizeMode="contain"
-            />
-            {/* Minimal clinical glow behind the robot – 10–15% opacity so it feels digital, not playful */}
-            <View style={styles.logoGlow} />
-          </View>
-          <View style={styles.logoTextWrapper}>
-            <Text style={styles.logoTitle}>Therapy AI</Text>
-            <Text style={styles.logoSubtitle}>Clinical conversational support</Text>
-          </View>
-        </View>
-
-        {/* Tagline: sounds like a real mental health product, but hints at data persistence */}
-        <Text style={styles.taglineText}>Personalized therapy. Persistent data.</Text>
+        <LogoHeader logoPulse={logoPulse} />
 
         {/* Flexible spacer keeps the CTA block anchored in the lower half on tall and short devices */}
         <View style={styles.flexSpacer} />
 
+        {/* Divider to visually tie the content block to the CTAs */}
+        <View style={styles.buttonDivider} />
+
         {/* Primary & secondary actions – vertically stacked, with generous margins */}
         <View style={styles.buttonStack}>
-          <Animated.View style={{ transform: [{ scale: primaryButtonScale }] }}>
-            <TouchableOpacity
-              style={styles.primaryButton}
-              onPress={handleStartNew}
-              onPressIn={() => handlePressIn('primary')}
-              onPressOut={() => handlePressOut('primary')}
-              activeOpacity={0.9}
-            >
-              <Text style={styles.primaryButtonLabel}>Start New Session</Text>
-            </TouchableOpacity>
-          </Animated.View>
+          <PrimaryButton
+            label="Start New Session"
+            onPress={handleStartNew}
+            onPressIn={() => handlePressIn('primary')}
+            onPressOut={() => handlePressOut('primary')}
+            scale={primaryButtonScale}
+          />
 
           <View style={styles.buttonSpacer} />
 
-          <Animated.View style={{ transform: [{ scale: secondaryButtonScale }] }}>
-            <TouchableOpacity
-              style={[
-                styles.secondaryButton,
-                !hasSavedGame && styles.secondaryButtonDisabled,
-              ]}
-              onPress={handleContinue}
-              onPressIn={() => handlePressIn('secondary')}
-              onPressOut={() => handlePressOut('secondary')}
-              activeOpacity={0.9}
-              disabled={!hasSavedGame}
-            >
-              <Text
-                style={[
-                  styles.secondaryButtonLabel,
-                  !hasSavedGame && styles.secondaryButtonLabelDisabled,
-                ]}
-              >
-                Continue Session
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
+          <SecondaryButton
+            label="Continue Session"
+            disabled={!hasSavedGame}
+            onPress={handleContinue}
+            onPressIn={() => handlePressIn('secondary')}
+            onPressOut={() => handlePressOut('secondary')}
+            scale={secondaryButtonScale}
+          />
         </View>
 
-        {/* Footer consent text feels like a normal terms line, but the content is quietly alarming */}
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Sessions may be stored and reviewed to improve your emotional model.
-          </Text>
-        </View>
+        <FooterLegal />
       </Animated.View>
     </SafeAreaView>
   );
 };
+
+const LogoHeader = ({ logoPulse }) => {
+  return (
+    <View style={styles.logoHeaderWrapper}>
+      {/* Soft focal glow behind the logo block to anchor the composition */}
+      <View style={styles.logoFocal}>
+        <LinearGradient
+          colors={[START_THEME.focalTeal, 'transparent']}
+          start={{ x: 0.5, y: 0.2 }}
+          end={{ x: 0.5, y: 1 }}
+          style={styles.logoFocalGradient}
+        />
+      </View>
+
+      <Animated.View style={[styles.logoRow, { transform: [{ scale: logoPulse }] }]}>
+        <View style={styles.logoIconWrapper}>
+          <Image
+            source={require('../assets/character-removebg.png')}
+            style={styles.logoIcon}
+            resizeMode="contain"
+          />
+          {/* Minimal clinical glow behind the robot – 10–15% opacity so it feels digital, not playful */}
+          <View style={styles.logoGlow} />
+        </View>
+        <View style={styles.logoTextWrapper}>
+          <Text style={styles.logoTitle}>Therapy AI</Text>
+          <Text style={styles.logoSubtitle}>Clinical conversational support</Text>
+          <Text style={styles.dataLine}>Monitoring baseline response time…</Text>
+        </View>
+      </Animated.View>
+
+      {/* Tagline: sounds like a real mental health product, but hints at data persistence */}
+      <Text style={styles.taglineText}>Personalized therapy. Persistent data.</Text>
+    </View>
+  );
+};
+
+const PrimaryButton = ({ label, onPress, onPressIn, onPressOut, scale }) => (
+  <Animated.View style={{ transform: [{ scale }] }}>
+    <TouchableOpacity
+      style={styles.primaryButton}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      activeOpacity={0.9}
+    >
+      <Text style={styles.primaryButtonLabel}>{label}</Text>
+    </TouchableOpacity>
+  </Animated.View>
+);
+
+const SecondaryButton = ({ label, disabled, onPress, onPressIn, onPressOut, scale }) => (
+  <Animated.View style={{ transform: [{ scale }] }}>
+    <TouchableOpacity
+      style={[
+        styles.secondaryButton,
+        disabled && styles.secondaryButtonDisabled,
+      ]}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      activeOpacity={0.9}
+      disabled={disabled}
+    >
+      <Text
+        style={[
+          styles.secondaryButtonLabel,
+          disabled && styles.secondaryButtonLabelDisabled,
+        ]}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
+  </Animated.View>
+);
+
+const FooterLegal = () => (
+  <View style={styles.footer}>
+    <Text style={styles.footerText}>
+      Sessions may be stored and reviewed to improve your emotional model.
+    </Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -228,15 +306,35 @@ const styles = StyleSheet.create({
   settingsButton: {
     opacity: 0.6, // slightly muted to feel like secondary chrome
   },
+  logoHeaderWrapper: {
+    marginTop: SPACING.sm + START_THEME.headerBlockOffset, // Shifted down 12-16px
+    marginBottom: SPACING.lg,
+  },
+  logoFocal: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: -SPACING.md + START_THEME.headerBlockOffset,
+    height: 140,
+    alignItems: 'center',
+    justifyContent: 'center',
+    pointerEvents: 'none',
+  },
+  logoFocalGradient: {
+    width: 260,
+    height: 140,
+    borderRadius: 130,
+    opacity: START_THEME.focalGradientOpacity, // Strengthened for presence
+  },
   logoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   logoIconWrapper: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: SPACING.md,
@@ -244,16 +342,16 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
   logoIcon: {
-    width: 32,
-    height: 32,
+    width: 36,
+    height: 36,
     opacity: 0.9,
     zIndex: 2,
   },
   logoGlow: {
     position: 'absolute',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     backgroundColor: COLORS.accent.cyan,
     opacity: 0.15, // 10–15% opacity glow: barely there, more clinical than playful
     zIndex: 1,
@@ -264,26 +362,40 @@ const styles = StyleSheet.create({
   logoTitle: {
     ...FONTS.titleScreen.title,
     color: START_THEME.primaryText,
-    fontSize: 24,
-    letterSpacing: 0.7,
+    fontSize: 26,
+    letterSpacing: START_THEME.logoTitleLetterSpacing, // Increased for clinical feel
   },
   logoSubtitle: {
     ...FONTS.titleScreen.tagline,
     color: START_THEME.secondaryText,
-    marginTop: 4,
+    marginTop: 2,
+  },
+  dataLine: {
+    ...FONTS.small,
+    color: START_THEME.secondaryText,
+    opacity: START_THEME.dataLineOpacity, // Increased to 45-55% for readability
+    marginTop: 6,
   },
   taglineText: {
     ...FONTS.titleScreen.tagline,
     color: START_THEME.secondaryText,
-    marginTop: SPACING.sm,
+    marginTop: SPACING.md - START_THEME.taglineTighten, // 4-6px closer to line above
   },
   flexSpacer: {
     flex: 1,
+    maxHeight: SPACING.xxl, // Prevents the mid-screen from feeling too empty on tall devices
   },
   buttonStack: {
     width: '100%',
     maxWidth: 360,
     alignSelf: 'center',
+    marginTop: SPACING.lg,
+  },
+  buttonDivider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: `rgba(255, 255, 255, ${START_THEME.dividerOpacity})`, // 12-16% for intentional divider
+    marginHorizontal: SPACING.lg,
+    marginBottom: SPACING.md,
   },
   primaryButton: {
     backgroundColor: START_THEME.accent,
@@ -292,7 +404,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: SPACING.md,
-    paddingHorizontal: SPACING.xl,
+    paddingHorizontal: START_THEME.buttonPaddingHorizontal, // Increased for premium feel
     shadowColor: START_THEME.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.18,
@@ -315,9 +427,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: SPACING.md - 2,
-    paddingHorizontal: SPACING.xl,
+    paddingHorizontal: START_THEME.buttonPaddingHorizontal, // Matched with primary for consistency
     borderWidth: 1,
-    borderColor: START_THEME.accentBorder40,
+    borderColor: START_THEME.accentBorderSoft,
     backgroundColor: 'transparent',
   },
   secondaryButtonDisabled: {
@@ -336,15 +448,17 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   footer: {
-    marginTop: SPACING.xl,
+    marginTop: SPACING.lg,
     paddingHorizontal: SPACING.lg,
     alignItems: 'center',
     justifyContent: 'center',
   },
   footerText: {
     ...FONTS.titleScreen.disclaimer,
-    color: START_THEME.footerText,
+    color: START_THEME.footerText, // Increased opacity by 10-12% (0.42 → 0.54)
     textAlign: 'center',
+    letterSpacing: 0.4,
+    lineHeight: START_THEME.footerLineHeight, // Tightened for stronger legibility
   },
 });
 
