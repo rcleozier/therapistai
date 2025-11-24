@@ -32,7 +32,7 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "ITSAppUsesNonExemptEncryption": false,
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -40,7 +40,7 @@
       "versionCode": 1,
       "permissions": [
         "android.permission.INTERNET",
-        "android.permission.VIBRATE",
+        "android.permission.VIBRATE"
       ]
     },
     "description": "TherapistAI | A psychological horror narrative game",
@@ -80,6 +80,7 @@
           "androidPriority": "high"
         }
       ],
+      "expo-audio"
     ],
     "notification": {
       "icon": "./assets/icons/icon.png",

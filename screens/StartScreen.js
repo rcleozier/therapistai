@@ -14,7 +14,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import storyEngine from '../utils/storyEngine';
-import { initializeAudio, playBackgroundMusic, stopBackgroundMusic } from '../utils/audioManager';
+import { initializeAudio, playBackgroundMusic, stopBackgroundMusic, getAudioEnabled } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
 
 const { width, height } = Dimensions.get('window');
@@ -94,11 +94,19 @@ const StartScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       checkForSavedGame();
-      // Resume music when returning to start screen (only if not already playing)
+      // Only resume music if we're returning from another screen (not on initial mount)
+      // The useEffect already handles initial music start, so we check if music is playing
       const resumeMusic = async () => {
-        await playBackgroundMusic();
+        // Check if music is already playing before trying to start it
+        const enabled = await getAudioEnabled();
+        if (enabled) {
+          // playBackgroundMusic will check if already playing, so it's safe to call
+          await playBackgroundMusic();
+        }
       };
-      resumeMusic();
+      // Small delay to avoid race condition with useEffect
+      const timer = setTimeout(resumeMusic, 100);
+      return () => clearTimeout(timer);
     }, [])
   );
 

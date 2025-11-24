@@ -40,6 +40,8 @@ class StoryEngine {
       messages: node.messages || [],
       choices: node.choices || [],
       isEnding: (node.choices || []).length === 0,
+      // Interactive elements
+      interactive: node.interactive || null,
     };
   }
 

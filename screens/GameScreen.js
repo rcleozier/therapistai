@@ -17,6 +17,7 @@ import storyEngine from '../utils/storyEngine';
 import { Analytics } from '../utils/analytics';
 import { stopBackgroundMusic, playGameMusic, stopGameMusic } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
+import { processNodeInteractiveElements } from '../utils/interactiveElements';
 
 const GameScreen = ({ route }) => {
   const [currentNode, setCurrentNode] = useState(null);
@@ -78,6 +79,9 @@ const GameScreen = ({ route }) => {
             Analytics.trackGameNodeVisit(initialNode.nodeId, 'intro');
             nodeVisitCountRef.current = 1;
           }
+
+          // Process interactive elements for initial node
+          await processNodeInteractiveElements(initialNode, 2000);
 
           // Save initial state
           await storyEngine.saveGameState();
@@ -178,6 +182,9 @@ const GameScreen = ({ route }) => {
           Analytics.trackGameNodeVisit(nextNode.nodeId, nodeType);
           nodeVisitCountRef.current += 1;
         }
+
+        // Process interactive elements for the new node (after a short delay)
+        await processNodeInteractiveElements(nextNode, 1500);
 
         // Save game state after making a choice
         await storyEngine.saveGameState();

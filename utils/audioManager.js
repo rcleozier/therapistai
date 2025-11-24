@@ -1,4 +1,4 @@
-import { Audio } from 'expo-av';
+import { Audio } from 'expo-audio';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AUDIO_ENABLED_KEY = 'audio_enabled';
@@ -9,6 +9,7 @@ let startScreenSound = null;
 let gameSound = null;
 let isAudioEnabled = true;
 let isInitialized = false;
+let isStartingMusic = false; // Flag to prevent concurrent music starts
 
 // Initialize audio settings
 export const initializeAudio = async () => {
@@ -128,7 +129,15 @@ export const setAudioEnabled = async (enabled) => {
 
 // Play background music (for start screen)
 export const playBackgroundMusic = async () => {
+  // Prevent concurrent calls
+  if (isStartingMusic) {
+    console.log('Music is already starting, skipping duplicate call');
+    return;
+  }
+
   try {
+    isStartingMusic = true;
+
     // Always check current setting before playing
     const enabled = await getAudioEnabled();
     if (!enabled) {
@@ -167,6 +176,8 @@ export const playBackgroundMusic = async () => {
     console.log('Start screen music started');
   } catch (error) {
     console.error('Error playing background music:', error);
+  } finally {
+    isStartingMusic = false;
   }
 };
 
@@ -196,7 +207,15 @@ export const stopBackgroundMusic = async () => {
 
 // Play game music
 export const playGameMusic = async () => {
+  // Prevent concurrent calls
+  if (isStartingMusic) {
+    console.log('Music is already starting, skipping duplicate call');
+    return;
+  }
+
   try {
+    isStartingMusic = true;
+
     // Always check current setting before playing
     const enabled = await getAudioEnabled();
     if (!enabled) {
@@ -223,6 +242,8 @@ export const playGameMusic = async () => {
     console.log('Game music started');
   } catch (error) {
     console.error('Error playing game music:', error);
+  } finally {
+    isStartingMusic = false;
   }
 };
 
