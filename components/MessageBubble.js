@@ -14,16 +14,19 @@ const MessageBubble = ({ message, index }) => {
       return {
         container: styles.aiContainer,
         text: styles.aiText,
+        wrapper: styles.aiWrapper,
       };
     } else if (isNarrator) {
       return {
         container: styles.narratorContainer,
         text: styles.narratorText,
+        wrapper: styles.narratorWrapper,
       };
     } else {
       return {
         container: styles.playerContainer,
         text: styles.playerText,
+        wrapper: styles.playerWrapper,
       };
     }
   };
@@ -31,9 +34,9 @@ const MessageBubble = ({ message, index }) => {
   const bubbleStyles = getStyles();
 
   return (
-    <View style={[styles.messageWrapper, isPlayer && styles.playerWrapper]}>
+    <View style={[styles.messageWrapper, bubbleStyles.wrapper]}>
       <View style={[styles.bubble, bubbleStyles.container]}>
-        <Text style={[styles.text, bubbleStyles.text]}>
+        <Text style={[bubbleStyles.text]}>
           {text}
         </Text>
       </View>
@@ -43,39 +46,54 @@ const MessageBubble = ({ message, index }) => {
 
 const styles = StyleSheet.create({
   messageWrapper: {
-    marginBottom: SPACING.md,
-    paddingHorizontal: SPACING.md,
+    marginBottom: SPACING.lg, // More space between messages - clinical spacing
+    paddingHorizontal: SPACING.lg, // Wider margins
+  },
+  aiWrapper: {
+    alignItems: 'flex-start',
   },
   playerWrapper: {
     alignItems: 'flex-end',
   },
+  narratorWrapper: {
+    alignItems: 'center',
+    width: '100%',
+  },
   bubble: {
-    maxWidth: '85%',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm + 2,
-    borderRadius: BORDER_RADIUS.md,
-    borderWidth: 1,
+    maxWidth: '78%', // Slightly narrower - more intimate, claustrophobic
+    paddingHorizontal: SPACING.lg,
+    paddingVertical: SPACING.md,
+    borderRadius: BORDER_RADIUS.sm, // Smaller radius - more clinical, less friendly
+    borderWidth: 0.5, // Thinner border - subtle
   },
   aiContainer: {
     backgroundColor: COLORS.message.ai.background,
     borderColor: COLORS.message.ai.border,
-    alignSelf: 'flex-start',
+    borderWidth: 0.5,
+    // Subtle shadow for depth and unease
+    shadowColor: COLORS.message.ai.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 2,
   },
   playerContainer: {
     backgroundColor: COLORS.message.player.background,
     borderColor: COLORS.message.player.border,
-    alignSelf: 'flex-end',
+    borderWidth: 0.5,
+    shadowColor: COLORS.message.player.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
   },
   narratorContainer: {
-    backgroundColor: COLORS.message.narrator.background,
+    backgroundColor: 'transparent', // No background - just text floating
     borderColor: COLORS.message.narrator.border,
-    alignSelf: 'center',
-    maxWidth: '95%',
-    borderStyle: 'dashed',
-  },
-  text: {
-    ...FONTS.body,
-    lineHeight: 22,
+    borderWidth: 0.5,
+    borderStyle: 'dashed', // Dashed border - broken, incomplete
+    maxWidth: '90%',
+    paddingVertical: SPACING.sm + 4,
   },
   aiText: {
     color: COLORS.message.ai.text,
@@ -83,10 +101,11 @@ const styles = StyleSheet.create({
   },
   playerText: {
     color: COLORS.message.player.text,
+    ...FONTS.body,
   },
   narratorText: {
     color: COLORS.message.narrator.text,
-    fontStyle: 'italic',
+    ...FONTS.narrator,
     textAlign: 'center',
   },
 });
