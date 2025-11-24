@@ -13,7 +13,7 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
       setIsPressed(true);
       Animated.parallel([
         Animated.spring(scaleAnim, {
-          toValue: 0.98,
+          toValue: 0.97, // Slight scale down (0.97 from spec)
           useNativeDriver: true,
           tension: 300,
           friction: 10,
@@ -105,19 +105,19 @@ const styles = StyleSheet.create({
     // Container for touch handling
   },
   buttonInner: {
-    backgroundColor: COLORS.choice.background,
-    borderWidth: 0.5, // Thin border - clinical
-    borderRadius: BORDER_RADIUS.sm, // Smaller radius - less friendly
-    paddingVertical: SPACING.lg, // Taller buttons - easier to tap, more presence
-    paddingHorizontal: SPACING.xl, // Wider padding - breathing room
-    minHeight: 56, // Minimum touch target
+    backgroundColor: COLORS.choice.background, // #13151A (refined from spec)
+    borderWidth: 1, // 1px border
+    borderRadius: BORDER_RADIUS.md, // 14-16px radius (refined from spec)
+    paddingVertical: SPACING.md + 4, // 52-56pt height for good tap targets (refined from spec)
+    paddingHorizontal: SPACING.lg + 4, // 20-24px horizontal margin (refined from spec)
+    minHeight: 56, // Minimum touch target (52-56pt from spec)
     justifyContent: 'center',
     alignItems: 'center',
     // Subtle shadow for depth
     shadowColor: COLORS.choice.shadow,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.4,
-    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
     elevation: 2,
   },
   buttonDisabled: {
@@ -125,9 +125,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     ...FONTS.body,
+    fontSize: 16, // 15-16pt from spec
+    fontWeight: '500', // Medium weight (refined from spec)
     textAlign: 'center',
-    letterSpacing: 0.2, // Slightly wider spacing
-    color: COLORS.choice.text,
+    letterSpacing: 0.2,
+    color: COLORS.choice.text, // #F5F3EE soft off-white (refined from spec)
   },
   buttonTextPressed: {
     color: COLORS.choice.textHover, // Red tint when pressed

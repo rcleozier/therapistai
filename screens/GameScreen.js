@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
   Animated,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import MessageBubble from '../components/MessageBubble';
 import ChoiceButton from '../components/ChoiceButton';
+import StatusBar from '../components/StatusBar';
 import storyEngine from '../utils/storyEngine';
 import { Analytics } from '../utils/analytics';
 import { stopBackgroundMusic, playGameMusic, stopGameMusic } from '../utils/audioManager';
@@ -262,40 +266,53 @@ const GameScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-        <Text style={styles.title}>Therapist AI</Text>
-        <View style={styles.headerRight}>
-          {isEnding && (
-            <TouchableOpacity onPress={handleRestart} style={styles.restartButton}>
-              <Text style={styles.restartText}>RESTART</Text>
-            </TouchableOpacity>
-          )}
-          <SettingsButton style={styles.settingsButton} />
-        </View>
-      </Animated.View>
+      {/* Gradient background for subtle vignette effect */}
+      <LinearGradient
+        colors={[COLORS.backgroundGradient.start, COLORS.backgroundGradient.end, COLORS.backgroundGradient.start]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={StyleSheet.absoluteFill}
+      />
+      
+      <KeyboardAvoidingView
+        style={styles.keyboardView}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
+      >
+        {/* Header - refined title and settings */}
+        <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
+          <Text style={styles.title}>Therapist AI</Text>
+          <View style={styles.headerRight}>
+            {isEnding && (
+              <TouchableOpacity onPress={handleRestart} style={styles.restartButton}>
+                <Text style={styles.restartText}>RESTART</Text>
+              </TouchableOpacity>
+            )}
+            <SettingsButton style={styles.settingsButton} />
+          </View>
+        </Animated.View>
 
-      <Animated.View style={[styles.contentWrapper, { opacity: fadeAnim }]}>
-        <ScrollView
-          ref={scrollViewRef}
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {displayedMessages.map((message, index) => (
-            <MessageBubble key={message.id || index} message={message} index={index} />
-          ))}
-          
-          {isTyping && (
-            <Animated.View style={[styles.typingIndicator, { opacity: typingOpacity }]}>
-              <View style={styles.typingDots}>
-                <View style={[styles.dot, styles.dot1]} />
-                <View style={[styles.dot, styles.dot2]} />
-                <View style={[styles.dot, styles.dot3]} />
-              </View>
-            </Animated.View>
-          )}
+        {/* Status bar - processing/typing indicator */}
+        <StatusBar isTyping={isTyping} statusText={displayedMessageIndex < messages.length ? 'Processing…' : 'Waiting for your response'} />
 
-          {showChoices && (
+        {/* Chat area with scrollable messages */}
+        <Animated.View style={[styles.contentWrapper, { opacity: fadeAnim }]}>
+          <ScrollView
+            ref={scrollViewRef}
+            style={styles.scrollView}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+          >
+            {displayedMessages.map((message, index) => (
+              <MessageBubble key={message.id || index} message={message} index={index} />
+            ))}
+          </ScrollView>
+        </Animated.View>
+
+        {/* Choices container - pinned to bottom */}
+        {showChoices && (
+          <View style={styles.choicesWrapper}>
+            <View style={styles.choicesDivider} />
             <View style={styles.choicesContainer}>
               <Text style={styles.choicesLabel}>CHOOSE YOUR RESPONSE</Text>
               {choices.map((choice) => (
@@ -307,18 +324,19 @@ const GameScreen = ({ route }) => {
                 />
               ))}
             </View>
-          )}
+          </View>
+        )}
 
-          {isEnding && (
-            <View style={styles.endingContainer}>
-              <Text style={styles.endingText}>THE STORY HAS ENDED</Text>
-              <TouchableOpacity onPress={handleRestart} style={styles.restartButtonLarge}>
-                <Text style={styles.restartTextLarge}>PLAY AGAIN</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </ScrollView>
-      </Animated.View>
+        {/* Ending container */}
+        {isEnding && (
+          <View style={styles.endingContainer}>
+            <Text style={styles.endingText}>THE STORY HAS ENDED</Text>
+            <TouchableOpacity onPress={handleRestart} style={styles.restartButtonLarge}>
+              <Text style={styles.restartTextLarge}>PLAY AGAIN</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -326,17 +344,21 @@ const GameScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.background, // Near-black base (#050608)
+  },
+  keyboardView: {
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: SPACING.xl, // Wider padding - more breathing room
-    paddingVertical: SPACING.lg, // Taller header - more presence
-    borderBottomWidth: 0.5, // Thinner border - subtle
+    paddingHorizontal: SPACING.xl,
+    paddingTop: 16, // Breathing room from safe area (refined from spec)
+    paddingBottom: SPACING.md,
+    borderBottomWidth: 0.5,
     borderBottomColor: COLORS.divider,
-    backgroundColor: COLORS.background,
+    backgroundColor: 'transparent', // Transparent to show gradient
     position: 'relative',
     zIndex: 1,
   },
@@ -347,8 +369,8 @@ const styles = StyleSheet.create({
   },
   title: {
     ...FONTS.heading,
-    color: COLORS.text.primary,
-    letterSpacing: 2, // Extra spacing for clinical feel
+    color: COLORS.text.primary, // Soft off-white #F5F3EE (refined from spec)
+    // Title case, not all caps (refined from spec)
   },
   restartButton: {
     paddingHorizontal: SPACING.md,
@@ -361,56 +383,41 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     flex: 1,
+    // Chat area container - card-like with padding (refined from spec)
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    paddingVertical: SPACING.xl, // More vertical padding
-    paddingBottom: SPACING.xxl + SPACING.md, // Extra bottom padding
+    paddingVertical: SPACING.md + 4, // 16px vertical padding (refined from spec)
+    paddingBottom: SPACING.xl, // Extra bottom padding for scroll
     paddingHorizontal: 0, // No horizontal padding - handled by MessageBubble
   },
-  typingIndicator: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: SPACING.lg,
-    paddingHorizontal: SPACING.md,
+  choicesWrapper: {
+    // Pinned to bottom above home indicator (refined from spec)
+    backgroundColor: COLORS.background,
+    borderTopWidth: 0.5,
+    borderTopColor: COLORS.divider,
+    paddingBottom: SPACING.md, // Safe area padding
   },
-  typingDots: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: SPACING.xs,
-  },
-  dot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: COLORS.message.ai.text,
-    opacity: 0.6,
-  },
-  dot1: {
-    // Will be animated separately if needed
-  },
-  dot2: {
-    // Will be animated separately if needed
-  },
-  dot3: {
-    // Will be animated separately if needed
+  choicesDivider: {
+    height: 1,
+    backgroundColor: COLORS.dividerGradient, // Subtle gradient line (refined from spec)
+    marginHorizontal: SPACING.xl,
+    marginTop: SPACING.lg,
+    marginBottom: SPACING.md,
   },
   choicesContainer: {
-    paddingHorizontal: SPACING.lg,
-    paddingTop: SPACING.xl, // More space before choices
-    marginTop: SPACING.xl, // More separation
-    borderTopWidth: 0.5, // Thinner divider
-    borderTopColor: COLORS.divider,
+    paddingHorizontal: SPACING.lg + 4, // 20-24px horizontal margin (refined from spec)
+    paddingTop: SPACING.md,
+    paddingBottom: SPACING.sm,
   },
   choicesLabel: {
     ...FONTS.caption,
-    color: COLORS.text.muted, // More muted
-    marginBottom: SPACING.lg, // More space
+    color: COLORS.text.muted, // Grey at 55-65% opacity (refined from spec)
+    marginBottom: SPACING.lg, // Generous spacing (refined from spec)
     textAlign: 'center',
-    letterSpacing: 1.5,
+    // Letter spacing increased (refined from spec)
   },
   endingContainer: {
     paddingHorizontal: SPACING.lg,
@@ -427,9 +434,9 @@ const styles = StyleSheet.create({
   },
   restartButtonLarge: {
     backgroundColor: COLORS.choice.background,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: COLORS.choice.border,
-    borderRadius: BORDER_RADIUS.sm,
+    borderRadius: BORDER_RADIUS.md,
     paddingVertical: SPACING.lg,
     paddingHorizontal: SPACING.xl + SPACING.md,
     minWidth: 180,
@@ -446,7 +453,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   settingsButton: {
-    // Positioned within header, no absolute positioning needed
+    // Positioned within header, larger tap target handled in component
   },
 });
 

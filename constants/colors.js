@@ -1,32 +1,38 @@
 import { Platform } from "react-native";
 
 export const COLORS = {
-  // Clinical darkness - like a dimly lit therapy office
-  background: '#0B0C0E', // Premium near-black, slightly warm gray
-  backgroundSecondary: '#151515', // Subtle elevation
-  backgroundTertiary: '#1a1a1a', // Cards/surfaces
+  // Premium psychological horror - refined near-black palette
+  background: '#050608', // Near-black base (refined from spec)
+  backgroundSecondary: '#080A0C', // Slightly lighter for chat area
+  backgroundTertiary: '#111318', // Message bubble background
   backgroundStart: '#050508', // Darker variant for start screen
+  backgroundGradient: {
+    start: '#050608', // Edges darker
+    end: '#080A0C', // Center slightly lighter (vignette effect)
+  },
   
-  // Text colors - desaturated, muted, with subtle warmth
+  // Text colors - refined premium palette
   text: {
-    primary: '#F5F3EE', // Off-white / soft gray for premium feel
+    primary: '#F5F3EE', // Soft off-white (refined from spec)
     secondary: '#9a9a9a', // Muted gray
-    muted: '#5a5a5a', // Almost invisible
-    ai: '#c44d4d', // Desaturated deep red - like dried blood
+    muted: 'rgba(154, 154, 154, 0.6)', // Status text at 60% opacity
+    status: 'rgba(154, 154, 154, 0.6)', // Status bar text
+    ai: '#F3E4D8', // Muted warm off-white for AI messages (refined from spec)
     narrator: '#7a7a7a', // Ghostly gray
     player: '#6b8db8', // Muted blue-gray - clinical
     tagline: 'rgba(245, 243, 238, 0.65)', // Tagline with 65% opacity
     disclaimer: 'rgba(245, 243, 238, 0.4)', // Disclaimer with 40% opacity
   },
   
-  // Message bubble colors - clinical with subtle wrongness
+  // Message bubble colors - premium refined design
   message: {
     ai: {
-      background: '#1a0f0f', // Barely perceptible red tint
-      border: '#2a1a1a', // Subtle border
-      borderGlow: '#3a1a1a', // Slight glow for unease
-      text: '#c44d4d', // Desaturated red
-      shadow: 'rgba(196, 77, 77, 0.1)', // Subtle red shadow
+      background: '#111318', // Very dark gray (refined from spec)
+      border: 'rgba(242, 92, 77, 0.4)', // Desaturated red-orange at 40% opacity
+      borderGlow: 'rgba(242, 92, 77, 0.15)', // Outer glow at 10-15% opacity
+      text: '#F3E4D8', // Muted warm off-white (refined from spec)
+      shadow: 'rgba(242, 92, 77, 0.12)', // Subtle accent shadow
+      accent: '#F25C4D', // Warm red accent for key words
     },
     player: {
       background: '#0f0f1a', // Barely perceptible blue tint
@@ -42,27 +48,29 @@ export const COLORS = {
     },
   },
   
-  // Choice buttons - clinical but slightly off
+  // Choice buttons - premium refined design
   choice: {
-    background: '#151515', // Slightly elevated
-    backgroundPressed: '#1a1a1a', // Pressed state
-    border: '#2a2a2a', // Subtle border
-    borderHover: '#3a2a2a', // Slight red tint on hover
-    text: '#d8d8d8', // Soft white
-    textHover: '#c44d4d', // Slight red tint
+    background: '#13151A', // Slightly lighter than page background (refined from spec)
+    backgroundPressed: '#0F1115', // Darkened by ~10% when pressed
+    border: 'rgba(242, 92, 77, 0.3)', // Subtle stroke at 25-35% opacity
+    borderHover: 'rgba(242, 92, 77, 0.5)', // Stronger on press
+    text: '#F5F3EE', // Soft off-white (refined from spec)
+    textHover: '#F25C4D', // Accent color on press
     shadow: 'rgba(0, 0, 0, 0.3)', // Deep shadow
+    innerShadow: 'rgba(0, 0, 0, 0.2)', // Inner shadow on press
   },
   
-  // Accent colors - danger but muted
+  // Accent colors - refined premium palette
   accent: {
-    red: '#F25C4D', // Deep red-orange for primary button
+    red: '#F25C4D', // Desaturated red-orange (refined from spec)
     redPressed: '#D84A3D', // Darker when pressed
     redGlow: 'rgba(242, 92, 77, 0.3)', // Soft glow for primary button
     darkRed: '#8b2a2a', // Darker red
     ember: '#b85c3a', // Ember orange (muted)
     gold: '#b8a86b', // Dim gold
     eerie: '#3a3a3a', // Eerie gray
-    teal: '#4A9E9E', // Teal for icon glow
+    teal: '#4A9E9E', // Teal for character avatar eye glow
+    cyan: '#4A9E9E', // Soft cyan for avatar glow
   },
   
   white: '#ffffff',
@@ -72,10 +80,11 @@ export const COLORS = {
   error: '#c44d4d',
   warning: '#b85c3a',
   
-  // Borders and dividers - subtle but present
+  // Borders and dividers - refined subtle palette
   border: '#1f1f1f', // Very subtle
-  divider: '#151515', // Almost invisible
-  dividerStrong: '#2a2a2a', // When needed
+  divider: 'rgba(255, 255, 255, 0.08)', // Almost invisible, refined
+  dividerStrong: 'rgba(255, 255, 255, 0.12)', // When needed
+  dividerGradient: 'rgba(242, 92, 77, 0.2)', // Subtle gradient line for choices separator
 };
 
 export const SPACING = {
@@ -88,8 +97,8 @@ export const SPACING = {
 };
 
 export const BORDER_RADIUS = {
-  sm: 8,
-  md: 12,
+  sm: 12, // Refined: 12-16 for message bubbles
+  md: 14, // Refined: 14-16 for choice buttons
   lg: 16,
   xl: 24,
   xxl: 32,
@@ -99,11 +108,11 @@ export const BORDER_RADIUS = {
 export const FONTS = {
   // Typography hierarchy - clinical precision with subtle tension
   heading: {
-    fontSize: 24,
-    fontWeight: '300', // Thin, elegant, unsettling
+    fontSize: 20, // Refined size
+    fontWeight: '400', // Medium weight for better readability
     fontFamily: Platform.select({ ios: 'SF Pro Display', android: 'Roboto' }),
-    letterSpacing: 1.5, // Wide spacing - clinical, detached
-    textTransform: 'uppercase', // Clinical formality
+    letterSpacing: 0.5, // Refined spacing (title case, not all caps)
+    textTransform: 'none', // Title case instead of all caps
   },
   subheading: {
     fontSize: 18,
@@ -126,12 +135,19 @@ export const FONTS = {
     letterSpacing: 0.1,
   },
   caption: {
-    fontSize: 13,
-    fontWeight: '300', // Thin, almost whisper-like
+    fontSize: 12, // Refined to 11-12pt from spec
+    fontWeight: '400', // Medium weight for status text
     fontFamily: Platform.select({ ios: 'SF Pro Text', android: 'Roboto' }),
-    lineHeight: 18,
-    letterSpacing: 0.5,
-    textTransform: 'uppercase', // Clinical labels
+    lineHeight: 16,
+    letterSpacing: 1.2, // Increased letter spacing for "CHOOSE YOUR RESPONSE"
+    textTransform: 'uppercase', // All caps for labels
+  },
+  status: {
+    fontSize: 11, // 11-12pt from spec
+    fontWeight: '400',
+    fontFamily: Platform.select({ ios: 'SF Pro Text', android: 'Roboto' }),
+    lineHeight: 16,
+    letterSpacing: 0.8, // Slightly increased
   },
   small: {
     fontSize: 11,
@@ -140,13 +156,13 @@ export const FONTS = {
     lineHeight: 16,
     letterSpacing: 0.3,
   },
-  // AI messages - slightly off, creating unease
+  // AI messages - refined premium styling
   aiMessage: {
-    fontSize: 16,
-    fontWeight: '400',
+    fontSize: 16, // 15-16pt from spec
+    fontWeight: '400', // Medium weight
     fontFamily: Platform.select({ ios: 'SF Pro Text', android: 'Roboto' }),
-    lineHeight: 26,
-    letterSpacing: 0.3, // Slightly wider - feels off
+    lineHeight: 24, // Generous line height
+    letterSpacing: 0.2, // Refined spacing
   },
   // Narrator - ethereal, ghostly
   narrator: {

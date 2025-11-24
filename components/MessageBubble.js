@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
+/**
+ * MessageBubble component - premium styled chat messages
+ * Features refined styling with character avatar for AI messages
+ */
 const MessageBubble = ({ message, index }) => {
   const { from, type, text } = message;
   
@@ -36,11 +40,15 @@ const MessageBubble = ({ message, index }) => {
   return (
     <View style={[styles.messageWrapper, bubbleStyles.wrapper]}>
       {isAI && (
-        <Image
-          source={require('../assets/character-removebg.png')}
-          style={styles.characterImage}
-          resizeMode="contain"
-        />
+        <View style={styles.avatarContainer}>
+          <Image
+            source={require('../assets/character-removebg.png')}
+            style={styles.characterImage}
+            resizeMode="contain"
+          />
+          {/* Soft cyan eye glow effect */}
+          <View style={styles.avatarGlow} />
+        </View>
       )}
       <View style={[styles.bubble, bubbleStyles.container]}>
         <Text style={[bubbleStyles.text]}>
@@ -53,13 +61,14 @@ const MessageBubble = ({ message, index }) => {
 
 const styles = StyleSheet.create({
   messageWrapper: {
-    marginBottom: SPACING.lg, // More space between messages - clinical spacing
-    paddingHorizontal: SPACING.lg, // Wider margins
+    marginBottom: SPACING.lg,
+    paddingHorizontal: SPACING.lg + 4, // 20-24px horizontal padding (refined from spec)
+    paddingVertical: SPACING.xs, // Vertical spacing between messages
   },
   aiWrapper: {
     alignItems: 'flex-start',
     flexDirection: 'row',
-    gap: SPACING.sm,
+    gap: SPACING.sm + 2, // Gap between avatar and bubble
   },
   playerWrapper: {
     alignItems: 'flex-end',
@@ -68,22 +77,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  avatarContainer: {
+    position: 'relative',
+    width: 40, // Slightly larger avatar (refined from spec)
+    height: 40,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: SPACING.xs, // Align with top of bubble
+  },
+  characterImage: {
+    width: 40,
+    height: 40,
+    opacity: 0.9, // Slight transparency (refined from spec)
+    zIndex: 1,
+  },
+  avatarGlow: {
+    position: 'absolute',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: COLORS.accent.cyan,
+    opacity: 0.15, // Soft cyan eye glow (refined from spec)
+    zIndex: 0,
+  },
   bubble: {
-    maxWidth: '78%', // Slightly narrower - more intimate, claustrophobic
+    maxWidth: '78%', // Maintains intimate feel
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    borderRadius: BORDER_RADIUS.sm, // Smaller radius - more clinical, less friendly
-    borderWidth: 0.5, // Thinner border - subtle
+    paddingVertical: SPACING.md + 2, // 16px vertical padding
+    borderRadius: BORDER_RADIUS.sm, // 12-16px radius (refined from spec)
+    borderWidth: 1, // 1px border
   },
   aiContainer: {
-    backgroundColor: COLORS.message.ai.background,
-    borderColor: COLORS.message.ai.border,
-    borderWidth: 0.5,
-    // Subtle shadow for depth and unease
-    shadowColor: COLORS.message.ai.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    backgroundColor: COLORS.message.ai.background, // #111318 (refined from spec)
+    borderColor: COLORS.message.ai.border, // Desaturated red-orange at 40% opacity
+    // Outer glow effect for alert feel (10-15% opacity)
+    shadowColor: COLORS.message.ai.borderGlow,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.12, // 10-15% opacity glow
+    shadowRadius: 8,
     elevation: 2,
   },
   playerContainer: {
@@ -105,7 +136,7 @@ const styles = StyleSheet.create({
     paddingVertical: SPACING.sm + 4,
   },
   aiText: {
-    color: COLORS.message.ai.text,
+    color: COLORS.message.ai.text, // #F3E4D8 muted warm off-white (refined from spec)
     ...FONTS.aiMessage,
   },
   playerText: {
@@ -116,12 +147,6 @@ const styles = StyleSheet.create({
     color: COLORS.message.narrator.text,
     ...FONTS.narrator,
     textAlign: 'center',
-  },
-  characterImage: {
-    width: 32,
-    height: 32,
-    opacity: 0.9,
-    marginTop: SPACING.xs,
   },
 });
 

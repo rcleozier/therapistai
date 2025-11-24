@@ -32,7 +32,8 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSContactsUsageDescription": "TherapistAI does not access your contacts. This permission is required by a dependency but is not used by the app."
       }
     },
     "android": {
