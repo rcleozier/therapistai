@@ -12,6 +12,7 @@ import { COLORS, FONTS, SPACING } from '../constants/colors';
 import MessageBubble from '../components/MessageBubble';
 import ChoiceButton from '../components/ChoiceButton';
 import storyEngine from '../utils/storyEngine';
+import { Analytics } from '../utils/analytics';
 
 const GameScreen = () => {
   const [currentNode, setCurrentNode] = useState(null);
@@ -21,6 +22,8 @@ const GameScreen = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0);
   const scrollViewRef = useRef(null);
+  const choiceCountRef = useRef(0);
+  const nodeVisitCountRef = useRef(0);
 
   // Initialize story on mount
   useEffect(() => {
@@ -31,6 +34,16 @@ const GameScreen = () => {
         setMessages(initialNode.messages);
         setChoices(initialNode.choices);
         setDisplayedMessageIndex(0);
+        
+        // Track game start
+        Analytics.trackGameStart();
+        Analytics.trackScreenView('Game');
+        
+        // Track initial node visit
+        if (initialNode.nodeId) {
+          Analytics.trackGameNodeVisit(initialNode.nodeId, 'intro');
+          nodeVisitCountRef.current = 1;
+        }
       }
     } catch (error) {
       console.error('Failed to initialize story:', error);
@@ -71,6 +84,14 @@ const GameScreen = () => {
     setIsLoading(true);
     
     try {
+      // Find the choice label for tracking
+      const choice = choices.find(c => c.id === choiceId);
+      const choiceLabel = choice?.label || 'Unknown';
+      
+      // Track the choice
+      Analytics.trackGameChoice(choiceId, choiceLabel, currentNode?.nodeId);
+      choiceCountRef.current += 1;
+      
       // Add a small delay for better UX
       await new Promise(resolve => setTimeout(resolve, 300));
       
@@ -81,6 +102,13 @@ const GameScreen = () => {
         setMessages(nextNode.messages);
         setChoices(nextNode.choices);
         setDisplayedMessageIndex(0);
+        
+        // Track node visit
+        if (nextNode.nodeId) {
+          const nodeType = nextNode.isEnding ? 'ending' : 'story';
+          Analytics.trackGameNodeVisit(nextNode.nodeId, nodeType);
+          nodeVisitCountRef.current += 1;
+        }
       } else {
         console.error('Failed to load next node');
       }
@@ -92,16 +120,47 @@ const GameScreen = () => {
   };
 
   const handleRestart = () => {
+    // Track game restart
+    Analytics.trackGameRestart();
+    
+    // Reset counters
+    choiceCountRef.current = 0;
+    nodeVisitCountRef.current = 0;
+    
     const initialNode = storyEngine.reset();
     setCurrentNode(initialNode);
     setMessages(initialNode.messages);
     setChoices(initialNode.choices);
     setDisplayedMessageIndex(0);
+    
+    // Track new game start
+    Analytics.trackGameStart();
+    if (initialNode.nodeId) {
+      Analytics.trackGameNodeVisit(initialNode.nodeId, 'intro');
+      nodeVisitCountRef.current = 1;
+    }
   };
 
   const displayedMessages = messages.slice(0, displayedMessageIndex);
   const showChoices = displayedMessageIndex >= messages.length && choices.length > 0 && !isLoading;
   const isEnding = currentNode?.isEnding && displayedMessageIndex >= messages.length;
+
+  // Track ending when reached
+  useEffect(() => {
+    if (isEnding && currentNode?.nodeId) {
+      // Extract ending name from node ID
+      const endingName = currentNode.nodeId
+        .replace(/_ending$/, '')
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, l => l.toUpperCase());
+      
+      Analytics.trackGameEnding(
+        endingName,
+        choiceCountRef.current,
+        nodeVisitCountRef.current
+      );
+    }
+  }, [isEnding, currentNode]);
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
