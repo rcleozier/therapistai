@@ -61,9 +61,10 @@ const MessageBubble = ({ message, index }) => {
 
 const styles = StyleSheet.create({
   messageWrapper: {
-    marginBottom: SPACING.lg,
-    paddingHorizontal: SPACING.lg + 4, // 20-24px horizontal padding (refined from spec)
-    paddingVertical: SPACING.xs, // Vertical spacing between messages
+    // Slightly tighter spacing so more messages fit on screen
+    marginBottom: SPACING.md,
+    paddingHorizontal: SPACING.lg + 2,
+    paddingVertical: SPACING.xs,
   },
   aiWrapper: {
     alignItems: 'flex-start',
@@ -101,11 +102,11 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   bubble: {
-    maxWidth: '78%', // Maintains intimate feel
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md + 2, // 16px vertical padding
-    borderRadius: BORDER_RADIUS.sm, // 12-16px radius (refined from spec)
-    borderWidth: 1, // 1px border
+    maxWidth: '82%',
+    paddingHorizontal: SPACING.md + 2,
+    paddingVertical: SPACING.sm + 2,
+    borderRadius: BORDER_RADIUS.sm,
+    borderWidth: 1,
   },
   aiContainer: {
     backgroundColor: COLORS.message.ai.background, // #111318 (refined from spec)

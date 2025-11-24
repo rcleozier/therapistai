@@ -108,9 +108,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.choice.background, // #13151A (refined from spec)
     borderWidth: 1, // 1px border
     borderRadius: BORDER_RADIUS.md, // 14-16px radius (refined from spec)
-    paddingVertical: SPACING.md + 4, // 52-56pt height for good tap targets (refined from spec)
-    paddingHorizontal: SPACING.lg + 4, // 20-24px horizontal margin (refined from spec)
-    minHeight: 56, // Minimum touch target (52-56pt from spec)
+    // Slightly more compact to keep the choices section from dominating the screen
+    paddingVertical: SPACING.sm + 4,
+    paddingHorizontal: SPACING.md + 2,
+    minHeight: 48,
     justifyContent: 'center',
     alignItems: 'center',
     // Subtle shadow for depth

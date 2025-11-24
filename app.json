@@ -3,7 +3,6 @@
     "name": "TherapistAI",
     "slug": "therapistai",
     "newArchEnabled": true,
-    "privacy": "public",
     "jsEngine": "jsc",
     "platforms": [
       "ios",
@@ -84,16 +83,7 @@
     "notification": {
       "icon": "./assets/icons/icon.png",
       "color": "#8B0000",
-      "iosDisplayInForeground": true,
-      "androidMode": "default",
-      "androidCollapsedTitle": "TherapistAI",
-      "androidChannelId": "therapistai-default",
-      "androidChannelName": "TherapistAI Notifications",
-      "androidChannelDescription": "Your therapy session awaits",
-      "androidChannelImportance": "high",
-      "androidShowBadge": true,
-      "androidVibrate": true,
-      "androidPriority": "high"
+      "iosDisplayInForeground": true
     },
     "extra": {
       "eas": {

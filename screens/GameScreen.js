@@ -389,28 +389,29 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingVertical: SPACING.md + 4, // 16px vertical padding (refined from spec)
-    paddingBottom: SPACING.xl, // Extra bottom padding for scroll
-    paddingHorizontal: 0, // No horizontal padding - handled by MessageBubble
+    // Reduce padding so the chat area has more usable height
+    paddingVertical: SPACING.sm + 2,
+    paddingBottom: SPACING.lg,
+    paddingHorizontal: 0,
   },
   choicesWrapper: {
-    // Pinned to bottom above home indicator (refined from spec)
+    // Pinned to bottom above home indicator
     backgroundColor: COLORS.background,
     borderTopWidth: 0.5,
     borderTopColor: COLORS.divider,
-    paddingBottom: SPACING.md, // Safe area padding
+    paddingBottom: SPACING.sm,
   },
   choicesDivider: {
     height: 1,
     backgroundColor: COLORS.dividerGradient, // Subtle gradient line (refined from spec)
-    marginHorizontal: SPACING.xl,
-    marginTop: SPACING.lg,
-    marginBottom: SPACING.md,
+    marginHorizontal: SPACING.lg,
+    marginTop: SPACING.md,
+    marginBottom: SPACING.sm,
   },
   choicesContainer: {
-    paddingHorizontal: SPACING.lg + 4, // 20-24px horizontal margin (refined from spec)
-    paddingTop: SPACING.md,
-    paddingBottom: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xs,
+    paddingBottom: SPACING.xs,
   },
   choicesLabel: {
     ...FONTS.caption,
