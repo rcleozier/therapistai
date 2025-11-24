@@ -57,14 +57,16 @@ export const handleInteractiveElements = async (interactive, nodeId = null) => {
       }
     }
 
-    // Handle notifications
+    // Handle local notifications only (no push/remote notifications)
     if (interactive.notification) {
       const { title, body, delay = 0, sound = true } = interactive.notification;
       
+      // Local notification trigger - schedules notification locally on device
       const trigger = delay > 0 
         ? { seconds: delay }
         : null;
 
+      // scheduleNotificationAsync creates local notifications only
       await Notifications.scheduleNotificationAsync({
         content: {
           title: title || 'TherapistAI',
