@@ -94,8 +94,11 @@ const StartScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       checkForSavedGame();
-      // Resume music when returning to start screen
-      playBackgroundMusic();
+      // Resume music when returning to start screen (only if not already playing)
+      const resumeMusic = async () => {
+        await playBackgroundMusic();
+      };
+      resumeMusic();
     }, [])
   );
 

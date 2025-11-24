@@ -48,16 +48,75 @@ export const getAudioEnabled = async () => {
   }
 };
 
+// Stop all music - helper function that forcefully stops everything
+const stopAllMusic = async () => {
+  console.log('Stopping all music...');
+  const promises = [];
+  
+  // Stop start screen music
+  if (startScreenSound) {
+    promises.push(
+      (async () => {
+        try {
+          const status = await startScreenSound.getStatusAsync();
+          if (status.isLoaded) {
+            if (status.isPlaying) {
+              await startScreenSound.stopAsync();
+            }
+            await startScreenSound.unloadAsync();
+          }
+        } catch (err) {
+          console.error('Error stopping start screen sound:', err);
+        } finally {
+          startScreenSound = null;
+        }
+      })()
+    );
+  }
+  
+  // Stop game music
+  if (gameSound) {
+    promises.push(
+      (async () => {
+        try {
+          const status = await gameSound.getStatusAsync();
+          if (status.isLoaded) {
+            if (status.isPlaying) {
+              await gameSound.stopAsync();
+            }
+            await gameSound.unloadAsync();
+          }
+        } catch (err) {
+          console.error('Error stopping game sound:', err);
+        } finally {
+          gameSound = null;
+        }
+      })()
+    );
+  }
+  
+  await Promise.all(promises);
+  
+  // Force cleanup any remaining references
+  startScreenSound = null;
+  gameSound = null;
+  
+  // Wait for audio system to fully release resources
+  await new Promise(resolve => setTimeout(resolve, 300));
+  console.log('All music stopped');
+};
+
 // Set audio enabled state
 export const setAudioEnabled = async (enabled) => {
   try {
+    console.log(`Setting audio enabled to: ${enabled}`);
     isAudioEnabled = enabled;
     await AsyncStorage.setItem(AUDIO_ENABLED_KEY, JSON.stringify(enabled));
 
-    // If disabling, stop all current playback
+    // If disabling, IMMEDIATELY stop all current playback
     if (!enabled) {
-      await stopBackgroundMusic();
-      await stopGameMusic();
+      console.log('Audio disabled - stopping all music immediately');
+      await stopAllMusic();
     }
 
     return true;
@@ -67,40 +126,28 @@ export const setAudioEnabled = async (enabled) => {
   }
 };
 
-// Stop all music - helper function
-const stopAllMusic = async () => {
-  const promises = [];
-  
-  if (startScreenSound) {
-    promises.push(
-      startScreenSound.stopAsync()
-        .then(() => startScreenSound.unloadAsync())
-        .catch(err => console.error('Error stopping start screen sound:', err))
-        .finally(() => { startScreenSound = null; })
-    );
-  }
-  
-  if (gameSound) {
-    promises.push(
-      gameSound.stopAsync()
-        .then(() => gameSound.unloadAsync())
-        .catch(err => console.error('Error stopping game sound:', err))
-        .finally(() => { gameSound = null; })
-    );
-  }
-  
-  await Promise.all(promises);
-  // Wait for audio system to fully release resources
-  await new Promise(resolve => setTimeout(resolve, 200));
-};
-
 // Play background music (for start screen)
 export const playBackgroundMusic = async () => {
   try {
     // Always check current setting before playing
     const enabled = await getAudioEnabled();
     if (!enabled) {
+      console.log('Audio is disabled, not playing start screen music');
       return;
+    }
+
+    // If start screen music is already playing, don't restart
+    if (startScreenSound) {
+      try {
+        const status = await startScreenSound.getStatusAsync();
+        if (status.isLoaded && status.isPlaying) {
+          console.log('Start screen music already playing, skipping');
+          return;
+        }
+      } catch (error) {
+        // If there's an error checking status, clean up and continue
+        startScreenSound = null;
+      }
     }
 
     // Stop ALL music first (both game and start screen) to ensure only one plays
@@ -127,8 +174,17 @@ export const playBackgroundMusic = async () => {
 export const stopBackgroundMusic = async () => {
   try {
     if (startScreenSound) {
-      await startScreenSound.stopAsync();
-      await startScreenSound.unloadAsync();
+      try {
+        const status = await startScreenSound.getStatusAsync();
+        if (status.isLoaded) {
+          if (status.isPlaying) {
+            await startScreenSound.stopAsync();
+          }
+          await startScreenSound.unloadAsync();
+        }
+      } catch (error) {
+        console.error('Error stopping start screen sound:', error);
+      }
       startScreenSound = null;
       console.log('Start screen music stopped');
     }
@@ -144,10 +200,13 @@ export const playGameMusic = async () => {
     // Always check current setting before playing
     const enabled = await getAudioEnabled();
     if (!enabled) {
+      console.log('Audio is disabled, not playing game music');
+      // Still stop all music even if disabled
+      await stopAllMusic();
       return;
     }
 
-    // Stop ALL music first (both start screen and game)
+    // Stop ALL music first (both start screen and game) and wait for it to fully stop
     await stopAllMusic();
 
     // Create and load sound
@@ -171,13 +230,23 @@ export const playGameMusic = async () => {
 export const stopGameMusic = async () => {
   try {
     if (gameSound) {
-      await gameSound.stopAsync();
-      await gameSound.unloadAsync();
+      try {
+        const status = await gameSound.getStatusAsync();
+        if (status.isLoaded) {
+          if (status.isPlaying) {
+            await gameSound.stopAsync();
+          }
+          await gameSound.unloadAsync();
+        }
+      } catch (error) {
+        console.error('Error stopping game sound:', error);
+      }
       gameSound = null;
       console.log('Game music stopped');
     }
   } catch (error) {
     console.error('Error stopping game music:', error);
+    gameSound = null;
   }
 };
 
@@ -208,7 +277,5 @@ export const resumeBackgroundMusic = async () => {
 
 // Cleanup on app close
 export const cleanupAudio = async () => {
-  await stopBackgroundMusic();
-  await stopGameMusic();
+  await stopAllMusic();
 };
-

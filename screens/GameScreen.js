@@ -33,11 +33,8 @@ const GameScreen = ({ route }) => {
 
   // Initialize story on mount
   useEffect(() => {
-    // Stop start screen music first, then start game music after a brief delay
+    // playGameMusic() already stops all music via stopAllMusic(), so we just call it directly
     const setupAudio = async () => {
-      await stopBackgroundMusic();
-      // Small delay to ensure start screen music is fully stopped
-      await new Promise(resolve => setTimeout(resolve, 100));
       await playGameMusic();
     };
     setupAudio();
