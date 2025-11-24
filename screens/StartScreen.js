@@ -14,6 +14,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import storyEngine from '../utils/storyEngine';
+import { initializeAudio, playBackgroundMusic, stopBackgroundMusic } from '../utils/audioManager';
+import SettingsButton from '../components/SettingsButton';
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,6 +32,13 @@ const StartScreen = ({ navigation }) => {
   const secondaryButtonScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    // Initialize audio and start background music
+    const setupAudio = async () => {
+      await initializeAudio();
+      await playBackgroundMusic();
+    };
+    setupAudio();
+
     // Staggered fade-in animations
     Animated.sequence([
       // Icon fades in first
@@ -74,12 +83,19 @@ const StartScreen = ({ navigation }) => {
         }),
       ])
     ).start();
+
+    // Cleanup on unmount
+    return () => {
+      stopBackgroundMusic();
+    };
   }, []);
 
   // Check for saved game when screen comes into focus
   useFocusEffect(
     React.useCallback(() => {
       checkForSavedGame();
+      // Resume music when returning to start screen
+      playBackgroundMusic();
     }, [])
   );
 
@@ -238,6 +254,9 @@ const StartScreen = ({ navigation }) => {
         <Text style={styles.disclaimer}>
           The AI retains previous conversations.
         </Text>
+
+        {/* Settings Button */}
+        <SettingsButton style={styles.settingsButton} />
       </View>
     </SafeAreaView>
   );
@@ -365,9 +384,15 @@ const styles = StyleSheet.create({
     color: COLORS.text.disclaimer,
     textAlign: 'center',
     position: 'absolute',
-    bottom: SPACING.xl + 20,
+    bottom: SPACING.xl + 50,
     left: SPACING.xl,
     right: SPACING.xl,
+  },
+  settingsButton: {
+    position: 'absolute',
+    top: SPACING.lg,
+    right: SPACING.lg,
+    zIndex: 10,
   },
 });
 

@@ -15,6 +15,8 @@ import MessageBubble from '../components/MessageBubble';
 import ChoiceButton from '../components/ChoiceButton';
 import storyEngine from '../utils/storyEngine';
 import { Analytics } from '../utils/analytics';
+import { stopBackgroundMusic, playGameMusic, stopGameMusic } from '../utils/audioManager';
+import SettingsButton from '../components/SettingsButton';
 
 const GameScreen = ({ route }) => {
   const [currentNode, setCurrentNode] = useState(null);
@@ -31,6 +33,15 @@ const GameScreen = ({ route }) => {
 
   // Initialize story on mount
   useEffect(() => {
+    // Stop start screen music first, then start game music after a brief delay
+    const setupAudio = async () => {
+      await stopBackgroundMusic();
+      // Small delay to ensure start screen music is fully stopped
+      await new Promise(resolve => setTimeout(resolve, 100));
+      await playGameMusic();
+    };
+    setupAudio();
+
     const initializeGame = async () => {
       try {
         const startNew = route?.params?.startNew ?? true;
@@ -237,15 +248,25 @@ const GameScreen = ({ route }) => {
     }
   }, [isEnding, currentNode]);
 
+  // Cleanup when leaving game screen
+  useEffect(() => {
+    return () => {
+      stopGameMusic();
+    };
+  }, []);
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
         <Text style={styles.title}>THERAPISTAI</Text>
-        {isEnding && (
-          <TouchableOpacity onPress={handleRestart} style={styles.restartButton}>
-            <Text style={styles.restartText}>RESTART</Text>
-          </TouchableOpacity>
-        )}
+        <View style={styles.headerRight}>
+          {isEnding && (
+            <TouchableOpacity onPress={handleRestart} style={styles.restartButton}>
+              <Text style={styles.restartText}>RESTART</Text>
+            </TouchableOpacity>
+          )}
+          <SettingsButton style={styles.settingsButton} />
+        </View>
       </Animated.View>
 
       <Animated.View style={[styles.contentWrapper, { opacity: fadeAnim }]}>
@@ -311,6 +332,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5, // Thinner border - subtle
     borderBottomColor: COLORS.divider,
     backgroundColor: COLORS.background,
+    position: 'relative',
+    zIndex: 1,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.md,
   },
   title: {
     ...FONTS.heading,
@@ -411,6 +439,9 @@ const styles = StyleSheet.create({
     color: COLORS.accent.red,
     textAlign: 'center',
     letterSpacing: 0.5,
+  },
+  settingsButton: {
+    // Positioned within header, no absolute positioning needed
   },
 });
 
