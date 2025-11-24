@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
 const MessageBubble = ({ message, index }) => {
@@ -35,6 +35,13 @@ const MessageBubble = ({ message, index }) => {
 
   return (
     <View style={[styles.messageWrapper, bubbleStyles.wrapper]}>
+      {isAI && (
+        <Image
+          source={require('../assets/character-removebg.png')}
+          style={styles.characterImage}
+          resizeMode="contain"
+        />
+      )}
       <View style={[styles.bubble, bubbleStyles.container]}>
         <Text style={[bubbleStyles.text]}>
           {text}
@@ -51,6 +58,8 @@ const styles = StyleSheet.create({
   },
   aiWrapper: {
     alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: SPACING.sm,
   },
   playerWrapper: {
     alignItems: 'flex-end',
@@ -107,6 +116,12 @@ const styles = StyleSheet.create({
     color: COLORS.message.narrator.text,
     ...FONTS.narrator,
     textAlign: 'center',
+  },
+  characterImage: {
+    width: 32,
+    height: 32,
+    opacity: 0.9,
+    marginTop: SPACING.xs,
   },
 });
 

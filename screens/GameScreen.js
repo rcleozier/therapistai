@@ -263,14 +263,7 @@ const GameScreen = ({ route }) => {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-        <View style={styles.headerLeft}>
-          <Image
-            source={require('../assets/character-removebg.png')}
-            style={styles.headerCharacterImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.title}>Therapist AI</Text>
-        </View>
+        <Text style={styles.title}>Therapist AI</Text>
         <View style={styles.headerRight}>
           {isEnding && (
             <TouchableOpacity onPress={handleRestart} style={styles.restartButton}>
@@ -346,11 +339,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background,
     position: 'relative',
     zIndex: 1,
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.sm,
   },
   headerRight: {
     flexDirection: 'row',
@@ -459,11 +447,6 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     // Positioned within header, no absolute positioning needed
-  },
-  headerCharacterImage: {
-    width: 32,
-    height: 32,
-    opacity: 0.9,
   },
 });
 
