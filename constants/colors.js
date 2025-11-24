@@ -2,18 +2,21 @@ import { Platform } from "react-native";
 
 export const COLORS = {
   // Clinical darkness - like a dimly lit therapy office
-  background: '#0f0f0f', // Slightly warmer than pure black
+  background: '#0B0C0E', // Premium near-black, slightly warm gray
   backgroundSecondary: '#151515', // Subtle elevation
   backgroundTertiary: '#1a1a1a', // Cards/surfaces
+  backgroundStart: '#050508', // Darker variant for start screen
   
   // Text colors - desaturated, muted, with subtle warmth
   text: {
-    primary: '#d8d8d8', // Soft white, not harsh
+    primary: '#F5F3EE', // Off-white / soft gray for premium feel
     secondary: '#9a9a9a', // Muted gray
     muted: '#5a5a5a', // Almost invisible
     ai: '#c44d4d', // Desaturated deep red - like dried blood
     narrator: '#7a7a7a', // Ghostly gray
     player: '#6b8db8', // Muted blue-gray - clinical
+    tagline: 'rgba(245, 243, 238, 0.65)', // Tagline with 65% opacity
+    disclaimer: 'rgba(245, 243, 238, 0.4)', // Disclaimer with 40% opacity
   },
   
   // Message bubble colors - clinical with subtle wrongness
@@ -52,11 +55,14 @@ export const COLORS = {
   
   // Accent colors - danger but muted
   accent: {
-    red: '#c44d4d', // Desaturated deep red
+    red: '#F25C4D', // Deep red-orange for primary button
+    redPressed: '#D84A3D', // Darker when pressed
+    redGlow: 'rgba(242, 92, 77, 0.3)', // Soft glow for primary button
     darkRed: '#8b2a2a', // Darker red
     ember: '#b85c3a', // Ember orange (muted)
     gold: '#b8a86b', // Dim gold
     eerie: '#3a3a3a', // Eerie gray
+    teal: '#4A9E9E', // Teal for icon glow
   },
   
   white: '#ffffff',
@@ -150,5 +156,29 @@ export const FONTS = {
     lineHeight: 24,
     letterSpacing: 0.8, // Wide spacing - ghostly
     fontStyle: 'italic',
+  },
+  // Premium title screen typography
+  titleScreen: {
+    title: {
+      fontSize: 30,
+      fontWeight: '600', // Semibold
+      fontFamily: Platform.select({ ios: 'SF Pro Display', android: 'Roboto' }),
+      letterSpacing: 0.5,
+      textTransform: 'none', // Title case, not all caps
+    },
+    tagline: {
+      fontSize: 13,
+      fontWeight: '400',
+      fontFamily: Platform.select({ ios: 'SF Pro Text', android: 'Roboto' }),
+      letterSpacing: 0.2,
+      lineHeight: 18,
+    },
+    disclaimer: {
+      fontSize: 10,
+      fontWeight: '300',
+      fontFamily: Platform.select({ ios: 'SF Pro Text', android: 'Roboto' }),
+      letterSpacing: 0.3,
+      lineHeight: 14,
+    },
   },
 };

@@ -5,24 +5,75 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  Image,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import storyEngine from '../utils/storyEngine';
 
+const { width, height } = Dimensions.get('window');
+
 const StartScreen = ({ navigation }) => {
   const [hasSavedGame, setHasSavedGame] = useState(false);
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  
+  // Animation refs
+  const iconFadeAnim = useRef(new Animated.Value(0)).current;
+  const titleFadeAnim = useRef(new Animated.Value(0)).current;
+  const buttonsSlideAnim = useRef(new Animated.Value(50)).current;
+  const buttonsOpacityAnim = useRef(new Animated.Value(0)).current;
+  const iconGlowAnim = useRef(new Animated.Value(0.3)).current;
+  const primaryButtonScale = useRef(new Animated.Value(1)).current;
+  const secondaryButtonScale = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Fade in animation
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 800,
-      useNativeDriver: true,
-    }).start();
+    // Staggered fade-in animations
+    Animated.sequence([
+      // Icon fades in first
+      Animated.timing(iconFadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      // Title fades in
+      Animated.timing(titleFadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      // Buttons slide up and fade in
+      Animated.parallel([
+        Animated.timing(buttonsSlideAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+        Animated.timing(buttonsOpacityAnim, {
+          toValue: 1,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start();
+
+    // Subtle pulsing glow on icon
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(iconGlowAnim, {
+          toValue: 0.6,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(iconGlowAnim, {
+          toValue: 0.3,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
   }, []);
 
   // Check for saved game when screen comes into focus
@@ -48,41 +99,146 @@ const StartScreen = ({ navigation }) => {
   };
 
   const handleContinue = () => {
+    if (!hasSavedGame) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     navigation.navigate('Game', { startNew: false });
   };
 
+  const handlePressIn = (button) => {
+    const scaleAnim = button === 'primary' ? primaryButtonScale : secondaryButtonScale;
+    Animated.spring(scaleAnim, {
+      toValue: 0.97,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 10,
+    }).start();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = (button) => {
+    const scaleAnim = button === 'primary' ? primaryButtonScale : secondaryButtonScale;
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 10,
+    }).start();
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
-        <View style={styles.header}>
-          <Text style={styles.title}>THERAPISTAI</Text>
+      {/* Subtle vignette overlay */}
+      <LinearGradient
+        colors={['transparent', 'rgba(5, 5, 8, 0.4)', 'rgba(5, 5, 8, 0.8)']}
+        locations={[0, 0.5, 1]}
+        style={styles.vignette}
+        pointerEvents="none"
+      />
+
+      <View style={styles.content}>
+        {/* Icon and Title Section */}
+        <View style={styles.brandSection}>
+          <Animated.View
+            style={[
+              styles.characterContainer,
+              {
+                opacity: iconFadeAnim,
+                transform: [{ scale: iconFadeAnim }],
+              },
+            ]}
+          >
+            <Image
+              source={require('../assets/character-removebg.png')}
+              style={styles.character}
+              resizeMode="contain"
+            />
+            {/* Subtle glow effect on character */}
+            <Animated.View
+              style={[
+                styles.characterGlow,
+                {
+                  opacity: iconGlowAnim,
+                },
+              ]}
+            />
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              styles.titleContainer,
+              { opacity: titleFadeAnim },
+            ]}
+          >
+            <Text style={styles.title}>Therapy AI</Text>
+            <Text style={styles.tagline}>
+              Your final session begins now.
+            </Text>
+          </Animated.View>
         </View>
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, styles.primaryButton]}
-            onPress={handleStartNew}
-            activeOpacity={0.8}
+        {/* Buttons Section */}
+        <Animated.View
+          style={[
+            styles.buttonContainer,
+            {
+              opacity: buttonsOpacityAnim,
+              transform: [{ translateY: buttonsSlideAnim }],
+            },
+          ]}
+        >
+          <Animated.View
+            style={[
+              { transform: [{ scale: primaryButtonScale }] },
+            ]}
           >
-            <Text style={[styles.buttonText, styles.primaryButtonText]}>
-              START NEW GAME
-            </Text>
-          </TouchableOpacity>
-
-          {hasSavedGame && (
             <TouchableOpacity
-              style={[styles.button, styles.secondaryButton]}
-              onPress={handleContinue}
-              activeOpacity={0.8}
+              style={[styles.button, styles.primaryButton]}
+              onPress={handleStartNew}
+              onPressIn={() => handlePressIn('primary')}
+              onPressOut={() => handlePressOut('primary')}
+              activeOpacity={1}
             >
-              <Text style={[styles.buttonText, styles.secondaryButtonText]}>
-                CONTINUE
+              <Text style={[styles.buttonText, styles.primaryButtonText]}>
+                Start New Session
               </Text>
             </TouchableOpacity>
-          )}
-        </View>
-      </Animated.View>
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              { transform: [{ scale: secondaryButtonScale }] },
+            ]}
+          >
+            <TouchableOpacity
+              style={[
+                styles.button,
+                styles.secondaryButton,
+                !hasSavedGame && styles.secondaryButtonDisabled,
+              ]}
+              onPress={handleContinue}
+              onPressIn={() => handlePressIn('secondary')}
+              onPressOut={() => handlePressOut('secondary')}
+              activeOpacity={1}
+              disabled={!hasSavedGame}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  styles.secondaryButtonText,
+                  !hasSavedGame && styles.secondaryButtonTextDisabled,
+                ]}
+              >
+                Continue Session
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </Animated.View>
+
+        {/* Disclaimer */}
+        <Text style={styles.disclaimer}>
+          The AI retains previous conversations.
+        </Text>
+      </View>
     </SafeAreaView>
   );
 };
@@ -90,63 +246,129 @@ const StartScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: COLORS.backgroundStart,
+  },
+  vignette: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: width,
+    height: height,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: SPACING.xl,
+    paddingVertical: SPACING.xxl,
   },
-  header: {
-    marginBottom: SPACING.xxl * 2,
+  brandSection: {
+    alignItems: 'center',
+    marginBottom: SPACING.xxl * 1.5,
+    zIndex: 1,
+  },
+  characterContainer: {
+    width: 200,
+    height: 200,
+    marginBottom: SPACING.lg,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  character: {
+    width: 200,
+    height: 200,
+    opacity: 0.95,
+  },
+  characterGlow: {
+    position: 'absolute',
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: COLORS.accent.teal,
+    // Blur effect simulation with shadow
+    shadowColor: COLORS.accent.teal,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 5,
+  },
+  titleContainer: {
+    alignItems: 'center',
   },
   title: {
-    ...FONTS.heading,
+    ...FONTS.titleScreen.title,
     color: COLORS.text.primary,
-    letterSpacing: 2,
+    marginBottom: SPACING.sm,
     textAlign: 'center',
+  },
+  tagline: {
+    ...FONTS.titleScreen.tagline,
+    color: COLORS.text.tagline,
+    textAlign: 'center',
+    marginTop: SPACING.xs,
   },
   buttonContainer: {
     width: '100%',
-    maxWidth: 300,
-    gap: SPACING.lg,
+    maxWidth: 320,
+    gap: SPACING.md,
+    marginBottom: SPACING.xl,
   },
   button: {
-    backgroundColor: COLORS.choice.background,
-    borderWidth: 0.5,
-    borderColor: COLORS.choice.border,
-    borderRadius: BORDER_RADIUS.sm,
+    borderRadius: BORDER_RADIUS.md,
     paddingVertical: SPACING.lg,
     paddingHorizontal: SPACING.xl,
     minHeight: 56,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: COLORS.choice.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 3,
+    overflow: 'hidden',
   },
   primaryButton: {
-    borderColor: COLORS.accent.red,
-    borderWidth: 1,
-  },
-  secondaryButton: {
-    borderColor: COLORS.choice.border,
-  },
-  buttonText: {
-    ...FONTS.bodyBold,
-    letterSpacing: 1,
-    textAlign: 'center',
+    backgroundColor: COLORS.accent.red,
+    shadowColor: COLORS.accent.redGlow,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 8,
   },
   primaryButtonText: {
-    color: COLORS.accent.red,
+    ...FONTS.bodyBold,
+    color: COLORS.text.primary,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+    fontSize: 15,
+  },
+  secondaryButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: `${COLORS.accent.red}80`, // 50% opacity
+  },
+  secondaryButtonDisabled: {
+    borderColor: `${COLORS.text.muted}40`, // Lower opacity when disabled
+    opacity: 0.5,
   },
   secondaryButtonText: {
+    ...FONTS.bodyBold,
     color: COLORS.text.primary,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+    fontSize: 15,
+    opacity: 0.8,
+  },
+  secondaryButtonTextDisabled: {
+    opacity: 0.4,
+  },
+  disclaimer: {
+    ...FONTS.titleScreen.disclaimer,
+    color: COLORS.text.disclaimer,
+    textAlign: 'center',
+    position: 'absolute',
+    bottom: SPACING.xl + 20,
+    left: SPACING.xl,
+    right: SPACING.xl,
   },
 });
 
 export default StartScreen;
-
