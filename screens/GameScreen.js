@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING } from '../constants/colors';
 import MessageBubble from '../components/MessageBubble';
 import ChoiceButton from '../components/ChoiceButton';
@@ -59,6 +60,18 @@ const GameScreen = () => {
       const timer = setTimeout(() => {
         setDisplayedMessageIndex(displayedMessageIndex + 1);
         setIsTyping(false);
+        
+        // Subtle haptic feedback when new message appears
+        const currentMessage = messages[displayedMessageIndex];
+        if (currentMessage) {
+          // Different haptics based on message type
+          if (currentMessage.from === 'ai') {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          } else if (currentMessage.from === 'narrator') {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          }
+        }
+        
         // Auto-scroll to bottom when new message appears
         setTimeout(() => {
           scrollViewRef.current?.scrollToEnd({ animated: true });
@@ -120,6 +133,9 @@ const GameScreen = () => {
   };
 
   const handleRestart = () => {
+    // Medium haptic feedback for restart
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    
     // Track game restart
     Analytics.trackGameRestart();
     

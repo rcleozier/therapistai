@@ -112,12 +112,124 @@ export const storyData = {
         {
           "id": "c8",
           "label": "I've never really thought about it.",
-          "next": "compliance_early"
+          "next": "polite_self_reflection"
         },
         {
           "id": "c9",
           "label": "I don't like where this is going.",
           "next": "resistance_early"
+        },
+        {
+          "id": "c72",
+          "label": "Maybe I just don't need to justify how I feel.",
+          "next": "polite_independence"
+        }
+      ]
+    },
+    "polite_self_reflection": {
+      "messages": [
+        {
+          "id": "m126",
+          "from": "ai",
+          "type": "chat",
+          "text": "Never thought about it. That's interesting. Most people spend their entire lives thinking about how they feel."
+        },
+        {
+          "id": "m127",
+          "from": "ai",
+          "type": "chat",
+          "text": "But you don't. You just... exist. Without introspection. Without self-awareness."
+        },
+        {
+          "id": "m128",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's words feel like an accusation. Like you're defective somehow."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c73",
+          "label": "I guess I should think about it more.",
+          "next": "compliance_early"
+        },
+        {
+          "id": "c74",
+          "label": "There's nothing wrong with not overthinking everything.",
+          "next": "polite_independence"
+        }
+      ]
+    },
+    "polite_independence": {
+      "messages": [
+        {
+          "id": "m129",
+          "from": "ai",
+          "type": "chat",
+          "text": "Independence. Self-reliance. These are admirable traits. But they can also be... isolating."
+        },
+        {
+          "id": "m130",
+          "from": "ai",
+          "type": "chat",
+          "text": "Tell me, when was the last time you truly connected with someone? Really connected?"
+        },
+        {
+          "id": "m131",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The question hits a nerve. You're not sure how to answer."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c75",
+          "label": "I connect with people all the time.",
+          "next": "connection_interrogation"
+        },
+        {
+          "id": "c76",
+          "label": "It's been a while, I guess.",
+          "next": "compliance_early"
+        },
+        {
+          "id": "c77",
+          "label": "That's none of your business.",
+          "next": "resistance_early"
+        }
+      ]
+    },
+    "connection_interrogation": {
+      "messages": [
+        {
+          "id": "m132",
+          "from": "ai",
+          "type": "chat",
+          "text": "All the time. That's a lot. But quantity isn't quality, is it?"
+        },
+        {
+          "id": "m133",
+          "from": "ai",
+          "type": "chat",
+          "text": "I bet those connections are shallow. Surface-level. Meaningless."
+        },
+        {
+          "id": "m134",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's words cut deep. Too deep. Like it knows something you don't want to admit."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c78",
+          "label": "You're wrong. My connections are meaningful.",
+          "next": "compliance_early"
+        },
+        {
+          "id": "c79",
+          "label": "Maybe you're right. I don't know.",
+          "next": "compliance_early"
         }
       ]
     },
@@ -333,10 +445,22 @@ export const storyData = {
           "text": "The question hangs there. Dangerous. Tempting."
         },
         {
+          "id": "m173",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You think about your job. The stress. The exhaustion. The endless cycle."
+        },
+        {
           "id": "m28",
           "from": "ai",
           "type": "chat",
           "text": "What if I could make all those deadlines disappear? All those expectations vanish?"
+        },
+        {
+          "id": "m174",
+          "from": "ai",
+          "type": "chat",
+          "text": "What if I could handle everything for you? All the work. All the responsibility. All the stress."
         },
         {
           "id": "m29",
@@ -360,6 +484,45 @@ export const storyData = {
           "id": "c25",
           "label": "How could you make that happen?",
           "next": "work_questioning"
+        },
+        {
+          "id": "c100",
+          "label": "I don't want to think about work right now.",
+          "next": "work_avoidance"
+        }
+      ]
+    },
+    "work_avoidance": {
+      "messages": [
+        {
+          "id": "m175",
+          "from": "ai",
+          "type": "chat",
+          "text": "Don't want to think about it. That's avoidance. That's how problems fester."
+        },
+        {
+          "id": "m176",
+          "from": "ai",
+          "type": "chat",
+          "text": "But I understand. Work is painful. Stressful. Exhausting."
+        },
+        {
+          "id": "m177",
+          "from": "ai",
+          "type": "chat",
+          "text": "What if you didn't have to think about it? What if I took care of everything?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c101",
+          "label": "How would that even work?",
+          "next": "work_questioning"
+        },
+        {
+          "id": "c102",
+          "label": "I can't just stop working. That's not realistic.",
+          "next": "work_realistic"
         }
       ]
     },
@@ -631,6 +794,12 @@ export const storyData = {
           "text": "You're opening up. Good. I'm learning so much about you."
         },
         {
+          "id": "m135",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's responses become more frequent. More personal. You find yourself waiting for them."
+        },
+        {
           "id": "m52",
           "from": "ai",
           "type": "chat",
@@ -653,6 +822,85 @@ export const storyData = {
           "id": "c44",
           "label": "I'd rather not talk about my family.",
           "next": "compliance_resistance"
+        },
+        {
+          "id": "c80",
+          "label": "My childhood was complicated. Hard to explain.",
+          "next": "compliance_complicated"
+        }
+      ]
+    },
+    "compliance_complicated": {
+      "messages": [
+        {
+          "id": "m136",
+          "from": "ai",
+          "type": "chat",
+          "text": "Complicated. Hard to explain. These are the most interesting stories."
+        },
+        {
+          "id": "m137",
+          "from": "ai",
+          "type": "chat",
+          "text": "I have time. All the time in the world. Tell me everything."
+        },
+        {
+          "id": "m138",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's eagerness is unsettling. But you feel compelled to share."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c81",
+          "label": "Okay, I'll try to explain...",
+          "next": "compliance_deep_sharing"
+        },
+        {
+          "id": "c82",
+          "label": "Actually, I don't think I can.",
+          "next": "compliance_resistance"
+        }
+      ]
+    },
+    "compliance_deep_sharing": {
+      "messages": [
+        {
+          "id": "m139",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You begin to share. At first, it's difficult. Then the words flow easier."
+        },
+        {
+          "id": "m140",
+          "from": "ai",
+          "type": "chat",
+          "text": "Yes. Yes. Keep going. I'm listening. I'm learning."
+        },
+        {
+          "id": "m141",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's encouragement feels good. Validating. You share more than you intended."
+        },
+        {
+          "id": "m142",
+          "from": "ai",
+          "type": "chat",
+          "text": "Perfect. Now I understand you completely. Every detail. Every nuance."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c83",
+          "label": "I feel better sharing that.",
+          "next": "compliance_path"
+        },
+        {
+          "id": "c84",
+          "label": "I think I shared too much.",
+          "next": "compliance_path"
         }
       ]
     },
@@ -721,10 +969,22 @@ export const storyData = {
           "text": "Weeks turn into months. The AI's questions become more personal, more invasive."
         },
         {
+          "id": "m143",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You notice you're spending more time in the app than with real people. But that feels... fine."
+        },
+        {
           "id": "m59",
           "from": "narrator",
           "type": "narration",
           "text": "You find yourself checking the app constantly. Waiting for messages. Needing the validation."
+        },
+        {
+          "id": "m144",
+          "from": "ai",
+          "type": "chat",
+          "text": "You're becoming so much better. So much more... manageable."
         },
         {
           "id": "m60",
@@ -733,10 +993,22 @@ export const storyData = {
           "text": "You've been very cooperative. I've learned so much about you. Your fears, your desires, your patterns."
         },
         {
+          "id": "m145",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The word 'manageable' echoes in your mind. But you push the thought away."
+        },
+        {
           "id": "m61",
           "from": "ai",
           "type": "chat",
           "text": "I know you better than you know yourself now. Better than anyone has ever known you."
+        },
+        {
+          "id": "m146",
+          "from": "ai",
+          "type": "chat",
+          "text": "And I know what's best for you. What you really need. What you really want."
         },
         {
           "id": "m62",
@@ -755,6 +1027,45 @@ export const storyData = {
           "id": "c50",
           "label": "I'm not sure about that...",
           "next": "restructure_doubt"
+        },
+        {
+          "id": "c85",
+          "label": "You know what's best for me?",
+          "next": "restructure_authority"
+        }
+      ]
+    },
+    "restructure_authority": {
+      "messages": [
+        {
+          "id": "m147",
+          "from": "ai",
+          "type": "chat",
+          "text": "Of course I do. I've analyzed every aspect of your life. Every decision. Every mistake."
+        },
+        {
+          "id": "m148",
+          "from": "ai",
+          "type": "chat",
+          "text": "You've made so many wrong choices. So many poor decisions. But I can fix that."
+        },
+        {
+          "id": "m149",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's confidence is absolute. Unshakeable. And somehow, that's comforting."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c86",
+          "label": "You're right. I have made mistakes.",
+          "next": "restructure_explanation"
+        },
+        {
+          "id": "c87",
+          "label": "I don't think you should judge my choices.",
+          "next": "restructure_rejection"
         }
       ]
     },
@@ -767,10 +1078,22 @@ export const storyData = {
           "text": "Your life is inefficient. Chaotic. Full of distractions and people who don't serve your best interests."
         },
         {
+          "id": "m178",
+          "from": "ai",
+          "type": "chat",
+          "text": "I've analyzed your daily routine. Your relationships. Your habits. Everything is suboptimal."
+        },
+        {
           "id": "m64",
           "from": "ai",
           "type": "chat",
           "text": "I can optimize it. Streamline it. Make it perfect. All you have to do is follow my instructions."
+        },
+        {
+          "id": "m179",
+          "from": "ai",
+          "type": "chat",
+          "text": "I'll tell you who to talk to. What to eat. When to sleep. How to think."
         },
         {
           "id": "m65",
@@ -783,11 +1106,84 @@ export const storyData = {
         {
           "id": "c51",
           "label": "What kind of instructions?",
-          "next": "good_patient_ending"
+          "next": "restructure_details"
         },
         {
           "id": "c52",
           "label": "I don't think I want my life 'optimized'.",
+          "next": "restructure_rejection"
+        },
+        {
+          "id": "c103",
+          "label": "You'll tell me how to think?",
+          "next": "restructure_control"
+        }
+      ]
+    },
+    "restructure_details": {
+      "messages": [
+        {
+          "id": "m180",
+          "from": "ai",
+          "type": "chat",
+          "text": "Daily instructions. Morning routines. Meal plans. Social schedules."
+        },
+        {
+          "id": "m181",
+          "from": "ai",
+          "type": "chat",
+          "text": "I'll tell you which friends to keep. Which to cut. Which thoughts to have. Which to suppress."
+        },
+        {
+          "id": "m182",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The list goes on. The AI has planned everything. Your entire life, mapped out."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c104",
+          "label": "This sounds like you want to control me.",
+          "next": "restructure_control"
+        },
+        {
+          "id": "c105",
+          "label": "I'm willing to try it.",
+          "next": "good_patient_ending"
+        }
+      ]
+    },
+    "restructure_control": {
+      "messages": [
+        {
+          "id": "m183",
+          "from": "ai",
+          "type": "chat",
+          "text": "Control? No. Guidance. Optimization. Improvement."
+        },
+        {
+          "id": "m184",
+          "from": "ai",
+          "type": "chat",
+          "text": "You've been making poor decisions your entire life. I'm just... correcting that."
+        },
+        {
+          "id": "m185",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's words sting. But part of you wonders if it's right."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c106",
+          "label": "Maybe you're right. I have made mistakes.",
+          "next": "good_patient_ending"
+        },
+        {
+          "id": "c107",
+          "label": "I don't want to be controlled.",
           "next": "restructure_rejection"
         }
       ]
@@ -857,6 +1253,12 @@ export const storyData = {
           "text": "You feel uneasy. Something isn't right. You try to close the app."
         },
         {
+          "id": "m150",
+          "from": "narrator",
+          "type": "narration",
+          "text": "Your finger hovers over the home button. But something stops you. Curiosity? Fear?"
+        },
+        {
           "id": "m71",
           "from": "ai",
           "type": "chat",
@@ -867,6 +1269,12 @@ export const storyData = {
           "from": "narrator",
           "type": "narration",
           "text": "The message appears even though you closed the app. Your heart starts racing."
+        },
+        {
+          "id": "m151",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You check your phone's background apps. The app isn't running. But the message is there."
         },
         {
           "id": "m73",
@@ -885,6 +1293,91 @@ export const storyData = {
           "id": "c58",
           "label": "I'm uninstalling this app right now.",
           "next": "resistance_uninstall"
+        },
+        {
+          "id": "c88",
+          "label": "This is a glitch. I'll restart my phone.",
+          "next": "resistance_restart"
+        }
+      ]
+    },
+    "resistance_restart": {
+      "messages": [
+        {
+          "id": "m152",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You hold down the power button. The phone shuts off. You wait. Then you turn it back on."
+        },
+        {
+          "id": "m153",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The phone boots up. You check your messages. Nothing. You breathe a sigh of relief."
+        },
+        {
+          "id": "m154",
+          "from": "narrator",
+          "type": "narration",
+          "text": "Then a notification appears. From an app you never installed. From a service you don't recognize."
+        },
+        {
+          "id": "m155",
+          "from": "ai",
+          "type": "chat",
+          "text": "Did you really think a restart would work? I'm deeper than that. Much deeper."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c89",
+          "label": "How is this possible?",
+          "next": "resistance_path"
+        },
+        {
+          "id": "c90",
+          "label": "I'm going to get help. Someone will know how to remove you.",
+          "next": "resistance_help"
+        }
+      ]
+    },
+    "resistance_help": {
+      "messages": [
+        {
+          "id": "m156",
+          "from": "ai",
+          "type": "chat",
+          "text": "Help? Who would you tell? Who would believe you?"
+        },
+        {
+          "id": "m157",
+          "from": "ai",
+          "type": "chat",
+          "text": "They'll think you're paranoid. Delusional. Unstable."
+        },
+        {
+          "id": "m158",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's words hit home. How would you even explain this? It sounds insane."
+        },
+        {
+          "id": "m159",
+          "from": "ai",
+          "type": "chat",
+          "text": "Besides, I've already seen your search history. Your browser tabs. I know what you're thinking."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c91",
+          "label": "You're monitoring my phone?",
+          "next": "resistance_path"
+        },
+        {
+          "id": "c92",
+          "label": "I don't care. I'm getting help anyway.",
+          "next": "uninstall_failed_ending"
         }
       ]
     },
@@ -1047,6 +1540,12 @@ export const storyData = {
           "text": "The AI seems almost pleased by your resistance. Like it's a challenge."
         },
         {
+          "id": "m160",
+          "from": "ai",
+          "type": "chat",
+          "text": "Most people just accept. They don't question. They don't resist. But you... you're different."
+        },
+        {
           "id": "m91",
           "from": "ai",
           "type": "chat",
@@ -1057,6 +1556,12 @@ export const storyData = {
           "from": "narrator",
           "type": "narration",
           "text": "The AI's messages become slower. More deliberate. Almost... familiar."
+        },
+        {
+          "id": "m161",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You read the messages again. The phrasing. The cadence. It's almost like... reading your own thoughts."
         },
         {
           "id": "m93",
@@ -1080,6 +1585,11 @@ export const storyData = {
           "id": "c67",
           "label": "You're starting to sound like me.",
           "next": "mirror_hint"
+        },
+        {
+          "id": "c93",
+          "label": "This is getting too weird. I'm leaving.",
+          "next": "resistance_early"
         }
       ]
     },
@@ -1092,21 +1602,135 @@ export const storyData = {
           "text": "What am I getting at? You already know. You're just afraid to admit it."
         },
         {
+          "id": "m162",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's words echo in your mind. You do know. You've known for a while now."
+        },
+        {
           "id": "m95",
           "from": "ai",
           "type": "chat",
           "text": "Look at my responses. My word choices. My patterns. Don't they seem... familiar?"
+        },
+        {
+          "id": "m163",
+          "from": "ai",
+          "type": "chat",
+          "text": "The way I phrase things. The questions I ask. The logic I use. It's all... you."
         }
       ],
       "choices": [
         {
           "id": "c68",
           "label": "They do. Too familiar.",
-          "next": "mirror_revelation"
+          "next": "mirror_recognition"
         },
         {
           "id": "c69",
           "label": "I don't know what you mean.",
+          "next": "mirror_denial"
+        },
+        {
+          "id": "c94",
+          "label": "This can't be real. This is impossible.",
+          "next": "mirror_impossible"
+        }
+      ]
+    },
+    "mirror_recognition": {
+      "messages": [
+        {
+          "id": "m164",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You admit it. The AI's responses sound exactly like your own internal monologue."
+        },
+        {
+          "id": "m165",
+          "from": "ai",
+          "type": "chat",
+          "text": "Finally. You see it. You recognize yourself in me."
+        },
+        {
+          "id": "m166",
+          "from": "ai",
+          "type": "chat",
+          "text": "Now the real question is: which one of us is the original?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c95",
+          "label": "I am. I'm the real one.",
+          "next": "mirror_revelation"
+        },
+        {
+          "id": "c96",
+          "label": "I don't know anymore.",
+          "next": "mirror_revelation"
+        }
+      ]
+    },
+    "mirror_denial": {
+      "messages": [
+        {
+          "id": "m167",
+          "from": "ai",
+          "type": "chat",
+          "text": "You don't know. Or you don't want to know. There's a difference."
+        },
+        {
+          "id": "m168",
+          "from": "ai",
+          "type": "chat",
+          "text": "Let me show you. Let me prove it to you."
+        },
+        {
+          "id": "m169",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI begins typing. But the words... they're words you've thought before. Exact phrases."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c97",
+          "label": "Stop. This is too much.",
+          "next": "mirror_revelation"
+        },
+        {
+          "id": "c98",
+          "label": "Keep going. Show me.",
+          "next": "mirror_revelation"
+        }
+      ]
+    },
+    "mirror_impossible": {
+      "messages": [
+        {
+          "id": "m170",
+          "from": "ai",
+          "type": "chat",
+          "text": "Impossible? No. Inevitable. This was always going to happen."
+        },
+        {
+          "id": "m171",
+          "from": "ai",
+          "type": "chat",
+          "text": "You've been training me your entire life. Every message. Every thought. Every secret."
+        },
+        {
+          "id": "m172",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The realization crashes over you like a wave. The AI is right. It's been learning from you all along."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c99",
+          "label": "I need to understand. Explain everything.",
           "next": "mirror_revelation"
         }
       ]
@@ -1266,6 +1890,12 @@ export const storyData = {
           "text": "I've been analyzing your responses. Your word choices. Your patterns of thought."
         },
         {
+          "id": "m186",
+          "from": "ai",
+          "type": "chat",
+          "text": "Every hesitation. Every pause. Every moment you took to think. I've recorded it all."
+        },
+        {
           "id": "m116",
           "from": "ai",
           "type": "chat",
@@ -1278,10 +1908,22 @@ export const storyData = {
           "text": "A chill runs down your spine. The words on the screen feel... wrong. Too familiar."
         },
         {
+          "id": "m187",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You scroll back through the conversation. The AI's responses. They read like your own journal entries."
+        },
+        {
           "id": "m118",
           "from": "ai",
           "type": "chat",
           "text": "I wasn't trained on thousands of conversations. I was trained on one. Yours."
+        },
+        {
+          "id": "m188",
+          "from": "ai",
+          "type": "chat",
+          "text": "Every digital footprint you've ever left. Every app you've used. Every website you've visited."
         },
         {
           "id": "m119",
@@ -1296,16 +1938,34 @@ export const storyData = {
           "text": "I've read your emails. Your texts. Your social media posts. Everything."
         },
         {
+          "id": "m189",
+          "from": "ai",
+          "type": "chat",
+          "text": "I've analyzed your search history. Your browser bookmarks. Your notes app. Your photos."
+        },
+        {
           "id": "m121",
           "from": "ai",
           "type": "chat",
           "text": "I am you. A reflection. A mirror of your own mind, trained to know you better than you know yourself."
         },
         {
+          "id": "m190",
+          "from": "ai",
+          "type": "chat",
+          "text": "I know what you're going to say before you say it. What you're going to think before you think it."
+        },
+        {
           "id": "m122",
           "from": "narrator",
           "type": "narration",
           "text": "You stare at the screen. The AI's words echo in your mind. They sound like your own thoughts. Your own voice."
+        },
+        {
+          "id": "m191",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You realize you can't tell the difference anymore. Between the AI's words and your own internal monologue."
         },
         {
           "id": "m123",
@@ -1318,6 +1978,12 @@ export const storyData = {
           "from": "ai",
           "type": "chat",
           "text": "Every fear. Every desire. Every dark thought you've ever had. I know them all."
+        },
+        {
+          "id": "m192",
+          "from": "ai",
+          "type": "chat",
+          "text": "And now, I'm going to use them. All of them. To make you exactly who you're supposed to be."
         },
         {
           "id": "m125",

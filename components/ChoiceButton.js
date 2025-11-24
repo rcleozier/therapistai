@@ -1,12 +1,21 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
 const ChoiceButton = ({ choice, onPress, disabled = false }) => {
+  const handlePress = () => {
+    if (!disabled) {
+      // Light impact feedback for choice selection
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      onPress(choice.id);
+    }
+  };
+
   return (
     <TouchableOpacity
       style={[styles.button, disabled && styles.buttonDisabled]}
-      onPress={() => !disabled && onPress(choice.id)}
+      onPress={handlePress}
       activeOpacity={0.7}
       disabled={disabled}
     >
