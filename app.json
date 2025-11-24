@@ -40,15 +40,12 @@
       "versionCode": 1,
       "permissions": [
         "android.permission.INTERNET",
-        "android.permission.VIBRATE"
+        "android.permission.VIBRATE",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
     },
     "description": "TherapistAI | A psychological horror narrative game",
-    "extra": {
-      "eas": {
-        "projectId": "934d172a-af39-4044-939d-9e6a1c3643c7"
-      }
-    },
     "plugins": [
       [
         "expo-build-properties",
@@ -95,6 +92,11 @@
       "androidShowBadge": true,
       "androidVibrate": true,
       "androidPriority": "high"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8307a251-bd00-415a-8b37-6ceb49dbdb76"
+      }
     }
   }
 }

@@ -1,11 +1,34 @@
 import * as Notifications from 'expo-notifications';
 import * as Haptics from 'expo-haptics';
 
+// Ensure notification channel exists
+const ensureNotificationChannel = async () => {
+  try {
+    const channel = await Notifications.getNotificationChannelAsync('therapistai-default');
+    if (!channel) {
+      await Notifications.setNotificationChannelAsync('therapistai-default', {
+        name: 'TherapistAI Notifications',
+        description: 'Your therapy session awaits',
+        importance: Notifications.AndroidImportance.HIGH,
+        vibrationPattern: [0, 250, 250, 250],
+        enableVibrate: true,
+        enableLights: true,
+        enableSound: true,
+        lockscreenVisibility: Notifications.AndroidNotificationVisibility.PUBLIC,
+      });
+    }
+  } catch (error) {
+    console.error('Error setting up notification channel:', error);
+  }
+};
+
 // Handle interactive elements from story nodes
-export const handleInteractiveElements = async (interactive) => {
+export const handleInteractiveElements = async (interactive, nodeId = null) => {
   if (!interactive) return;
 
   try {
+    // Ensure notification channel exists (Android)
+    await ensureNotificationChannel();
     // Handle vibrations
     if (interactive.vibrate) {
       const { pattern, intensity = 'medium' } = interactive.vibrate;
@@ -46,7 +69,7 @@ export const handleInteractiveElements = async (interactive) => {
         content: {
           title: title || 'TherapistAI',
           body: body || '',
-          data: { type: 'story_interactive', nodeId: interactive.nodeId },
+          data: { type: 'story_interactive', nodeId: nodeId },
           sound: sound,
           priority: Notifications.AndroidNotificationPriority.HIGH,
         },
@@ -80,6 +103,6 @@ export const processNodeInteractiveElements = async (node, delay = 0) => {
     await new Promise(resolve => setTimeout(resolve, delay));
   }
 
-  await handleInteractiveElements(node.interactive);
+  await handleInteractiveElements(node.interactive, node.nodeId);
 };
 

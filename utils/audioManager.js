@@ -1,4 +1,4 @@
-import { Audio } from 'expo-audio';
+import { Audio } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AUDIO_ENABLED_KEY = 'audio_enabled';
