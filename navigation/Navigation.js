@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Analytics } from '../utils/analytics';
+import StartScreen from '../screens/StartScreen';
 import GameScreen from '../screens/GameScreen';
 
 const Stack = createNativeStackNavigator();
@@ -24,7 +25,9 @@ const Navigation = () => {
           }
         },
       }}
+      initialRouteName="Start"
     >
+      <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Game" component={GameScreen} />
     </Stack.Navigator>
   );

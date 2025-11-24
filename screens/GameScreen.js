@@ -16,7 +16,7 @@ import ChoiceButton from '../components/ChoiceButton';
 import storyEngine from '../utils/storyEngine';
 import { Analytics } from '../utils/analytics';
 
-const GameScreen = () => {
+const GameScreen = ({ route }) => {
   const [currentNode, setCurrentNode] = useState(null);
   const [messages, setMessages] = useState([]);
   const [choices, setChoices] = useState([]);
@@ -31,38 +31,56 @@ const GameScreen = () => {
 
   // Initialize story on mount
   useEffect(() => {
-    try {
-      const initialNode = storyEngine.start();
-      if (initialNode) {
-        setCurrentNode(initialNode);
-        setMessages(initialNode.messages);
-        setChoices(initialNode.choices);
-        setDisplayedMessageIndex(0);
-        
-        // Fade in animation
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 800, // Slow fade - creates unease
-          useNativeDriver: true,
-        }).start();
-        
-        // Subtle haptic feedback when game starts
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        
-        // Track game start
-        Analytics.trackGameStart();
-        Analytics.trackScreenView('Game');
-        
-        // Track initial node visit
-        if (initialNode.nodeId) {
-          Analytics.trackGameNodeVisit(initialNode.nodeId, 'intro');
-          nodeVisitCountRef.current = 1;
+    const initializeGame = async () => {
+      try {
+        const startNew = route?.params?.startNew ?? true;
+        let initialNode;
+
+        if (startNew) {
+          // Clear any saved state and start fresh
+          await storyEngine.clearGameState();
+          initialNode = storyEngine.start();
+        } else {
+          // Continue from saved state
+          initialNode = await storyEngine.continue();
         }
+
+        if (initialNode) {
+          setCurrentNode(initialNode);
+          setMessages(initialNode.messages);
+          setChoices(initialNode.choices);
+          setDisplayedMessageIndex(0);
+          
+          // Fade in animation
+          Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 800, // Slow fade - creates unease
+            useNativeDriver: true,
+          }).start();
+          
+          // Subtle haptic feedback when game starts
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          
+          // Track game start
+          Analytics.trackGameStart();
+          Analytics.trackScreenView('Game');
+          
+          // Track initial node visit
+          if (initialNode.nodeId) {
+            Analytics.trackGameNodeVisit(initialNode.nodeId, 'intro');
+            nodeVisitCountRef.current = 1;
+          }
+
+          // Save initial state
+          await storyEngine.saveGameState();
+        }
+      } catch (error) {
+        console.error('Failed to initialize story:', error);
       }
-    } catch (error) {
-      console.error('Failed to initialize story:', error);
-    }
-  }, []);
+    };
+
+    initializeGame();
+  }, [route?.params?.startNew]);
 
   // Display messages one at a time with typing effect
   useEffect(() => {
@@ -152,6 +170,9 @@ const GameScreen = () => {
           Analytics.trackGameNodeVisit(nextNode.nodeId, nodeType);
           nodeVisitCountRef.current += 1;
         }
+
+        // Save game state after making a choice
+        await storyEngine.saveGameState();
       } else {
         console.error('Failed to load next node');
       }
@@ -162,7 +183,7 @@ const GameScreen = () => {
     }
   };
 
-  const handleRestart = () => {
+  const handleRestart = async () => {
     // Medium haptic feedback for restart
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     
@@ -173,6 +194,8 @@ const GameScreen = () => {
     choiceCountRef.current = 0;
     nodeVisitCountRef.current = 0;
     
+    // Clear saved state and start fresh
+    await storyEngine.clearGameState();
     const initialNode = storyEngine.reset();
     setCurrentNode(initialNode);
     setMessages(initialNode.messages);
@@ -185,6 +208,9 @@ const GameScreen = () => {
       Analytics.trackGameNodeVisit(initialNode.nodeId, 'intro');
       nodeVisitCountRef.current = 1;
     }
+
+    // Save initial state
+    await storyEngine.saveGameState();
   };
 
   const displayedMessages = messages.slice(0, displayedMessageIndex);

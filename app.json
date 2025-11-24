@@ -67,7 +67,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icons/notification-icon.png",
+          "icon": "./assets/icons/icon.png",
           "color": "#8B0000",
           "androidMode": "default",
           "androidCollapsedTitle": "TherapistAI",
@@ -82,7 +82,7 @@
       ],
     ],
     "notification": {
-      "icon": "./assets/icons/notification-icon.png",
+      "icon": "./assets/icons/icon.png",
       "color": "#8B0000",
       "iosDisplayInForeground": true,
       "androidMode": "default",

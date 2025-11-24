@@ -1,4 +1,7 @@
 import { storyData } from '../data/storyData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const GAME_STATE_KEY = 'therapistai_game_state';
 
 class StoryEngine {
   constructor() {
@@ -82,6 +85,78 @@ class StoryEngine {
       title: this.story.title,
       storyId: this.story.story_id,
     };
+  }
+
+  // Save game state
+  async saveGameState() {
+    try {
+      const gameState = {
+        currentNodeId: this.currentNodeId,
+        visitedNodes: Array.from(this.visitedNodes),
+        messageHistory: this.messageHistory,
+        choices: this.choices,
+        timestamp: Date.now(),
+      };
+      await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
+      return true;
+    } catch (error) {
+      console.error('Error saving game state:', error);
+      return false;
+    }
+  }
+
+  // Check if there's a saved game state (without loading it)
+  async hasSavedGameState() {
+    try {
+      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
+      return savedState !== null;
+    } catch (error) {
+      console.error('Error checking for saved game state:', error);
+      return false;
+    }
+  }
+
+  // Load game state
+  async loadGameState() {
+    try {
+      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
+      if (!savedState) {
+        return null;
+      }
+      const gameState = JSON.parse(savedState);
+      
+      // Restore state
+      this.currentNodeId = gameState.currentNodeId;
+      this.visitedNodes = new Set(gameState.visitedNodes || []);
+      this.messageHistory = gameState.messageHistory || [];
+      this.choices = gameState.choices || [];
+      
+      return gameState;
+    } catch (error) {
+      console.error('Error loading game state:', error);
+      return null;
+    }
+  }
+
+  // Continue from saved state
+  async continue() {
+    const savedState = await this.loadGameState();
+    if (!savedState || !this.currentNodeId) {
+      // No saved state, start fresh
+      return this.start();
+    }
+    return this.getCurrentNode();
+  }
+
+  // Clear saved game state
+  async clearGameState() {
+    try {
+      await AsyncStorage.removeItem(GAME_STATE_KEY);
+      return true;
+    } catch (error) {
+      console.error('Error clearing game state:', error);
+      return false;
+    }
   }
 }
 
