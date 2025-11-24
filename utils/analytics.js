@@ -13,7 +13,7 @@ export const Analytics = {
   initialize() {
     if (isNative) {
       try {
-        Aptabase.init("A-US-6674327791");
+        Aptabase.init("A-US-1946704640");
       } catch (error) {
         console.error("Error initializing Aptabase:", error);
       }
