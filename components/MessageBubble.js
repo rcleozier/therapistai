@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
 /**
- * MessageBubble component - premium styled chat messages
+ * ChatMessage component - premium styled chat messages
  * Features refined styling with character avatar for AI messages
  */
-const MessageBubble = ({ message, index }) => {
+const ChatMessage = ({ message }) => {
   const { from, type, text } = message;
   
   const isAI = from === 'ai';
@@ -40,20 +40,18 @@ const MessageBubble = ({ message, index }) => {
   return (
     <View style={[styles.messageWrapper, bubbleStyles.wrapper]}>
       {isAI && (
-        <View style={styles.avatarContainer}>
+        <View style={styles.avatarContainer} pointerEvents="none">
           <Image
             source={require('../assets/character-removebg.png')}
             style={styles.characterImage}
             resizeMode="contain"
           />
-          {/* Soft cyan eye glow effect */}
+          {/* Very faint teal glow to keep the avatar feeling clinical, not playful */}
           <View style={styles.avatarGlow} />
         </View>
       )}
       <View style={[styles.bubble, bubbleStyles.container]}>
-        <Text style={[bubbleStyles.text]}>
-          {text}
-        </Text>
+        <Text style={bubbleStyles.text}>{text}</Text>
       </View>
     </View>
   );
@@ -61,9 +59,9 @@ const MessageBubble = ({ message, index }) => {
 
 const styles = StyleSheet.create({
   messageWrapper: {
-    // Slightly tighter spacing so more messages fit on screen
-    marginBottom: SPACING.md,
-    paddingHorizontal: SPACING.lg + 2,
+    // Base vertical rhythm; individual variants can add extra margin.
+    marginBottom: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
     paddingVertical: SPACING.xs,
   },
   aiWrapper: {
@@ -77,34 +75,35 @@ const styles = StyleSheet.create({
   narratorWrapper: {
     alignItems: 'center',
     width: '100%',
+    marginBottom: SPACING.lg, // Extra separation so narrator feels like its own beat
   },
   avatarContainer: {
     position: 'relative',
-    width: 40, // Slightly larger avatar (refined from spec)
-    height: 40,
+    width: 36,
+    height: 36,
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingTop: SPACING.xs, // Align with top of bubble
   },
   characterImage: {
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
     opacity: 0.9, // Slight transparency (refined from spec)
     zIndex: 1,
   },
   avatarGlow: {
     position: 'absolute',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: COLORS.accent.cyan,
-    opacity: 0.15, // Soft cyan eye glow (refined from spec)
+    opacity: 0.12, // 10–15% opacity for clinical teal glow
     zIndex: 0,
   },
   bubble: {
     maxWidth: '82%',
-    paddingHorizontal: SPACING.md + 2,
-    paddingVertical: SPACING.sm + 2,
+    paddingHorizontal: SPACING.md,
+    paddingVertical: SPACING.md, // single consistent padding value
     borderRadius: BORDER_RADIUS.sm,
     borderWidth: 1,
   },
@@ -134,7 +133,8 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderStyle: 'dashed', // Dashed border - broken, incomplete
     maxWidth: '90%',
-    paddingVertical: SPACING.sm + 4,
+    paddingVertical: SPACING.sm + 2,
+    opacity: 0.85,
   },
   aiText: {
     color: COLORS.message.ai.text, // #F3E4D8 muted warm off-white (refined from spec)
@@ -151,5 +151,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MessageBubble;
+export default ChatMessage;
 

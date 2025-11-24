@@ -99,19 +99,18 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginBottom: SPACING.md, // More space between choices
+    marginBottom: SPACING.sm + 4, // 10–12pt between buttons
   },
   button: {
     // Container for touch handling
   },
   buttonInner: {
-    backgroundColor: COLORS.choice.background, // #13151A (refined from spec)
+    backgroundColor: COLORS.choice.background, // Slightly lighter than page background
     borderWidth: 1, // 1px border
     borderRadius: BORDER_RADIUS.md, // 14-16px radius (refined from spec)
-    // Slightly more compact to keep the choices section from dominating the screen
-    paddingVertical: SPACING.sm + 4,
-    paddingHorizontal: SPACING.md + 2,
-    minHeight: 48,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.lg,
+    minHeight: 52, // 52–56pt touch target
     justifyContent: 'center',
     alignItems: 'center',
     // Subtle shadow for depth

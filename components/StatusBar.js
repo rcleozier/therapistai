@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../constants/colors';
 
 /**
- * StatusBar component - displays processing/typing status
- * Shows animated ellipsis when AI is typing, or static status text
+ * StatusBar component - subtle system-like status row for chat state.
+ * Shows animated dots when the AI is "typing", otherwise a static label.
  */
 const StatusBar = ({ isTyping = false, statusText = 'Processing…' }) => {
   const dot1Anim = useRef(new Animated.Value(0.3)).current;
@@ -53,33 +53,44 @@ const StatusBar = ({ isTyping = false, statusText = 'Processing…' }) => {
     }
   }, [isTyping]);
 
+  const label = isTyping ? 'Waiting for your response' : statusText;
+
   return (
-    <View style={styles.container}>
-      {isTyping ? (
-        <View style={styles.typingContainer}>
-          <Text style={styles.typingLabel}>Waiting for response</Text>
-          <View style={styles.dotsContainer}>
-            <Animated.View style={[styles.dot, { opacity: dot1Anim }]} />
-            <Animated.View style={[styles.dot, { opacity: dot2Anim }]} />
-            <Animated.View style={[styles.dot, { opacity: dot3Anim }]} />
+    <View style={styles.wrapper}>
+      {/* Hairline dividers above and below to keep it feeling like a system status strip */}
+      <View style={styles.divider} />
+      <View style={styles.container}>
+        {isTyping ? (
+          <View style={styles.typingContainer}>
+            <Text style={styles.statusText}>{label}</Text>
+            <View style={styles.dotsContainer}>
+              <Animated.View style={[styles.dot, { opacity: dot1Anim }]} />
+              <Animated.View style={[styles.dot, { opacity: dot2Anim }]} />
+              <Animated.View style={[styles.dot, { opacity: dot3Anim }]} />
+            </View>
           </View>
-        </View>
-      ) : (
-        <Text style={styles.statusText}>{statusText}</Text>
-      )}
+        ) : (
+          <Text style={styles.statusText}>{label}</Text>
+        )}
+      </View>
+      <View style={styles.divider} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: COLORS.background,
+  },
   container: {
     paddingHorizontal: SPACING.xl,
     paddingVertical: SPACING.sm,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.divider,
-    backgroundColor: COLORS.background,
+  },
+  divider: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)', // 15–20% opacity hairline
   },
   typingContainer: {
     flexDirection: 'row',
@@ -104,7 +115,10 @@ const styles = StyleSheet.create({
   },
   statusText: {
     ...FONTS.status,
+    fontSize: 12,
+    letterSpacing: 0.5,
     color: COLORS.text.status,
+    opacity: 0.6, // Make status feel secondary to messages
   },
 });
 

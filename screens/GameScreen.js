@@ -4,10 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
   Animated,
-  Image,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -15,16 +12,17 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
-import MessageBubble from '../components/MessageBubble';
-import ChoiceButton from '../components/ChoiceButton';
 import StatusBar from '../components/StatusBar';
+import ChatMessage from '../components/MessageBubble';
+import TherapistHeader from '../components/TherapistHeader';
+import ChoiceList from '../components/ChoiceList';
 import storyEngine from '../utils/storyEngine';
 import { Analytics } from '../utils/analytics';
 import { stopBackgroundMusic, playGameMusic, stopGameMusic } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
 import { processNodeInteractiveElements } from '../utils/interactiveElements';
 
-const GameScreen = ({ route }) => {
+const GameScreen = ({ route, navigation }) => {
   const [currentNode, setCurrentNode] = useState(null);
   const [messages, setMessages] = useState([]);
   const [choices, setChoices] = useState([]);
@@ -233,6 +231,12 @@ const GameScreen = ({ route }) => {
     await storyEngine.saveGameState();
   };
 
+  const handleBackToHome = () => {
+    // Light haptic feedback for navigation
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.navigate('Start');
+  };
+
   const displayedMessages = messages.slice(0, displayedMessageIndex);
   const showChoices = displayedMessageIndex >= messages.length && choices.length > 0 && !isLoading;
   const isEnding = currentNode?.isEnding && displayedMessageIndex >= messages.length;
@@ -279,17 +283,13 @@ const GameScreen = ({ route }) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={0}
       >
-        {/* Header - refined title and settings */}
-        <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-          <Text style={styles.title}>Therapist AI</Text>
-          <View style={styles.headerRight}>
-            {isEnding && (
-              <TouchableOpacity onPress={handleRestart} style={styles.restartButton}>
-                <Text style={styles.restartText}>RESTART</Text>
-              </TouchableOpacity>
-            )}
-            <SettingsButton style={styles.settingsButton} />
-          </View>
+        {/* Header - shared therapist-style header */}
+        <Animated.View style={{ opacity: fadeAnim }}>
+          <TherapistHeader
+            onBack={handleBackToHome}
+            onRestart={handleRestart}
+            showRestart={isEnding}
+          />
         </Animated.View>
 
         {/* Status bar - processing/typing indicator */}
@@ -304,27 +304,14 @@ const GameScreen = ({ route }) => {
             showsVerticalScrollIndicator={false}
           >
             {displayedMessages.map((message, index) => (
-              <MessageBubble key={message.id || index} message={message} index={index} />
+              <ChatMessage key={message.id || index} message={message} />
             ))}
           </ScrollView>
         </Animated.View>
 
         {/* Choices container - pinned to bottom */}
         {showChoices && (
-          <View style={styles.choicesWrapper}>
-            <View style={styles.choicesDivider} />
-            <View style={styles.choicesContainer}>
-              <Text style={styles.choicesLabel}>CHOOSE YOUR RESPONSE</Text>
-              {choices.map((choice) => (
-                <ChoiceButton
-                  key={choice.id}
-                  choice={choice}
-                  onPress={handleChoice}
-                  disabled={isLoading}
-                />
-              ))}
-            </View>
-          </View>
+          <ChoiceList choices={choices} onChoice={handleChoice} isLoading={isLoading} />
         )}
 
         {/* Ending container */}
@@ -349,38 +336,6 @@ const styles = StyleSheet.create({
   keyboardView: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: SPACING.xl,
-    paddingTop: 16, // Breathing room from safe area (refined from spec)
-    paddingBottom: SPACING.md,
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.divider,
-    backgroundColor: 'transparent', // Transparent to show gradient
-    position: 'relative',
-    zIndex: 1,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.md,
-  },
-  title: {
-    ...FONTS.heading,
-    color: COLORS.text.primary, // Soft off-white #F5F3EE (refined from spec)
-    // Title case, not all caps (refined from spec)
-  },
-  restartButton: {
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.xs,
-  },
-  restartText: {
-    ...FONTS.caption,
-    color: COLORS.accent.red,
-    letterSpacing: 1,
-  },
   contentWrapper: {
     flex: 1,
     // Chat area container - card-like with padding (refined from spec)
@@ -389,36 +344,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    // Reduce padding so the chat area has more usable height
-    paddingVertical: SPACING.sm + 2,
-    paddingBottom: SPACING.lg,
     paddingHorizontal: 0,
-  },
-  choicesWrapper: {
-    // Pinned to bottom above home indicator
-    backgroundColor: COLORS.background,
-    borderTopWidth: 0.5,
-    borderTopColor: COLORS.divider,
-    paddingBottom: SPACING.sm,
-  },
-  choicesDivider: {
-    height: 1,
-    backgroundColor: COLORS.dividerGradient, // Subtle gradient line (refined from spec)
-    marginHorizontal: SPACING.lg,
-    marginTop: SPACING.md,
-    marginBottom: SPACING.sm,
-  },
-  choicesContainer: {
-    paddingHorizontal: SPACING.lg,
-    paddingTop: SPACING.xs,
-    paddingBottom: SPACING.xs,
-  },
-  choicesLabel: {
-    ...FONTS.caption,
-    color: COLORS.text.muted, // Grey at 55-65% opacity (refined from spec)
-    marginBottom: SPACING.lg, // Generous spacing (refined from spec)
-    textAlign: 'center',
-    // Letter spacing increased (refined from spec)
+    paddingTop: SPACING.md,
+    paddingBottom: SPACING.xl, // leaves room above the response panel
   },
   endingContainer: {
     paddingHorizontal: SPACING.lg,
@@ -455,6 +383,15 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     // Positioned within header, larger tap target handled in component
+  },
+  backButton: {
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+  },
+  backText: {
+    ...FONTS.caption,
+    color: COLORS.text.muted,
+    letterSpacing: 1,
   },
 });
 

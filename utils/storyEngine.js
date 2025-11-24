@@ -34,12 +34,15 @@ class StoryEngine {
     }
 
     this.visitedNodes.add(this.currentNodeId);
+    const rawChoices = node.choices || [];
+    // Limit the number of responses per thread to a maximum of three
+    const limitedChoices = rawChoices.slice(0, 3);
     
     return {
       nodeId: this.currentNodeId,
       messages: node.messages || [],
-      choices: node.choices || [],
-      isEnding: (node.choices || []).length === 0,
+      choices: limitedChoices,
+      isEnding: limitedChoices.length === 0,
       // Interactive elements
       interactive: node.interactive || null,
     };
