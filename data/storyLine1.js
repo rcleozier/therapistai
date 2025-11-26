@@ -1,7 +1,7 @@
 // Story data as JavaScript constant to avoid import issues
 export const storyData = {
   "story_id": "therapy_ai_session_1",
-  "title": "TherapistAI",
+  "title": "The First Session",
   "start_node": "intro",
   "nodes": {
     "intro": {

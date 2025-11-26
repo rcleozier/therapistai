@@ -1,19 +1,44 @@
-import { storyData } from '../data/storyData';
+import storyLineManager from './storyLineManager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const GAME_STATE_KEY = 'therapistai_game_state';
+const GAME_STATE_KEY_PREFIX = 'therapistai_game_state_';
 
 class StoryEngine {
   constructor() {
-    this.story = storyData;
+    this.story = null;
+    this.storyLineId = null;
     this.currentNodeId = null;
     this.visitedNodes = new Set();
     this.messageHistory = [];
     this.choices = [];
   }
 
+  // Get the storage key for a specific story line
+  getGameStateKey(storyLineId) {
+    return `${GAME_STATE_KEY_PREFIX}${storyLineId}`;
+  }
+
+  // Load a story line
+  loadStoryLine(storyLineId) {
+    const storyData = storyLineManager.getStoryLine(storyLineId);
+    if (!storyData) {
+      console.error(`Story line ${storyLineId} not found`);
+      return false;
+    }
+    this.story = storyData;
+    this.storyLineId = storyLineId;
+    return true;
+  }
+
   // Initialize the story
-  start() {
+  start(storyLineId) {
+    // Load the story line if not already loaded or if different
+    if (!this.story || this.storyLineId !== storyLineId) {
+      if (!this.loadStoryLine(storyLineId)) {
+        return null;
+      }
+    }
+    
     this.currentNodeId = this.story.start_node;
     this.visitedNodes.clear();
     this.messageHistory = [];
@@ -80,29 +105,48 @@ class StoryEngine {
   }
 
   // Reset the story
-  reset() {
-    return this.start();
+  reset(storyLineId) {
+    if (storyLineId && storyLineId !== this.storyLineId) {
+      return this.start(storyLineId);
+    }
+    // Use current story line if no ID provided
+    if (!this.storyLineId) {
+      console.error('Cannot reset: no story line loaded');
+      return null;
+    }
+    return this.start(this.storyLineId);
   }
 
   // Get story metadata
   getStoryInfo() {
+    if (!this.story) {
+      return null;
+    }
     return {
       title: this.story.title,
       storyId: this.story.story_id,
+      storyLineId: this.storyLineId,
     };
   }
 
   // Save game state
   async saveGameState() {
+    if (!this.storyLineId) {
+      console.error('Cannot save game state: no story line loaded');
+      return false;
+    }
+    
     try {
       const gameState = {
+        storyLineId: this.storyLineId,
         currentNodeId: this.currentNodeId,
         visitedNodes: Array.from(this.visitedNodes),
         messageHistory: this.messageHistory,
         choices: this.choices,
         timestamp: Date.now(),
       };
-      await AsyncStorage.setItem(GAME_STATE_KEY, JSON.stringify(gameState));
+      const key = this.getGameStateKey(this.storyLineId);
+      await AsyncStorage.setItem(key, JSON.stringify(gameState));
       return true;
     } catch (error) {
       console.error('Error saving game state:', error);
@@ -110,10 +154,11 @@ class StoryEngine {
     }
   }
 
-  // Check if there's a saved game state (without loading it)
-  async hasSavedGameState() {
+  // Check if there's a saved game state for a specific story line
+  async hasSavedGameState(storyLineId) {
     try {
-      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
+      const key = this.getGameStateKey(storyLineId);
+      const savedState = await AsyncStorage.getItem(key);
       return savedState !== null;
     } catch (error) {
       console.error('Error checking for saved game state:', error);
@@ -121,14 +166,31 @@ class StoryEngine {
     }
   }
 
-  // Load game state
-  async loadGameState() {
+  // Load game state for a specific story line
+  async loadGameState(storyLineId) {
+    if (!storyLineId) {
+      storyLineId = this.storyLineId;
+    }
+    
+    if (!storyLineId) {
+      console.error('Cannot load game state: no story line ID provided');
+      return null;
+    }
+    
     try {
-      const savedState = await AsyncStorage.getItem(GAME_STATE_KEY);
+      const key = this.getGameStateKey(storyLineId);
+      const savedState = await AsyncStorage.getItem(key);
       if (!savedState) {
         return null;
       }
       const gameState = JSON.parse(savedState);
+      
+      // Load the story line if different
+      if (gameState.storyLineId && gameState.storyLineId !== this.storyLineId) {
+        if (!this.loadStoryLine(gameState.storyLineId)) {
+          return null;
+        }
+      }
       
       // Restore state
       this.currentNodeId = gameState.currentNodeId;
@@ -144,19 +206,38 @@ class StoryEngine {
   }
 
   // Continue from saved state
-  async continue() {
-    const savedState = await this.loadGameState();
+  async continue(storyLineId) {
+    if (!storyLineId) {
+      storyLineId = this.storyLineId;
+    }
+    
+    if (!storyLineId) {
+      console.error('Cannot continue: no story line ID provided');
+      return null;
+    }
+    
+    const savedState = await this.loadGameState(storyLineId);
     if (!savedState || !this.currentNodeId) {
       // No saved state, start fresh
-      return this.start();
+      return this.start(storyLineId);
     }
     return this.getCurrentNode();
   }
 
-  // Clear saved game state
-  async clearGameState() {
+  // Clear saved game state for a specific story line
+  async clearGameState(storyLineId) {
+    if (!storyLineId) {
+      storyLineId = this.storyLineId;
+    }
+    
+    if (!storyLineId) {
+      console.error('Cannot clear game state: no story line ID provided');
+      return false;
+    }
+    
     try {
-      await AsyncStorage.removeItem(GAME_STATE_KEY);
+      const key = this.getGameStateKey(storyLineId);
+      await AsyncStorage.removeItem(key);
       return true;
     } catch (error) {
       console.error('Error clearing game state:', error);

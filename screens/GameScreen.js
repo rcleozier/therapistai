@@ -47,15 +47,16 @@ const GameScreen = ({ route, navigation }) => {
     const initializeGame = async () => {
       try {
         const startNew = route?.params?.startNew ?? true;
+        const storyLineId = route?.params?.storyLineId || 'therapy_ai_session_1'; // Default to first story line
         let initialNode;
 
         if (startNew) {
           // Clear any saved state and start fresh
-          await storyEngine.clearGameState();
-          initialNode = storyEngine.start();
+          await storyEngine.clearGameState(storyLineId);
+          initialNode = storyEngine.start(storyLineId);
         } else {
           // Continue from saved state
-          initialNode = await storyEngine.continue();
+          initialNode = await storyEngine.continue(storyLineId);
         }
 
         if (initialNode) {
@@ -99,7 +100,7 @@ const GameScreen = ({ route, navigation }) => {
     };
 
     initializeGame();
-  }, [route?.params?.startNew]);
+  }, [route?.params?.startNew, route?.params?.storyLineId]);
 
   // Display messages one at a time with typing effect
   useEffect(() => {
@@ -220,8 +221,9 @@ const GameScreen = ({ route, navigation }) => {
     nodeVisitCountRef.current = 0;
     
     // Clear saved state and start fresh
-    await storyEngine.clearGameState();
-    const initialNode = storyEngine.reset();
+    const storyLineId = route?.params?.storyLineId || 'therapy_ai_session_1';
+    await storyEngine.clearGameState(storyLineId);
+    const initialNode = storyEngine.start(storyLineId);
     setCurrentNode(initialNode);
     setMessages(initialNode.messages);
     setChoices(initialNode.choices);

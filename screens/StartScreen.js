@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import storyEngine from '../utils/storyEngine';
+import storyLineManager from '../utils/storyLineManager';
 import { initializeAudio, playBackgroundMusic, stopBackgroundMusic, getAudioEnabled } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
 
@@ -39,6 +40,8 @@ const START_THEME = {
 };
 
 const StartScreen = ({ navigation }) => {
+  const [storyLines, setStoryLines] = useState([]);
+  const [selectedStoryLine, setSelectedStoryLine] = useState(null);
   const [hasSavedGame, setHasSavedGame] = useState(false);
 
   // Subtle screen fade-in to keep the entrance calm and premium.
@@ -48,6 +51,14 @@ const StartScreen = ({ navigation }) => {
   const logoPulse = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    // Load available story lines
+    const availableStoryLines = storyLineManager.getAvailableStoryLines();
+    setStoryLines(availableStoryLines);
+    // Select first story line by default
+    if (availableStoryLines.length > 0) {
+      setSelectedStoryLine(availableStoryLines[0].id);
+    }
+    
     const setupAudio = async () => {
       await initializeAudio();
       await playBackgroundMusic();
@@ -85,8 +96,9 @@ const StartScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       const checkForSavedGame = async () => {
+        if (!selectedStoryLine) return;
         try {
-          const hasSaved = await storyEngine.hasSavedGameState();
+          const hasSaved = await storyEngine.hasSavedGameState(selectedStoryLine);
           setHasSavedGame(hasSaved);
         } catch (error) {
           console.error('Error checking for saved game:', error);
@@ -104,18 +116,24 @@ const StartScreen = ({ navigation }) => {
       checkForSavedGame();
       const timer = setTimeout(resumeMusic, 120);
       return () => clearTimeout(timer);
-    }, [])
+    }, [selectedStoryLine])
   );
 
   const handleStartNew = () => {
+    if (!selectedStoryLine) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    navigation.navigate('Game', { startNew: true });
+    navigation.navigate('Game', { startNew: true, storyLineId: selectedStoryLine });
   };
 
   const handleContinue = () => {
-    if (!hasSavedGame) return;
+    if (!hasSavedGame || !selectedStoryLine) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    navigation.navigate('Game', { startNew: false });
+    navigation.navigate('Game', { startNew: false, storyLineId: selectedStoryLine });
+  };
+
+  const handleStoryLineSelect = (storyLineId) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    setSelectedStoryLine(storyLineId);
   };
 
   const handlePressIn = (target) => {
@@ -158,6 +176,35 @@ const StartScreen = ({ navigation }) => {
         </View>
 
         <LogoHeader logoPulse={logoPulse} />
+
+        {/* Story line selection */}
+        {storyLines.length > 1 && (
+          <View style={styles.storyLineSelector}>
+            <Text style={styles.storyLineLabel}>Select Session</Text>
+            <View style={styles.storyLineButtons}>
+              {storyLines.map((storyLine) => (
+                <TouchableOpacity
+                  key={storyLine.id}
+                  style={[
+                    styles.storyLineButton,
+                    selectedStoryLine === storyLine.id && styles.storyLineButtonSelected,
+                  ]}
+                  onPress={() => handleStoryLineSelect(storyLine.id)}
+                  activeOpacity={0.8}
+                >
+                  <Text
+                    style={[
+                      styles.storyLineButtonText,
+                      selectedStoryLine === storyLine.id && styles.storyLineButtonTextSelected,
+                    ]}
+                  >
+                    {storyLine.title}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        )}
 
         {/* Flexible spacer keeps the CTA block anchored in the lower half on tall and short devices */}
         <View style={styles.flexSpacer} />
@@ -459,6 +506,51 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: 0.4,
     lineHeight: START_THEME.footerLineHeight, // Tightened for stronger legibility
+  },
+  storyLineSelector: {
+    marginTop: SPACING.md,
+    marginBottom: SPACING.md,
+    paddingHorizontal: SPACING.lg,
+  },
+  storyLineLabel: {
+    ...FONTS.small,
+    color: START_THEME.secondaryText,
+    opacity: 0.7,
+    marginBottom: SPACING.sm,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  storyLineButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: SPACING.sm,
+  },
+  storyLineButton: {
+    paddingVertical: SPACING.xs + 2,
+    paddingHorizontal: SPACING.md,
+    borderRadius: BORDER_RADIUS.md,
+    borderWidth: 1,
+    borderColor: START_THEME.accentBorderSoft,
+    backgroundColor: 'transparent',
+    minWidth: 120,
+  },
+  storyLineButtonSelected: {
+    backgroundColor: START_THEME.accent,
+    borderColor: START_THEME.accent,
+  },
+  storyLineButtonText: {
+    ...FONTS.small,
+    color: START_THEME.primaryText,
+    opacity: 0.7,
+    textAlign: 'center',
+    fontSize: 13,
+  },
+  storyLineButtonTextSelected: {
+    color: '#FEF7F4',
+    opacity: 1,
+    fontWeight: '600',
   },
 });
 

@@ -77,3 +77,4 @@ npx expo start -c
 npx eas build --profile development --platform ios
 ```
 
+
