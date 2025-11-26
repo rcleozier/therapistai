@@ -15,35 +15,59 @@ const ChatMessage = ({ message, isLatest = false }) => {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const glowAnim = useRef(new Animated.Value(0.1)).current;
+  const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Gentle fade-in for new messages
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 400,
-      useNativeDriver: true,
-    }).start();
+    // Welcoming fade-in with gentle scale for initial messages
+    const isInitial = message.id === 'm1' || message.id === 'm2' || message.id === 'm3';
+    
+    if (isInitial && isAI) {
+      scaleAnim.setValue(0.96);
+      Animated.parallel([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 600, // Slower, more welcoming for initial messages
+          useNativeDriver: true,
+        }),
+        Animated.spring(scaleAnim, {
+          toValue: 1,
+          tension: 50,
+          friction: 8,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }).start();
+    }
 
     // Subtle breathing glow for latest AI message (empathetic cue)
     if (isAI && isLatest) {
       const breathing = Animated.loop(
         Animated.sequence([
           Animated.timing(glowAnim, {
-            toValue: 0.15,
-            duration: 2000,
+            toValue: 0.18, // Slightly brighter for more welcoming feel
+            duration: 2500, // Slower, more calming
             useNativeDriver: false,
           }),
           Animated.timing(glowAnim, {
-            toValue: 0.1,
-            duration: 2000,
+            toValue: 0.12,
+            duration: 2500,
             useNativeDriver: false,
           }),
         ])
       );
       breathing.start();
       return () => breathing.stop();
+    } else if (isAI) {
+      // Set initial glow for non-latest messages
+      const isInitial = message.id === 'm1' || message.id === 'm2' || message.id === 'm3';
+      glowAnim.setValue(isInitial ? 0.15 : 0.1);
     }
-  }, [isAI, isLatest]);
+  }, [isAI, isLatest, message.id]);
 
   const getStyles = () => {
     if (isAI) {
@@ -70,7 +94,16 @@ const ChatMessage = ({ message, isLatest = false }) => {
   const bubbleStyles = getStyles();
 
   return (
-    <Animated.View style={[styles.messageWrapper, bubbleStyles.wrapper, { opacity: fadeAnim }]}>
+    <Animated.View 
+      style={[
+        styles.messageWrapper, 
+        bubbleStyles.wrapper, 
+        { 
+          opacity: fadeAnim,
+          transform: [{ scale: scaleAnim }],
+        }
+      ]}
+    >
       {isAI && (
         <View style={styles.avatarContainer} pointerEvents="none">
           <Image
@@ -82,7 +115,7 @@ const ChatMessage = ({ message, isLatest = false }) => {
           <Animated.View 
             style={[
               styles.avatarGlow,
-              { opacity: isLatest ? glowAnim : 0.1 }
+              { opacity: isLatest ? glowAnim : (isInitial ? 0.15 : 0.1) }
             ]} 
           />
         </View>
@@ -147,12 +180,14 @@ const styles = StyleSheet.create({
   aiContainer: {
     backgroundColor: COLORS.message.ai.background, // #111318 (refined from spec)
     borderColor: COLORS.message.ai.border, // Desaturated red-orange at 40% opacity
-    // Outer glow effect for alert feel (10-15% opacity)
+    // Softer, more welcoming glow effect with depth
     shadowColor: COLORS.message.ai.borderGlow,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.12, // 10-15% opacity glow
-    shadowRadius: 8,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.18, // More visible for welcoming depth
+    shadowRadius: 14, // Larger, softer shadow
+    elevation: 3,
+    // Subtle inner depth
+    borderWidth: 1.5, // Slightly thicker for definition
   },
   playerContainer: {
     backgroundColor: COLORS.message.player.background,

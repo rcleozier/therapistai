@@ -20,8 +20,8 @@ const SettingsButton = ({ style }) => {
       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       activeOpacity={0.7}
     >
-      {/* Slightly smaller, muted gear to keep the header quiet */}
-      <Svg width={21} height={21} viewBox="0 0 24 24" fill="none" opacity={0.6}>
+      {/* Balanced gear icon - subtle but accessible */}
+      <Svg width={20} height={20} viewBox="0 0 24 24" fill="none" opacity={0.65}>
         <Path
           d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
           stroke={COLORS.text.primary}

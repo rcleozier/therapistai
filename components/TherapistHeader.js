@@ -39,50 +39,57 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: SPACING.xl,
-    paddingTop: SPACING.md, // Slightly tighter than before to give chat more room
-    paddingBottom: SPACING.sm,
+    paddingHorizontal: SPACING.lg + 4,
+    paddingTop: SPACING.md + 2,
+    paddingBottom: SPACING.md,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: COLORS.divider,
+    borderBottomColor: 'rgba(255, 255, 255, 0.06)', // More subtle divider
     backgroundColor: 'transparent',
   },
   leftGroup: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SPACING.sm,
+    gap: SPACING.md, // Increased gap for better spacing
   },
   rightGroup: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: SPACING.md,
+    gap: SPACING.sm + 2, // Tighter gap for better balance
   },
   backButton: {
-    paddingHorizontal: SPACING.sm,
+    paddingHorizontal: SPACING.xs,
     paddingVertical: SPACING.xs,
+    minWidth: 44, // Better touch target
+    minHeight: 44,
+    justifyContent: 'center',
   },
   backText: {
     ...FONTS.caption,
     color: COLORS.text.primary,
-    opacity: 0.55, // Lower emphasis so title and content take priority
-    letterSpacing: 1,
+    opacity: 0.5, // More subtle
+    letterSpacing: 0.8,
+    fontSize: 12,
+    fontWeight: '400',
   },
   title: {
     ...FONTS.heading,
-    fontSize: 18, // Slightly smaller to keep things clinical and understated
-    letterSpacing: 0.7,
+    fontSize: 17, // Slightly smaller for cleaner look
+    letterSpacing: 0.5,
     color: COLORS.text.primary,
+    fontWeight: '500',
   },
   restartButton: {
-    paddingHorizontal: SPACING.md,
+    paddingHorizontal: SPACING.sm,
     paddingVertical: SPACING.xs,
   },
   restartText: {
     ...FONTS.caption,
     color: COLORS.accent.red,
-    letterSpacing: 1,
+    letterSpacing: 0.8,
+    fontSize: 11,
   },
   settingsButton: {
-    opacity: 0.6,
+    opacity: 0.55, // Better balanced with back button
   },
 });
 

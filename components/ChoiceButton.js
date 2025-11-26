@@ -107,18 +107,18 @@ const styles = StyleSheet.create({
   buttonInner: {
     backgroundColor: COLORS.choice.background, // Slightly lighter than page background
     borderWidth: 1.5, // Slightly thicker border for definition
-    borderRadius: BORDER_RADIUS.lg, // Larger radius for softer, more intentional feel
-    paddingVertical: SPACING.md + 4, // More generous vertical padding
-    paddingHorizontal: SPACING.lg + 4, // More generous horizontal padding
-    minHeight: 56, // Slightly taller for better touch target and presence
+    borderRadius: BORDER_RADIUS.lg + 2, // Even smoother corners (18px)
+    paddingVertical: SPACING.md + 6, // More generous vertical padding
+    paddingHorizontal: SPACING.lg + 6, // More generous horizontal padding
+    minHeight: 58, // Slightly taller for better touch target and presence
     justifyContent: 'center',
     alignItems: 'center',
-    // Softer shadow for depth without being heavy
+    // Enhanced shadow for better depth and contrast
     shadowColor: COLORS.choice.shadow,
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
-    elevation: 1,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    elevation: 2,
   },
   buttonDisabled: {
     opacity: 0.3, // More faded when disabled
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3, // Slightly increased for clarity
     color: COLORS.choice.text, // #F5F3EE soft off-white (refined from spec)
     lineHeight: 22, // Better line height for readability
+    opacity: 0.95, // Slightly softer for better contrast balance
   },
   buttonTextPressed: {
     color: COLORS.choice.textHover, // Red tint when pressed

@@ -279,12 +279,20 @@ const GameScreen = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* Gradient background for subtle vignette effect */}
+      {/* Enhanced gradient background with depth */}
       <LinearGradient
         colors={[COLORS.backgroundGradient.start, COLORS.backgroundGradient.end, COLORS.backgroundGradient.start]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         style={StyleSheet.absoluteFill}
+      />
+      {/* Subtle radial gradient overlay for depth - avoids flat black-on-black */}
+      <LinearGradient
+        colors={['rgba(0, 0, 0, 0.3)', 'transparent', 'rgba(0, 0, 0, 0.2)']}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }}
+        style={styles.depthOverlay}
+        pointerEvents="none"
       />
       
       <KeyboardAvoidingView
@@ -348,6 +356,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background, // Near-black base (#050608)
+  },
+  depthOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.6, // Subtle depth without being heavy
   },
   keyboardView: {
     flex: 1,
