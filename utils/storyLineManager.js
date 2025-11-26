@@ -8,6 +8,7 @@
 // Import all story lines
 import { storyData as storyLine1 } from '../data/storyLine1';
 import { storyData as storyLine2 } from '../data/storyLine2';
+import { storyData as storyLine3 } from '../data/storyLine3';
 
 // Registry of all available story lines
 const STORY_LINES = {
@@ -22,6 +23,12 @@ const STORY_LINES = {
     title: 'The Second Session',
     description: 'A different path. A different outcome.',
     data: storyLine2,
+  },
+  'therapy_ai_session_3': {
+    id: 'therapy_ai_session_3',
+    title: 'The Third Session',
+    description: "You wake up. The app is already open. You don't remember opening it.",
+    data: storyLine3,
   },
 };
 

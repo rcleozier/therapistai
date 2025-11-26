@@ -38,16 +38,16 @@ const GameScreen = ({ route, navigation }) => {
 
   // Initialize story on mount
   useEffect(() => {
-    // playGameMusic() already stops all music via stopAllMusic(), so we just call it directly
-    const setupAudio = async () => {
-      await playGameMusic();
-    };
-    setupAudio();
-
     const initializeGame = async () => {
       try {
         const startNew = route?.params?.startNew ?? true;
         const storyLineId = route?.params?.storyLineId || 'therapy_ai_session_1'; // Default to first story line
+        
+        // playGameMusic() already stops all music via stopAllMusic(), so we just call it directly
+        const setupAudio = async () => {
+          await playGameMusic(storyLineId);
+        };
+        setupAudio();
         let initialNode;
 
         if (startNew) {

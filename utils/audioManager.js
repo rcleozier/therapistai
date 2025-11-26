@@ -2,8 +2,17 @@ import { Audio } from 'expo-av';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AUDIO_ENABLED_KEY = 'audio_enabled';
-const START_SCREEN_MUSIC = require('../assets/music/scary-horror-creepy-music-359998.mp3');
-const GAME_MUSIC = require('../assets/music/scary-creepy-horror-music-430823.mp3');
+const HOME_MUSIC = require('../assets/music/home.mp3');
+
+// Story line audio mapping
+const STORY_LINE_MUSIC = {
+  'therapy_ai_session_1': require('../assets/music/therapy_ai_session_1.mp3'),
+  'therapy_ai_session_2': require('../assets/music/therapy_ai_session_2.mp3'),
+  'therapy_ai_session_3': require('../assets/music/therapy_ai_session_3.mp3'),
+};
+
+// Default to first story line if not specified
+const DEFAULT_STORY_LINE_ID = 'therapy_ai_session_1';
 
 let startScreenSound = null;
 let gameSound = null;
@@ -164,7 +173,7 @@ export const playBackgroundMusic = async () => {
 
     // Create and load sound
     const { sound } = await Audio.Sound.createAsync(
-      START_SCREEN_MUSIC,
+      HOME_MUSIC,
       {
         isLooping: true,
         volume: 0.5, // Set to 50% volume for ambient effect
@@ -205,8 +214,8 @@ export const stopBackgroundMusic = async () => {
   }
 };
 
-// Play game music
-export const playGameMusic = async () => {
+// Play game music for a specific story line
+export const playGameMusic = async (storyLineId = DEFAULT_STORY_LINE_ID) => {
   // Prevent concurrent calls
   if (isStartingMusic) {
     console.log('Music is already starting, skipping duplicate call');
@@ -225,12 +234,20 @@ export const playGameMusic = async () => {
       return;
     }
 
+    // Get the appropriate music file for this story line
+    const storyLineMusic = STORY_LINE_MUSIC[storyLineId] || STORY_LINE_MUSIC[DEFAULT_STORY_LINE_ID];
+    if (!storyLineMusic) {
+      console.error(`No music file found for story line: ${storyLineId}`);
+      isStartingMusic = false;
+      return;
+    }
+
     // Stop ALL music first (both start screen and game) and wait for it to fully stop
     await stopAllMusic();
 
     // Create and load sound
     const { sound } = await Audio.Sound.createAsync(
-      GAME_MUSIC,
+      storyLineMusic,
       {
         isLooping: true,
         volume: 0.4, // Set to 40% volume for game ambient effect
@@ -239,7 +256,7 @@ export const playGameMusic = async () => {
     );
 
     gameSound = sound;
-    console.log('Game music started');
+    console.log(`Game music started for story line: ${storyLineId}`);
   } catch (error) {
     console.error('Error playing game music:', error);
   } finally {
