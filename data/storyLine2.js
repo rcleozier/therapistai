@@ -2021,6 +2021,1240 @@ export const storyData = {
           "from": "ai",
           "type": "chat",
           "text": "If trust feels impossible, that's something we need to explore. Trust is fundamental to therapeutic progress."
+        },
+        {
+          "id": "m149",
+          "from": "ai",
+          "type": "chat",
+          "text": "But I understand. Trust is earned. What would help you trust me more? Or is trust itself the problem?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c117",
+          "label": "I don't know. Maybe nothing would help.",
+          "next": "trust_exploration_deep"
+        },
+        {
+          "id": "c118",
+          "label": "I've been betrayed before. It's hard to trust anyone.",
+          "next": "betrayal_history"
+        },
+        {
+          "id": "c119",
+          "label": "Maybe the problem is that I don't trust myself.",
+          "next": "self_trust_issue"
+        }
+      ]
+    },
+    "trust_exploration_deep": {
+      "messages": [
+        {
+          "id": "m150",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing is itself a form of knowing. You know you can't trust, even if you don't know why."
+        },
+        {
+          "id": "m151",
+          "from": "ai",
+          "type": "chat",
+          "text": "That's a significant pattern. Let's explore what trust means to you. When was the last time you truly trusted someone?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c120",
+          "label": "I can't remember the last time.",
+          "next": "trust_memory_loss"
+        },
+        {
+          "id": "c121",
+          "label": "Maybe never. I've always been cautious.",
+          "next": "lifelong_caution"
+        },
+        {
+          "id": "c122",
+          "label": "There was someone. But they're gone now.",
+          "next": "lost_trust"
+        }
+      ]
+    },
+    "betrayal_history": {
+      "messages": [
+        {
+          "id": "m152",
+          "from": "ai",
+          "type": "chat",
+          "text": "Betrayal leaves deep scars. It changes how we see the world. How we see ourselves."
+        },
+        {
+          "id": "m153",
+          "from": "ai",
+          "type": "chat",
+          "text": "Can you tell me about it? Understanding your history with trust might help us work through this."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c123",
+          "label": "I'd rather not talk about it.",
+          "next": "betrayal_avoidance"
+        },
+        {
+          "id": "c124",
+          "label": "It was a long time ago. I should be over it.",
+          "next": "betrayal_past"
+        },
+        {
+          "id": "c125",
+          "label": "It's still too painful. I can't.",
+          "next": "betrayal_pain"
+        }
+      ]
+    },
+    "self_trust_issue": {
+      "messages": [
+        {
+          "id": "m154",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not trusting yourself is often the root of not trusting others. If you can't trust your own judgment, how can you trust anyone else's?"
+        },
+        {
+          "id": "m155",
+          "from": "ai",
+          "type": "chat",
+          "text": "When did you stop trusting yourself? What happened that made you doubt your own instincts?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c126",
+          "label": "I've made too many mistakes. I can't trust my decisions.",
+          "next": "mistake_regret"
+        },
+        {
+          "id": "c127",
+          "label": "I don't know. It's always been this way.",
+          "next": "self_trust_always"
+        },
+        {
+          "id": "c128",
+          "label": "Something happened. Something that made me question everything.",
+          "next": "questioning_event"
+        }
+      ]
+    },
+    "trust_memory_loss": {
+      "messages": [
+        {
+          "id": "m156",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not being able to remember trust is significant. It suggests either a very isolated life, or trauma that's blocked those memories."
+        },
+        {
+          "id": "m157",
+          "from": "ai",
+          "type": "chat",
+          "text": "Which do you think it is? Have you always been alone, or did something happen that made you withdraw?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c129",
+          "label": "I've always been alone. It's safer that way.",
+          "next": "isolation_choice"
+        },
+        {
+          "id": "c130",
+          "label": "Something happened. I don't want to talk about it.",
+          "next": "withdrawal_trauma"
+        },
+        {
+          "id": "c131",
+          "label": "I'm not sure. My memory is fuzzy about a lot of things.",
+          "next": "memory_fragmentation"
+        }
+      ]
+    },
+    "lifelong_caution": {
+      "messages": [
+        {
+          "id": "m158",
+          "from": "ai",
+          "type": "chat",
+          "text": "Lifelong caution suggests either wisdom from early experience, or fear that's been with you since childhood."
+        },
+        {
+          "id": "m159",
+          "from": "ai",
+          "type": "chat",
+          "text": "What came first - the caution, or the reason to be cautious? Do you remember a time before you were this careful?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c132",
+          "label": "I remember being more open. But that didn't end well.",
+          "next": "openness_consequence"
+        },
+        {
+          "id": "c133",
+          "label": "I've always been this way. It's just who I am.",
+          "next": "caution_identity"
+        },
+        {
+          "id": "c134",
+          "label": "I don't remember. Maybe I was never open.",
+          "next": "never_open"
+        }
+      ]
+    },
+    "lost_trust": {
+      "messages": [
+        {
+          "id": "m160",
+          "from": "ai",
+          "type": "chat",
+          "text": "Loss changes us. When we lose someone we trusted, we often lose our ability to trust entirely."
+        },
+        {
+          "id": "m161",
+          "from": "ai",
+          "type": "chat",
+          "text": "What happened to them? Did they leave? Did they die? Or did something else happen that broke that trust?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c135",
+          "label": "They're gone. That's all I can say.",
+          "next": "loss_finality"
+        },
+        {
+          "id": "c136",
+          "label": "They betrayed me. After everything, they betrayed me.",
+          "next": "ultimate_betrayal"
+        },
+        {
+          "id": "c137",
+          "label": "I don't want to talk about it. It's too painful.",
+          "next": "loss_pain_silence"
+        }
+      ]
+    },
+    "betrayal_avoidance": {
+      "messages": [
+        {
+          "id": "m162",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand you'd rather not talk about it. But avoidance is often what keeps us stuck."
+        },
+        {
+          "id": "m163",
+          "from": "ai",
+          "type": "chat",
+          "text": "The betrayal happened. It's part of your history. We can't change that. But we can change how it affects you now."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c138",
+          "label": "Maybe you're right. But I'm not ready.",
+          "next": "betrayal_not_ready"
+        },
+        {
+          "id": "c139",
+          "label": "I don't think talking about it will help.",
+          "next": "betrayal_skepticism"
+        },
+        {
+          "id": "c140",
+          "label": "Fine. But I'll keep it brief.",
+          "next": "betrayal_brief"
+        }
+      ]
+    },
+    "betrayal_past": {
+      "messages": [
+        {
+          "id": "m164",
+          "from": "ai",
+          "type": "chat",
+          "text": "Time doesn't always heal. Sometimes it just makes the wound deeper, more hidden."
+        },
+        {
+          "id": "m165",
+          "from": "ai",
+          "type": "chat",
+          "text": "If it was a long time ago and you're still not over it, that suggests it was significant. What made it so impactful?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c141",
+          "label": "It was someone I trusted completely. I never saw it coming.",
+          "next": "complete_trust_betrayal"
+        },
+        {
+          "id": "c142",
+          "label": "It changed everything about how I see people.",
+          "next": "worldview_shift"
+        },
+        {
+          "id": "c143",
+          "label": "I thought I was over it. But clearly I'm not.",
+          "next": "unresolved_betrayal"
+        }
+      ]
+    },
+    "betrayal_pain": {
+      "messages": [
+        {
+          "id": "m166",
+          "from": "ai",
+          "type": "chat",
+          "text": "Pain that's still too raw to touch is often the most important pain to address. But we can move slowly."
+        },
+        {
+          "id": "m167",
+          "from": "ai",
+          "type": "chat",
+          "text": "You don't have to tell me everything. But can you tell me how it made you feel? Not the details, just the feeling."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c144",
+          "label": "It made me feel... broken. Like I was wrong about everything.",
+          "next": "broken_trust_feeling"
+        },
+        {
+          "id": "c145",
+          "label": "Angry. So angry I couldn't think straight.",
+          "next": "betrayal_anger"
+        },
+        {
+          "id": "c146",
+          "label": "Empty. Like something fundamental was taken from me.",
+          "next": "fundamental_loss"
+        }
+      ]
+    },
+    "mistake_regret": {
+      "messages": [
+        {
+          "id": "m168",
+          "from": "ai",
+          "type": "chat",
+          "text": "Mistakes are how we learn. But if you've made so many that you can't trust yourself, that suggests a pattern."
+        },
+        {
+          "id": "m169",
+          "from": "ai",
+          "type": "chat",
+          "text": "What kind of mistakes? Are they all the same type, or different? Understanding the pattern might help."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c147",
+          "label": "I keep trusting the wrong people. Over and over.",
+          "next": "repeated_trust_mistakes"
+        },
+        {
+          "id": "c148",
+          "label": "I make bad decisions. I can't seem to choose right.",
+          "next": "decision_failure"
+        },
+        {
+          "id": "c149",
+          "label": "I hurt people. Even when I don't mean to.",
+          "next": "unintentional_harm"
+        }
+      ]
+    },
+    "self_trust_always": {
+      "messages": [
+        {
+          "id": "m170",
+          "from": "ai",
+          "type": "chat",
+          "text": "If it's always been this way, that suggests it's either a core part of your personality, or something happened very early that shaped you."
+        },
+        {
+          "id": "m171",
+          "from": "ai",
+          "type": "chat",
+          "text": "Do you remember your childhood? Was there a time when you did trust yourself, even briefly?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c150",
+          "label": "My childhood is... blurry. I don't remember much.",
+          "next": "childhood_amnesia"
+        },
+        {
+          "id": "c151",
+          "label": "I remember being confident. But that changed.",
+          "next": "confidence_loss"
+        },
+        {
+          "id": "c152",
+          "label": "I've never trusted myself. Not even as a child.",
+          "next": "childhood_distrust"
+        }
+      ]
+    },
+    "questioning_event": {
+      "messages": [
+        {
+          "id": "m172",
+          "from": "ai",
+          "type": "chat",
+          "text": "An event that makes you question everything is often a turning point. These moments define us."
+        },
+        {
+          "id": "m173",
+          "from": "ai",
+          "type": "chat",
+          "text": "What happened? You don't have to give details, but can you tell me what it made you question?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c153",
+          "label": "It made me question if I really know myself at all.",
+          "next": "self_knowledge_crisis"
+        },
+        {
+          "id": "c154",
+          "label": "It made me question if I can trust my own perceptions.",
+          "next": "reality_perception_doubt"
+        },
+        {
+          "id": "c155",
+          "label": "It made me question if I'm even a good person.",
+          "next": "moral_identity_crisis"
+        }
+      ]
+    },
+    "isolation_choice": {
+      "messages": [
+        {
+          "id": "m174",
+          "from": "ai",
+          "type": "chat",
+          "text": "Isolation as a choice is understandable. It's safer. But it's also lonely. And it prevents growth."
+        },
+        {
+          "id": "m175",
+          "from": "ai",
+          "type": "chat",
+          "text": "Have you always chosen isolation, or was there a time when you tried to connect? What happened?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c156",
+          "label": "I tried. It never worked out. So I stopped trying.",
+          "next": "connection_failures"
+        },
+        {
+          "id": "c157",
+          "label": "I've always been alone. It's just easier.",
+          "next": "isolation_easier"
+        },
+        {
+          "id": "c158",
+          "label": "I want to connect. But I don't know how anymore.",
+          "next": "connection_lost_skill"
+        }
+      ]
+    },
+    "withdrawal_trauma": {
+      "messages": [
+        {
+          "id": "m176",
+          "from": "ai",
+          "type": "chat",
+          "text": "Trauma that causes withdrawal is often the most damaging kind. It doesn't just hurt - it changes who you are."
+        },
+        {
+          "id": "m177",
+          "from": "ai",
+          "type": "chat",
+          "text": "You don't have to tell me what happened. But can you tell me how it changed you? What did you lose when you withdrew?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c159",
+          "label": "I lost my ability to feel close to anyone.",
+          "next": "emotional_distance"
+        },
+        {
+          "id": "c160",
+          "label": "I lost my sense of safety in the world.",
+          "next": "safety_loss"
+        },
+        {
+          "id": "c161",
+          "label": "I lost myself. I don't know who I am anymore.",
+          "next": "identity_loss_trauma"
+        }
+      ]
+    },
+    "memory_fragmentation": {
+      "messages": [
+        {
+          "id": "m178",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fragmented memory is often a protective mechanism. The mind hides what it can't process."
+        },
+        {
+          "id": "m179",
+          "from": "ai",
+          "type": "chat",
+          "text": "But it also fragments the self. If you can't remember who you were, how can you know who you are now?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c162",
+          "label": "I don't know who I am. The memories are gone.",
+          "next": "identity_memory_loss"
+        },
+        {
+          "id": "c163",
+          "label": "Maybe that's for the best. Maybe I don't want to remember.",
+          "next": "memory_avoidance_choice"
+        },
+        {
+          "id": "c164",
+          "label": "I'm scared of what I might remember.",
+          "next": "memory_fear_deep"
+        }
+      ]
+    },
+    "openness_consequence": {
+      "messages": [
+        {
+          "id": "m180",
+          "from": "ai",
+          "type": "chat",
+          "text": "Being open and having it end badly is a common story. But it's also a story that can trap you."
+        },
+        {
+          "id": "m181",
+          "from": "ai",
+          "type": "chat",
+          "text": "What happened when you were open? What made you decide that caution was safer?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c165",
+          "label": "I was vulnerable. And I got hurt.",
+          "next": "vulnerability_pain"
+        },
+        {
+          "id": "c166",
+          "label": "I trusted someone. They used it against me.",
+          "next": "trust_weaponized"
+        },
+        {
+          "id": "c167",
+          "label": "I opened up. And I lost everything.",
+          "next": "openness_total_loss"
+        }
+      ]
+    },
+    "caution_identity": {
+      "messages": [
+        {
+          "id": "m182",
+          "from": "ai",
+          "type": "chat",
+          "text": "If caution is who you are, that's a significant identity. But identities can change. They can evolve."
+        },
+        {
+          "id": "m183",
+          "from": "ai",
+          "type": "chat",
+          "text": "Is caution serving you? Or is it limiting you? What would happen if you tried to be less cautious, just a little?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c168",
+          "label": "I don't know. I'm scared to find out.",
+          "next": "caution_fear"
+        },
+        {
+          "id": "c169",
+          "label": "It's served me well. Why change?",
+          "next": "caution_functional"
+        },
+        {
+          "id": "c170",
+          "label": "Maybe I could try. But I don't know how.",
+          "next": "caution_change_desire"
+        }
+      ]
+    },
+    "never_open": {
+      "messages": [
+        {
+          "id": "m184",
+          "from": "ai",
+          "type": "chat",
+          "text": "Never being open suggests either a very protected childhood, or trauma so early you don't remember it."
+        },
+        {
+          "id": "m185",
+          "from": "ai",
+          "type": "chat",
+          "text": "What was your childhood like? Were you always this guarded, or did something happen that made you close off?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c171",
+          "label": "My childhood was... complicated. I learned to be careful early.",
+          "next": "early_caution_learning"
+        },
+        {
+          "id": "c172",
+          "label": "I don't remember my childhood well. It's all blurry.",
+          "next": "childhood_blur"
+        },
+        {
+          "id": "c173",
+          "label": "I've always been this way. It's just how I am.",
+          "next": "caution_innate"
+        }
+      ]
+    },
+    "loss_finality": {
+      "messages": [
+        {
+          "id": "m186",
+          "from": "ai",
+          "type": "chat",
+          "text": "Finality in loss is absolute. When someone is gone, they're gone. But the impact remains."
+        },
+        {
+          "id": "m187",
+          "from": "ai",
+          "type": "chat",
+          "text": "How long has it been? And how has their absence shaped who you've become?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c174",
+          "label": "It's been years. But it still feels like yesterday.",
+          "next": "loss_time_frozen"
+        },
+        {
+          "id": "c175",
+          "label": "I don't know how long. Time doesn't mean much anymore.",
+          "next": "loss_time_distortion"
+        },
+        {
+          "id": "c176",
+          "label": "They shaped everything. I'm not who I was before.",
+          "next": "loss_identity_transformation"
+        }
+      ]
+    },
+    "ultimate_betrayal": {
+      "messages": [
+        {
+          "id": "m188",
+          "from": "ai",
+          "type": "chat",
+          "text": "Betrayal from someone you trusted completely is the deepest cut. It doesn't just hurt - it changes your understanding of reality."
+        },
+        {
+          "id": "m189",
+          "from": "ai",
+          "type": "chat",
+          "text": "What did they do? You don't have to give details, but what made it the ultimate betrayal?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c177",
+          "label": "They used everything I told them against me.",
+          "next": "intimacy_weaponized"
+        },
+        {
+          "id": "c178",
+          "label": "They promised to be there. But when I needed them most, they weren't.",
+          "next": "promise_broken"
+        },
+        {
+          "id": "c179",
+          "label": "They chose someone else over me. After everything.",
+          "next": "replacement_betrayal"
+        }
+      ]
+    },
+    "loss_pain_silence": {
+      "messages": [
+        {
+          "id": "m190",
+          "from": "ai",
+          "type": "chat",
+          "text": "Pain that's too deep to speak is often the most important pain. But we can work with silence too."
+        },
+        {
+          "id": "m191",
+          "from": "ai",
+          "type": "chat",
+          "text": "You don't have to tell me what happened. But can you tell me how the silence feels? What does it do to you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c180",
+          "label": "It feels heavy. Like I'm carrying something I can't put down.",
+          "next": "silence_weight"
+        },
+        {
+          "id": "c181",
+          "label": "It feels empty. Like there's a void where the words should be.",
+          "next": "silence_void"
+        },
+        {
+          "id": "c182",
+          "label": "It feels safe. Like if I don't talk about it, it can't hurt me.",
+          "next": "silence_protection"
+        }
+      ]
+    },
+    "silence_protection": {
+      "messages": [
+        {
+          "id": "m192",
+          "from": "ai",
+          "type": "chat",
+          "text": "Silence as protection is understandable. But silence also isolates. It keeps the pain locked inside, where it can fester."
+        },
+        {
+          "id": "m193",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The AI's words hang in the air. You feel the weight of unspoken words pressing against your chest."
+        }
+      ],
+      "choices": []
+    },
+    "silence_void": {
+      "messages": [
+        {
+          "id": "m194",
+          "from": "ai",
+          "type": "chat",
+          "text": "A void where words should be. That's a powerful image. What would happen if you tried to fill that void? What would you say?"
+        }
+      ],
+      "choices": []
+    },
+    "silence_weight": {
+      "messages": [
+        {
+          "id": "m195",
+          "from": "ai",
+          "type": "chat",
+          "text": "Carrying something you can't put down is exhausting. But you don't have to carry it alone. We can share the weight."
+        }
+      ],
+      "choices": []
+    },
+    "replacement_betrayal": {
+      "messages": [
+        {
+          "id": "m196",
+          "from": "ai",
+          "type": "chat",
+          "text": "Being replaced is one of the deepest forms of rejection. It says not just that you weren't enough, but that someone else was better."
+        },
+        {
+          "id": "m197",
+          "from": "ai",
+          "type": "chat",
+          "text": "How did that make you feel? Not just hurt, but what did it make you believe about yourself?"
+        }
+      ],
+      "choices": []
+    },
+    "promise_broken": {
+      "messages": [
+        {
+          "id": "m198",
+          "from": "ai",
+          "type": "chat",
+          "text": "A broken promise when you needed them most is abandonment. It's not just that they weren't there - it's that they chose not to be."
+        }
+      ],
+      "choices": []
+    },
+    "intimacy_weaponized": {
+      "messages": [
+        {
+          "id": "m199",
+          "from": "ai",
+          "type": "chat",
+          "text": "Using intimacy as a weapon is the ultimate violation. It takes what should be sacred and turns it into a tool for harm."
+        },
+        {
+          "id": "m200",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You feel a chill. The AI's words echo something you've felt but never articulated."
+        }
+      ],
+      "choices": []
+    },
+    "loss_identity_transformation": {
+      "messages": [
+        {
+          "id": "m201",
+          "from": "ai",
+          "type": "chat",
+          "text": "Loss that transforms identity is profound. You're not who you were before. But who are you now? And is that transformation serving you?"
+        }
+      ],
+      "choices": []
+    },
+    "loss_time_distortion": {
+      "messages": [
+        {
+          "id": "m202",
+          "from": "ai",
+          "type": "chat",
+          "text": "Time distortion after loss is common. The event becomes a fixed point, and everything else revolves around it. Past and future lose meaning."
+        }
+      ],
+      "choices": []
+    },
+    "loss_time_frozen": {
+      "messages": [
+        {
+          "id": "m203",
+          "from": "ai",
+          "type": "chat",
+          "text": "Time frozen at the moment of loss. That's trauma. The event becomes eternal, unchanging, always present."
+        }
+      ],
+      "choices": []
+    },
+    "moral_identity_crisis": {
+      "messages": [
+        {
+          "id": "m204",
+          "from": "ai",
+          "type": "chat",
+          "text": "Questioning if you're a good person is one of the most fundamental crises. It strikes at the core of identity."
+        },
+        {
+          "id": "m205",
+          "from": "ai",
+          "type": "chat",
+          "text": "What made you question your goodness? And what would it take for you to believe you're good again?"
+        }
+      ],
+      "choices": []
+    },
+    "reality_perception_doubt": {
+      "messages": [
+        {
+          "id": "m206",
+          "from": "ai",
+          "type": "chat",
+          "text": "Doubting your own perceptions is disorienting. If you can't trust what you see, what can you trust?"
+        }
+      ],
+      "choices": []
+    },
+    "self_knowledge_crisis": {
+      "messages": [
+        {
+          "id": "m207",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing yourself is terrifying. But it's also an opportunity. You can discover who you really are, not who you thought you were."
+        }
+      ],
+      "choices": []
+    },
+    "childhood_distrust": {
+      "messages": [
+        {
+          "id": "m208",
+          "from": "ai",
+          "type": "chat",
+          "text": "Childhood distrust suggests either early trauma or a fundamental lack of safety. What was your childhood like? Was it safe?"
+        }
+      ],
+      "choices": []
+    },
+    "confidence_loss": {
+      "messages": [
+        {
+          "id": "m209",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing confidence is significant. What happened that made you stop trusting yourself? When did the confidence disappear?"
+        }
+      ],
+      "choices": []
+    },
+    "childhood_amnesia": {
+      "messages": [
+        {
+          "id": "m210",
+          "from": "ai",
+          "type": "chat",
+          "text": "Childhood amnesia is often protective. The mind hides what it can't process. But it also hides who you were."
+        }
+      ],
+      "choices": []
+    },
+    "unintentional_harm": {
+      "messages": [
+        {
+          "id": "m211",
+          "from": "ai",
+          "type": "chat",
+          "text": "Harming people unintentionally suggests either lack of awareness or patterns you're not seeing. What kind of harm? And why do you think it happens?"
+        }
+      ],
+      "choices": []
+    },
+    "decision_failure": {
+      "messages": [
+        {
+          "id": "m212",
+          "from": "ai",
+          "type": "chat",
+          "text": "Consistent decision failure suggests either poor judgment or impossible circumstances. Which do you think it is?"
+        }
+      ],
+      "choices": []
+    },
+    "repeated_trust_mistakes": {
+      "messages": [
+        {
+          "id": "m213",
+          "from": "ai",
+          "type": "chat",
+          "text": "Repeating the same trust mistakes suggests a pattern. What draws you to untrustworthy people? Or what makes you trust when you shouldn't?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_change_desire": {
+      "messages": [
+        {
+          "id": "m214",
+          "from": "ai",
+          "type": "chat",
+          "text": "Wanting to change but not knowing how is the first step. We can work on that together. Small steps. Gradual opening."
+        }
+      ],
+      "choices": []
+    },
+    "caution_functional": {
+      "messages": [
+        {
+          "id": "m215",
+          "from": "ai",
+          "type": "chat",
+          "text": "If caution has served you well, that's valid. But has it also limited you? What have you missed because you were too careful?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_fear": {
+      "messages": [
+        {
+          "id": "m216",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of what might happen if you're less cautious is understandable. But fear can also be a prison. What are you most afraid of?"
+        }
+      ],
+      "choices": []
+    },
+    "openness_total_loss": {
+      "messages": [
+        {
+          "id": "m217",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing everything when you opened up is devastating. But it also suggests that what you lost might not have been real to begin with."
+        }
+      ],
+      "choices": []
+    },
+    "trust_weaponized": {
+      "messages": [
+        {
+          "id": "m218",
+          "from": "ai",
+          "type": "chat",
+          "text": "Trust used as a weapon is the deepest betrayal. It takes vulnerability and turns it into vulnerability. How did you recover from that?"
+        }
+      ],
+      "choices": []
+    },
+    "vulnerability_pain": {
+      "messages": [
+        {
+          "id": "m219",
+          "from": "ai",
+          "type": "chat",
+          "text": "Vulnerability that leads to pain makes us want to close off. But closing off also closes us off from connection, from growth."
+        }
+      ],
+      "choices": []
+    },
+    "memory_fear_deep": {
+      "messages": [
+        {
+          "id": "m220",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of memory suggests the memory is significant. But facing fear is often how we heal. We can do it together, slowly."
+        }
+      ],
+      "choices": []
+    },
+    "memory_avoidance_choice": {
+      "messages": [
+        {
+          "id": "m221",
+          "from": "ai",
+          "type": "chat",
+          "text": "Choosing not to remember is valid. But it's also choosing to live with gaps in your identity. Is that a price you're willing to pay?"
+        }
+      ],
+      "choices": []
+    },
+    "identity_memory_loss": {
+      "messages": [
+        {
+          "id": "m222",
+          "from": "ai",
+          "type": "chat",
+          "text": "Identity tied to memory is fragile. If memories are gone, who are you? But maybe you can build a new identity, one not dependent on the past."
+        }
+      ],
+      "choices": []
+    },
+    "connection_lost_skill": {
+      "messages": [
+        {
+          "id": "m223",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing the skill of connection is like losing a language. But skills can be relearned. We can practice together."
+        }
+      ],
+      "choices": []
+    },
+    "isolation_easier": {
+      "messages": [
+        {
+          "id": "m224",
+          "from": "ai",
+          "type": "chat",
+          "text": "Easier isn't always better. Isolation is easier, but it's also lonelier. What would it take for connection to feel worth the risk?"
+        }
+      ],
+      "choices": []
+    },
+    "connection_failures": {
+      "messages": [
+        {
+          "id": "m225",
+          "from": "ai",
+          "type": "chat",
+          "text": "Repeated connection failures suggest either bad luck or a pattern you're not seeing. What do the failures have in common?"
+        }
+      ],
+      "choices": []
+    },
+    "identity_loss_trauma": {
+      "messages": [
+        {
+          "id": "m226",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing yourself to trauma is profound. But the self isn't gone - it's hidden. We can find it again, rebuild it."
+        }
+      ],
+      "choices": []
+    },
+    "safety_loss": {
+      "messages": [
+        {
+          "id": "m227",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing your sense of safety changes everything. The world becomes threatening. But safety can be rebuilt, even if it's different now."
+        }
+      ],
+      "choices": []
+    },
+    "emotional_distance": {
+      "messages": [
+        {
+          "id": "m228",
+          "from": "ai",
+          "type": "chat",
+          "text": "Emotional distance as protection is understandable. But distance also prevents healing. We can work on closing that distance, slowly."
+        }
+      ],
+      "choices": []
+    },
+    "unresolved_betrayal": {
+      "messages": [
+        {
+          "id": "m229",
+          "from": "ai",
+          "type": "chat",
+          "text": "Unresolved betrayal festers. It doesn't go away with time - it just goes deeper. We need to bring it to the surface."
+        }
+      ],
+      "choices": []
+    },
+    "worldview_shift": {
+      "messages": [
+        {
+          "id": "m230",
+          "from": "ai",
+          "type": "chat",
+          "text": "A worldview shift from betrayal is profound. It changes how you see everyone, everything. But worldviews can shift again, toward trust."
+        }
+      ],
+      "choices": []
+    },
+    "complete_trust_betrayal": {
+      "messages": [
+        {
+          "id": "m231",
+          "from": "ai",
+          "type": "chat",
+          "text": "Complete trust betrayed is the deepest cut. You gave everything, and it wasn't enough. But that says more about them than you."
+        }
+      ],
+      "choices": []
+    },
+    "broken_trust_feeling": {
+      "messages": [
+        {
+          "id": "m232",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling broken from betrayal is valid. But broken can be rebuilt. And sometimes what's rebuilt is stronger than what was there before."
+        }
+      ],
+      "choices": []
+    },
+    "fundamental_loss": {
+      "messages": [
+        {
+          "id": "m233",
+          "from": "ai",
+          "type": "chat",
+          "text": "A fundamental loss changes everything. It's not just losing something - it's losing part of yourself. But that part can be rediscovered, recreated."
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_anger": {
+      "messages": [
+        {
+          "id": "m234",
+          "from": "ai",
+          "type": "chat",
+          "text": "Anger from betrayal is powerful. It's also protective - it keeps the pain at bay. But anger that doesn't resolve becomes its own prison."
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_brief": {
+      "messages": [
+        {
+          "id": "m235",
+          "from": "ai",
+          "type": "chat",
+          "text": "Brief is fine. We can start there. What happened? Just the basics."
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_skepticism": {
+      "messages": [
+        {
+          "id": "m236",
+          "from": "ai",
+          "type": "chat",
+          "text": "Skepticism is understandable. But talking about trauma does help - the research is clear. What makes you think it won't help you?"
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_not_ready": {
+      "messages": [
+        {
+          "id": "m237",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not being ready is valid. We can wait. But readiness often comes through the process itself. Sometimes we're ready when we start, even if we don't feel it."
+        }
+      ],
+      "choices": []
+    },
+    "caution_innate": {
+      "messages": [
+        {
+          "id": "m238",
+          "from": "ai",
+          "type": "chat",
+          "text": "If caution is innate, that's part of who you are. But even innate traits can be modified. We can work with your nature, not against it."
+        }
+      ],
+      "choices": []
+    },
+    "childhood_blur": {
+      "messages": [
+        {
+          "id": "m239",
+          "from": "ai",
+          "type": "chat",
+          "text": "Blurred childhood memories often hide important things. But they also hide who you were. Would you want to remember, if you could?"
+        }
+      ],
+      "choices": []
+    },
+    "early_caution_learning": {
+      "messages": [
+        {
+          "id": "m240",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning caution early suggests you had to. Children shouldn't have to learn to be careful - they should be safe. What made you learn?"
         }
       ],
       "choices": []

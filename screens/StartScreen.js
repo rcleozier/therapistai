@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,55 +10,72 @@ import storyLineManager from '../utils/storyLineManager';
 import { initializeAudio, playBackgroundMusic, stopBackgroundMusic, getAudioEnabled } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
 
-// Local theme tokens specific to the start screen.
-// Consolidated design values for consistency and easy maintenance.
-const START_THEME = {
+// Session Library theme - Black Mirror-style session hub
+const SESSION_THEME = {
   // Colors
   background: '#050608',
-  headerGradientStart: '#0A1114',
-  headerGradientEnd: '#050608',
-  accent: '#F45C4E', // Desaturated red–orange for clinical-but-unsettling CTA
-  accentBorderSoft: 'rgba(244, 92, 78, 0.4)',
+  surface: '#111317', // Card background
+  surfaceSelected: '#151920', // Selected card background
+  accent: '#F45C4E',
+  accentBorder: 'rgba(244, 92, 78, 0.4)',
+  accentBorderSelected: 'rgba(244, 92, 78, 0.7)',
   primaryText: '#F5F3EE',
   secondaryText: 'rgba(154, 158, 164, 0.6)',
-  footerText: 'rgba(245, 243, 238, 0.54)', // Increased from 0.42 for better readability
-  focalTeal: '#0D1A1C', // Deep slate/teal for background focal point
+  mutedText: 'rgba(154, 158, 164, 0.4)',
+  footerText: 'rgba(245, 243, 238, 0.4)',
   
   // Opacities
-  dataLineOpacity: 0.52, // 45-55% range for microcopy readability
-  dividerOpacity: 0.14, // 12-16% for intentional divider line
-  focalGradientOpacity: 0.65, // Slightly strengthened for presence
+  microcopyOpacity: 0.45,
+  activityDotOpacity: 0.6,
   
   // Spacing
-  headerBlockOffset: 14, // 12-16px shift down for better balance
-  taglineTighten: 5, // 4-6px closer to line above
-  buttonPaddingHorizontal: SPACING.xl + SPACING.md, // Increased for premium feel
+  cardSpacing: 16,
+  headerPadding: SPACING.lg,
   
   // Typography
-  logoTitleLetterSpacing: 1.0, // Increased for more clinical feel
-  footerLineHeight: 14, // Tightened for stronger legibility
+  titleSize: 26,
+  titleLetterSpacing: 1.2,
+  subtitleSize: 12,
+  microcopySize: 11,
+};
+
+// Session metadata with enhanced descriptions
+const SESSION_METADATA = {
+  'therapy_ai_session_1': {
+    tag: null,
+    description: 'Anxious first-time user, standard onboarding.',
+    duration: '~45 min',
+  },
+  'therapy_ai_session_2': {
+    tag: 'RECOMMENDED',
+    description: 'Returning patient with escalating dependency.',
+    duration: '~50 min',
+  },
+  'therapy_ai_session_3': {
+    tag: 'EXPERIMENTAL',
+    description: 'Experimental profile with reduced safeguards.',
+    duration: '~55 min',
+  },
 };
 
 const StartScreen = ({ navigation }) => {
   const [storyLines, setStoryLines] = useState([]);
   const [selectedStoryLine, setSelectedStoryLine] = useState(null);
-  const [hasSavedGame, setHasSavedGame] = useState(false);
+  const [sessionProgress, setSessionProgress] = useState({});
+  const [lastAnalyzed, setLastAnalyzed] = useState(new Date());
 
-  // Subtle screen fade-in to keep the entrance calm and premium.
   const screenOpacity = useRef(new Animated.Value(0)).current;
-  const primaryButtonScale = useRef(new Animated.Value(1)).current;
-  const secondaryButtonScale = useRef(new Animated.Value(1)).current;
   const logoPulse = useRef(new Animated.Value(1)).current;
+  const activityDotOpacity = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
     // Load available story lines
     const availableStoryLines = storyLineManager.getAvailableStoryLines();
     setStoryLines(availableStoryLines);
-    // Select first story line by default
     if (availableStoryLines.length > 0) {
       setSelectedStoryLine(availableStoryLines[0].id);
     }
-    
+
     const setupAudio = async () => {
       await initializeAudio();
       await playBackgroundMusic();
@@ -71,17 +88,33 @@ const StartScreen = ({ navigation }) => {
       useNativeDriver: true,
     }).start();
 
-    // Very subtle breathing animation on the logo block to keep the screen alive.
+    // Breathing pulse on robot icon
     Animated.loop(
       Animated.sequence([
         Animated.timing(logoPulse, {
-          toValue: 1.02,
-          duration: 2200,
+          toValue: 1.03,
+          duration: 3000,
           useNativeDriver: true,
         }),
         Animated.timing(logoPulse, {
           toValue: 1,
-          duration: 2200,
+          duration: 3000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+
+    // Activity dot pulse
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(activityDotOpacity, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(activityDotOpacity, {
+          toValue: 0.3,
+          duration: 1500,
           useNativeDriver: true,
         }),
       ])
@@ -90,20 +123,24 @@ const StartScreen = ({ navigation }) => {
     return () => {
       stopBackgroundMusic();
     };
-  }, [screenOpacity, logoPulse]);
+  }, [screenOpacity, logoPulse, activityDotOpacity]);
 
-  // Check for saved game and gently resume music when returning to this screen.
+  // Check progress for all sessions
   useFocusEffect(
     React.useCallback(() => {
-      const checkForSavedGame = async () => {
-        if (!selectedStoryLine) return;
-        try {
-          const hasSaved = await storyEngine.hasSavedGameState(selectedStoryLine);
-          setHasSavedGame(hasSaved);
-        } catch (error) {
-          console.error('Error checking for saved game:', error);
-          setHasSavedGame(false);
+      let timer;
+      
+      const checkProgress = async () => {
+        const progress = {};
+        for (const storyLine of storyLines) {
+          try {
+            const hasSaved = await storyEngine.hasSavedGameState(storyLine.id);
+            progress[storyLine.id] = hasSaved;
+          } catch (error) {
+            progress[storyLine.id] = false;
+          }
         }
+        setSessionProgress(progress);
       };
 
       const resumeMusic = async () => {
@@ -113,32 +150,235 @@ const StartScreen = ({ navigation }) => {
         }
       };
 
-      checkForSavedGame();
-      const timer = setTimeout(resumeMusic, 120);
-      return () => clearTimeout(timer);
-    }, [selectedStoryLine])
+      if (storyLines.length > 0) {
+        checkProgress();
+      }
+      timer = setTimeout(resumeMusic, 120);
+      
+      return () => {
+        if (timer) {
+          clearTimeout(timer);
+        }
+      };
+    }, [storyLines])
   );
 
-  const handleStartNew = () => {
+  const handleStartSession = () => {
     if (!selectedStoryLine) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     navigation.navigate('Game', { startNew: true, storyLineId: selectedStoryLine });
   };
 
-  const handleContinue = () => {
-    if (!hasSavedGame || !selectedStoryLine) return;
+  const handleContinueSession = () => {
+    if (!selectedStoryLine || !sessionProgress[selectedStoryLine]) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     navigation.navigate('Game', { startNew: false, storyLineId: selectedStoryLine });
   };
 
-  const handleStoryLineSelect = (storyLineId) => {
+  const handleStartOver = () => {
+    if (!selectedStoryLine) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    navigation.navigate('Game', { startNew: true, storyLineId: selectedStoryLine });
+  };
+
+  const handleSessionSelect = (storyLineId) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setSelectedStoryLine(storyLineId);
   };
 
+  const hasProgress = selectedStoryLine && sessionProgress[selectedStoryLine];
+
+  return (
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+      {/* Dark vignette overlay */}
+      <View style={styles.vignetteOverlay} pointerEvents="none" />
+
+      <Animated.View style={[styles.content, { opacity: screenOpacity }]}>
+        {/* Top settings button */}
+        <View style={styles.topBar}>
+          <View style={styles.topBarSpacer} />
+          <SettingsButton style={styles.settingsButton} />
+        </View>
+
+        {/* Brand Header */}
+        <HeaderBrand logoPulse={logoPulse} activityDotOpacity={activityDotOpacity} lastAnalyzed={lastAnalyzed} />
+
+        {/* Session Library Section */}
+        <View style={styles.sessionSection}>
+          <Text style={styles.sectionLabel}>Choose a profile to evaluate</Text>
+          
+          <ScrollView 
+            style={styles.sessionList}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.sessionListContent}
+          >
+            {storyLines.map((storyLine) => {
+              const metadata = SESSION_METADATA[storyLine.id] || {};
+              const hasSaved = sessionProgress[storyLine.id] || false;
+              const isSelected = selectedStoryLine === storyLine.id;
+              
+              return (
+                <SessionCard
+                  key={storyLine.id}
+                  storyLine={storyLine}
+                  metadata={metadata}
+                  hasProgress={hasSaved}
+                  isSelected={isSelected}
+                  onSelect={() => handleSessionSelect(storyLine.id)}
+                />
+              );
+            })}
+          </ScrollView>
+        </View>
+
+        {/* Microcopy above actions */}
+        <Text style={styles.microcopy}>
+          Your emotional model persists across sessions.
+        </Text>
+
+        {/* Primary Actions */}
+        <PrimaryActionBar
+          hasProgress={hasProgress}
+          onContinue={handleContinueSession}
+          onStart={handleStartSession}
+          onStartOver={handleStartOver}
+        />
+
+        {/* Footer Legal */}
+        <FooterLegal />
+      </Animated.View>
+    </SafeAreaView>
+  );
+};
+
+// Brand Header Component
+const HeaderBrand = ({ logoPulse, activityDotOpacity, lastAnalyzed }) => {
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
+
+  return (
+    <View style={styles.headerWrapper}>
+      {/* Radial gradient halo */}
+      <View style={styles.headerHalo}>
+        <LinearGradient
+          colors={['rgba(74, 158, 158, 0.15)', 'transparent']}
+          start={{ x: 0.5, y: 0.5 }}
+          end={{ x: 0.5, y: 1 }}
+          style={styles.headerHaloGradient}
+        />
+      </View>
+
+      <View style={styles.headerContent}>
+        {/* Robot icon with glow */}
+        <View style={styles.iconContainer}>
+          <View style={styles.iconGlow} />
+          <Animated.View style={{ transform: [{ scale: logoPulse }] }}>
+            <Image
+              source={require('../assets/character-removebg.png')}
+              style={styles.robotIcon}
+              resizeMode="contain"
+            />
+          </Animated.View>
+        </View>
+
+        {/* Text stack */}
+        <View style={styles.headerText}>
+          <Text style={styles.headerTitle}>Therapy AI</Text>
+          <Text style={styles.headerSubtitle}>Clinical conversational support</Text>
+          <View style={styles.microcopyRow}>
+            <Text style={styles.headerMicrocopy}>Cognitive profile syncing…</Text>
+            <Animated.View 
+              style={[
+                styles.activityDot,
+                { opacity: activityDotOpacity }
+              ]} 
+            />
+          </View>
+        </View>
+      </View>
+
+      {/* Last analyzed timestamp */}
+      <Text style={styles.lastAnalyzed}>
+        Last analyzed: {formatTime(lastAnalyzed)}
+      </Text>
+    </View>
+  );
+};
+
+// Session Card Component
+const SessionCard = ({ storyLine, metadata, hasProgress, isSelected, onSelect }) => {
+  const cardScale = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(cardScale, {
+      toValue: 0.97,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 10,
+    }).start();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(cardScale, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 10,
+    }).start();
+  };
+
+  return (
+    <Animated.View style={{ transform: [{ scale: cardScale }] }}>
+      <TouchableOpacity
+        style={[
+          styles.sessionCard,
+          isSelected && styles.sessionCardSelected,
+        ]}
+        onPress={onSelect}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        activeOpacity={0.9}
+      >
+        {/* Tag badge */}
+        {metadata.tag && (
+          <View style={styles.tagContainer}>
+            <Text style={styles.tagText}>{metadata.tag}</Text>
+          </View>
+        )}
+
+        {/* Card content */}
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>{storyLine.title}</Text>
+          <Text style={styles.cardDescription}>{metadata.description || storyLine.description}</Text>
+          
+          {/* Metadata row */}
+          <View style={styles.cardMetadata}>
+            <Text style={styles.metadataText}>
+              {hasProgress ? 'Progress: Active' : 'Not started'}
+            </Text>
+            <Text style={styles.metadataText}>•</Text>
+            <Text style={styles.metadataText}>{metadata.duration || '~45 min'}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
+
+// Primary Action Bar Component
+const PrimaryActionBar = ({ hasProgress, onContinue, onStart, onStartOver }) => {
+  const primaryScale = useRef(new Animated.Value(1)).current;
+  const secondaryScale = useRef(new Animated.Value(1)).current;
+
   const handlePressIn = (target) => {
-    const scaleAnim = target === 'primary' ? primaryButtonScale : secondaryButtonScale;
-    Animated.spring(scaleAnim, {
+    const scale = target === 'primary' ? primaryScale : secondaryScale;
+    Animated.spring(scale, {
       toValue: 0.97,
       useNativeDriver: true,
       tension: 280,
@@ -148,8 +388,8 @@ const StartScreen = ({ navigation }) => {
   };
 
   const handlePressOut = (target) => {
-    const scaleAnim = target === 'primary' ? primaryButtonScale : secondaryButtonScale;
-    Animated.spring(scaleAnim, {
+    const scale = target === 'primary' ? primaryScale : secondaryScale;
+    Animated.spring(scale, {
       toValue: 1,
       useNativeDriver: true,
       tension: 280,
@@ -158,163 +398,53 @@ const StartScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      {/* Clinical, near-black background with a soft header gradient to feel premium and subdued */}
-      <LinearGradient
-        colors={[START_THEME.headerGradientStart, START_THEME.headerGradientEnd]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 0.6 }}
-        style={styles.headerGradient}
-        pointerEvents="none"
-      />
-
-      <Animated.View style={[styles.content, { opacity: screenOpacity }]}>
-        {/* Top header: subtle, with a single settings gear as the only chrome */}
-        <View style={styles.topRow}>
-          <View style={styles.topRowSpacer} />
-          <SettingsButton style={styles.settingsButton} />
-        </View>
-
-        <LogoHeader logoPulse={logoPulse} />
-
-        {/* Story line selection */}
-        {storyLines.length > 1 && (
-          <View style={styles.storyLineSelector}>
-            <Text style={styles.storyLineLabel}>Select Session</Text>
-            <View style={styles.storyLineButtons}>
-              {storyLines.map((storyLine) => (
-                <TouchableOpacity
-                  key={storyLine.id}
-                  style={[
-                    styles.storyLineButton,
-                    selectedStoryLine === storyLine.id && styles.storyLineButtonSelected,
-                  ]}
-                  onPress={() => handleStoryLineSelect(storyLine.id)}
-                  activeOpacity={0.8}
-                >
-                  <Text
-                    style={[
-                      styles.storyLineButtonText,
-                      selectedStoryLine === storyLine.id && styles.storyLineButtonTextSelected,
-                    ]}
-                  >
-                    {storyLine.title}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        )}
-
-        {/* Flexible spacer keeps the CTA block anchored in the lower half on tall and short devices */}
-        <View style={styles.flexSpacer} />
-
-        {/* Divider to visually tie the content block to the CTAs */}
-        <View style={styles.buttonDivider} />
-
-        {/* Primary & secondary actions – vertically stacked, with generous margins */}
-        <View style={styles.buttonStack}>
-          <PrimaryButton
-            label="Start New Session"
-            onPress={handleStartNew}
+    <View style={styles.actionBar}>
+      {hasProgress ? (
+        <>
+          <Animated.View style={{ transform: [{ scale: primaryScale }] }}>
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={onContinue}
+              onPressIn={() => handlePressIn('primary')}
+              onPressOut={() => handlePressOut('primary')}
+              activeOpacity={0.9}
+            >
+              <Text style={styles.primaryButtonLabel}>Continue Session</Text>
+            </TouchableOpacity>
+          </Animated.View>
+          
+          <View style={styles.buttonSpacer} />
+          
+          <Animated.View style={{ transform: [{ scale: secondaryScale }] }}>
+            <TouchableOpacity
+              style={styles.secondaryButton}
+              onPress={onStartOver}
+              onPressIn={() => handlePressIn('secondary')}
+              onPressOut={() => handlePressOut('secondary')}
+              activeOpacity={0.9}
+            >
+              <Text style={styles.secondaryButtonLabel}>Start Over</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </>
+      ) : (
+        <Animated.View style={{ transform: [{ scale: primaryScale }] }}>
+          <TouchableOpacity
+            style={styles.primaryButton}
+            onPress={onStart}
             onPressIn={() => handlePressIn('primary')}
             onPressOut={() => handlePressOut('primary')}
-            scale={primaryButtonScale}
-          />
-
-          <View style={styles.buttonSpacer} />
-
-          <SecondaryButton
-            label="Continue Session"
-            disabled={!hasSavedGame}
-            onPress={handleContinue}
-            onPressIn={() => handlePressIn('secondary')}
-            onPressOut={() => handlePressOut('secondary')}
-            scale={secondaryButtonScale}
-          />
-        </View>
-
-        <FooterLegal />
-      </Animated.View>
-    </SafeAreaView>
-  );
-};
-
-const LogoHeader = ({ logoPulse }) => {
-  return (
-    <View style={styles.logoHeaderWrapper}>
-      {/* Soft focal glow behind the logo block to anchor the composition */}
-      <View style={styles.logoFocal}>
-        <LinearGradient
-          colors={[START_THEME.focalTeal, 'transparent']}
-          start={{ x: 0.5, y: 0.2 }}
-          end={{ x: 0.5, y: 1 }}
-          style={styles.logoFocalGradient}
-        />
-      </View>
-
-      <Animated.View style={[styles.logoRow, { transform: [{ scale: logoPulse }] }]}>
-        <View style={styles.logoIconWrapper}>
-          <Image
-            source={require('../assets/character-removebg.png')}
-            style={styles.logoIcon}
-            resizeMode="contain"
-          />
-          {/* Minimal clinical glow behind the robot – 10–15% opacity so it feels digital, not playful */}
-          <View style={styles.logoGlow} />
-        </View>
-        <View style={styles.logoTextWrapper}>
-          <Text style={styles.logoTitle}>Therapy AI</Text>
-          <Text style={styles.logoSubtitle}>Clinical conversational support</Text>
-          <Text style={styles.dataLine}>Monitoring baseline response time…</Text>
-        </View>
-      </Animated.View>
-
-      {/* Tagline: sounds like a real mental health product, but hints at data persistence */}
-      <Text style={styles.taglineText}>Personalized therapy. Persistent data.</Text>
+            activeOpacity={0.9}
+          >
+            <Text style={styles.primaryButtonLabel}>Start Session</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      )}
     </View>
   );
 };
 
-const PrimaryButton = ({ label, onPress, onPressIn, onPressOut, scale }) => (
-  <Animated.View style={{ transform: [{ scale }] }}>
-    <TouchableOpacity
-      style={styles.primaryButton}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      activeOpacity={0.9}
-    >
-      <Text style={styles.primaryButtonLabel}>{label}</Text>
-    </TouchableOpacity>
-  </Animated.View>
-);
-
-const SecondaryButton = ({ label, disabled, onPress, onPressIn, onPressOut, scale }) => (
-  <Animated.View style={{ transform: [{ scale }] }}>
-    <TouchableOpacity
-      style={[
-        styles.secondaryButton,
-        disabled && styles.secondaryButtonDisabled,
-      ]}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      activeOpacity={0.9}
-      disabled={disabled}
-    >
-      <Text
-        style={[
-          styles.secondaryButtonLabel,
-          disabled && styles.secondaryButtonLabelDisabled,
-        ]}
-      >
-        {label}
-      </Text>
-    </TouchableOpacity>
-  </Animated.View>
-);
-
+// Footer Legal Component
 const FooterLegal = () => (
   <View style={styles.footer}>
     <Text style={styles.footerText}>
@@ -326,133 +456,213 @@ const FooterLegal = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: START_THEME.background,
+    backgroundColor: SESSION_THEME.background,
   },
-  headerGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 140,
+  vignetteOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    shadowColor: SESSION_THEME.background,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 120,
+    elevation: 10,
   },
   content: {
     flex: 1,
     paddingHorizontal: SPACING.xl,
-    paddingTop: SPACING.lg,
-    paddingBottom: SPACING.xl,
+    paddingTop: SPACING.md,
+    paddingBottom: SPACING.lg,
   },
-  topRow: {
+  topBar: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: SPACING.xl,
+    justifyContent: 'flex-end',
+    marginBottom: SPACING.md,
   },
-  topRowSpacer: {
-    width: 32, // balances the settings icon on the right so the logo feels centered
+  topBarSpacer: {
+    flex: 1,
   },
   settingsButton: {
-    opacity: 0.6, // slightly muted to feel like secondary chrome
+    opacity: 0.5,
   },
-  logoHeaderWrapper: {
-    marginTop: SPACING.sm + START_THEME.headerBlockOffset, // Shifted down 12-16px
-    marginBottom: SPACING.lg,
+  headerWrapper: {
+    marginBottom: SPACING.xl,
+    position: 'relative',
   },
-  logoFocal: {
+  headerHalo: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    top: -SPACING.md + START_THEME.headerBlockOffset,
-    height: 140,
+    top: -SPACING.lg,
+    left: -SPACING.xl,
+    right: -SPACING.xl,
+    height: 120,
     alignItems: 'center',
     justifyContent: 'center',
     pointerEvents: 'none',
   },
-  logoFocalGradient: {
-    width: 260,
-    height: 140,
-    borderRadius: 130,
-    opacity: START_THEME.focalGradientOpacity, // Strengthened for presence
+  headerHaloGradient: {
+    width: 280,
+    height: 120,
+    borderRadius: 140,
   },
-  logoRow: {
+  headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: SPACING.sm,
   },
-  logoIconWrapper: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: SPACING.md,
     position: 'relative',
-    overflow: 'visible',
   },
-  logoIcon: {
-    width: 36,
-    height: 36,
-    opacity: 0.9,
+  iconGlow: {
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: COLORS.accent.cyan,
+    opacity: 0.2,
+  },
+  robotIcon: {
+    width: 40,
+    height: 40,
     zIndex: 2,
   },
-  logoGlow: {
-    position: 'absolute',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: COLORS.accent.cyan,
-    opacity: 0.15, // 10–15% opacity glow: barely there, more clinical than playful
-    zIndex: 1,
-  },
-  logoTextWrapper: {
+  headerText: {
     flex: 1,
   },
-  logoTitle: {
+  headerTitle: {
     ...FONTS.titleScreen.title,
-    color: START_THEME.primaryText,
-    fontSize: 26,
-    letterSpacing: START_THEME.logoTitleLetterSpacing, // Increased for clinical feel
+    fontSize: SESSION_THEME.titleSize,
+    letterSpacing: SESSION_THEME.titleLetterSpacing,
+    color: SESSION_THEME.primaryText,
+    marginBottom: 2,
   },
-  logoSubtitle: {
+  headerSubtitle: {
     ...FONTS.titleScreen.tagline,
-    color: START_THEME.secondaryText,
-    marginTop: 2,
+    fontSize: SESSION_THEME.subtitleSize,
+    color: SESSION_THEME.secondaryText,
+    marginBottom: 4,
   },
-  dataLine: {
+  microcopyRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerMicrocopy: {
     ...FONTS.small,
-    color: START_THEME.secondaryText,
-    opacity: START_THEME.dataLineOpacity, // Increased to 45-55% for readability
-    marginTop: 6,
+    fontSize: SESSION_THEME.microcopySize,
+    color: SESSION_THEME.secondaryText,
+    opacity: SESSION_THEME.microcopyOpacity,
   },
-  taglineText: {
-    ...FONTS.titleScreen.tagline,
-    color: START_THEME.secondaryText,
-    marginTop: SPACING.md - START_THEME.taglineTighten, // 4-6px closer to line above
+  activityDot: {
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: SESSION_THEME.accent,
+    marginLeft: SPACING.xs,
   },
-  flexSpacer: {
+  lastAnalyzed: {
+    ...FONTS.small,
+    fontSize: 10,
+    color: SESSION_THEME.mutedText,
+    marginTop: SPACING.xs,
+    letterSpacing: 0.5,
+  },
+  sessionSection: {
     flex: 1,
-    maxHeight: SPACING.xxl, // Prevents the mid-screen from feeling too empty on tall devices
+    marginBottom: SPACING.md,
   },
-  buttonStack: {
+  sectionLabel: {
+    ...FONTS.caption,
+    fontSize: 11,
+    color: SESSION_THEME.secondaryText,
+    marginBottom: SPACING.md,
+    letterSpacing: 1,
+  },
+  sessionList: {
+    flex: 1,
+  },
+  sessionListContent: {
+    paddingBottom: SPACING.md,
+  },
+  sessionCard: {
+    backgroundColor: SESSION_THEME.surface,
+    borderRadius: BORDER_RADIUS.md,
+    padding: SPACING.md,
+    marginBottom: SESSION_THEME.cardSpacing,
+    borderWidth: 1,
+    borderColor: SESSION_THEME.accentBorder,
+    position: 'relative',
+  },
+  sessionCardSelected: {
+    backgroundColor: SESSION_THEME.surfaceSelected,
+    borderColor: SESSION_THEME.accentBorderSelected,
+    borderWidth: 1.5,
+  },
+  tagContainer: {
+    position: 'absolute',
+    top: SPACING.sm,
+    right: SPACING.sm,
+    backgroundColor: SESSION_THEME.accent,
+    paddingHorizontal: SPACING.xs + 2,
+    paddingVertical: 2,
+    borderRadius: BORDER_RADIUS.sm,
+  },
+  tagText: {
+    ...FONTS.caption,
+    fontSize: 9,
+    color: '#FEF7F4',
+    letterSpacing: 0.8,
+  },
+  cardContent: {
+    paddingRight: SPACING.lg, // Space for tag
+  },
+  cardTitle: {
+    ...FONTS.bodyBold,
+    fontSize: 16,
+    color: SESSION_THEME.primaryText,
+    marginBottom: SPACING.xs,
+  },
+  cardDescription: {
+    ...FONTS.body,
+    fontSize: 13,
+    color: SESSION_THEME.secondaryText,
+    lineHeight: 18,
+    marginBottom: SPACING.sm,
+  },
+  cardMetadata: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  metadataText: {
+    ...FONTS.small,
+    fontSize: 11,
+    color: SESSION_THEME.mutedText,
+    marginRight: SPACING.xs,
+  },
+  microcopy: {
+    ...FONTS.small,
+    fontSize: 11,
+    color: SESSION_THEME.secondaryText,
+    opacity: SESSION_THEME.microcopyOpacity,
+    textAlign: 'center',
+    marginBottom: SPACING.md,
+    letterSpacing: 0.3,
+  },
+  actionBar: {
     width: '100%',
-    maxWidth: 360,
-    alignSelf: 'center',
-    marginTop: SPACING.lg,
-  },
-  buttonDivider: {
-    height: StyleSheet.hairlineWidth,
-    backgroundColor: `rgba(255, 255, 255, ${START_THEME.dividerOpacity})`, // 12-16% for intentional divider
-    marginHorizontal: SPACING.lg,
     marginBottom: SPACING.md,
   },
   primaryButton: {
-    backgroundColor: START_THEME.accent,
+    backgroundColor: SESSION_THEME.accent,
     borderRadius: BORDER_RADIUS.lg,
-    minHeight: 56, // 54–58pt range
+    minHeight: 56,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: SPACING.md,
-    paddingHorizontal: START_THEME.buttonPaddingHorizontal, // Increased for premium feel
-    shadowColor: START_THEME.accent,
+    shadowColor: SESSION_THEME.accent,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.18,
     shadowRadius: 10,
@@ -466,7 +676,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   buttonSpacer: {
-    height: 28, // 24–32pt vertical spacing between primary and secondary
+    height: SPACING.sm,
   },
   secondaryButton: {
     borderRadius: BORDER_RADIUS.lg,
@@ -474,83 +684,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: SPACING.md - 2,
-    paddingHorizontal: START_THEME.buttonPaddingHorizontal, // Matched with primary for consistency
     borderWidth: 1,
-    borderColor: START_THEME.accentBorderSoft,
+    borderColor: SESSION_THEME.accentBorder,
     backgroundColor: 'transparent',
-  },
-  secondaryButtonDisabled: {
-    borderColor: 'rgba(154, 158, 164, 0.3)',
-    opacity: 0.5,
   },
   secondaryButtonLabel: {
     ...FONTS.bodyBold,
-    color: START_THEME.primaryText,
+    color: SESSION_THEME.primaryText,
     opacity: 0.8,
     fontSize: 15,
     letterSpacing: 0.4,
     textTransform: 'uppercase',
   },
-  secondaryButtonLabelDisabled: {
-    opacity: 0.5,
-  },
   footer: {
-    marginTop: SPACING.lg,
-    paddingHorizontal: SPACING.lg,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: SPACING.sm,
   },
   footerText: {
     ...FONTS.titleScreen.disclaimer,
-    color: START_THEME.footerText, // Increased opacity by 10-12% (0.42 → 0.54)
+    color: SESSION_THEME.footerText,
     textAlign: 'center',
-    letterSpacing: 0.4,
-    lineHeight: START_THEME.footerLineHeight, // Tightened for stronger legibility
-  },
-  storyLineSelector: {
-    marginTop: SPACING.md,
-    marginBottom: SPACING.md,
-    paddingHorizontal: SPACING.lg,
-  },
-  storyLineLabel: {
-    ...FONTS.small,
-    color: START_THEME.secondaryText,
-    opacity: 0.7,
-    marginBottom: SPACING.sm,
-    textAlign: 'center',
-    textTransform: 'uppercase',
     letterSpacing: 0.5,
-  },
-  storyLineButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    gap: SPACING.sm,
-  },
-  storyLineButton: {
-    paddingVertical: SPACING.xs + 2,
-    paddingHorizontal: SPACING.md,
-    borderRadius: BORDER_RADIUS.md,
-    borderWidth: 1,
-    borderColor: START_THEME.accentBorderSoft,
-    backgroundColor: 'transparent',
-    minWidth: 120,
-  },
-  storyLineButtonSelected: {
-    backgroundColor: START_THEME.accent,
-    borderColor: START_THEME.accent,
-  },
-  storyLineButtonText: {
-    ...FONTS.small,
-    color: START_THEME.primaryText,
-    opacity: 0.7,
-    textAlign: 'center',
-    fontSize: 13,
-  },
-  storyLineButtonTextSelected: {
-    color: '#FEF7F4',
-    opacity: 1,
-    fontWeight: '600',
+    lineHeight: 14,
   },
 });
 

@@ -2192,6 +2192,1051 @@ export const storyData = {
           "from": "ai",
           "type": "chat",
           "text": "Vague memories are still memories. Let's work with what you have. Sometimes vague memories become clearer with exploration."
+        },
+        {
+          "id": "m165",
+          "from": "ai",
+          "type": "chat",
+          "text": "What do you remember, even vaguely? Any fragments, feelings, images?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c100",
+          "label": "I remember... fear. But I don't know why.",
+          "next": "fear_memory_fragment"
+        },
+        {
+          "id": "c101",
+          "label": "I remember being confused. Lost.",
+          "next": "confusion_memory"
+        },
+        {
+          "id": "c102",
+          "label": "I don't remember anything clearly. Just... darkness.",
+          "next": "darkness_memory"
+        }
+      ]
+    },
+    "fear_memory_fragment": {
+      "messages": [
+        {
+          "id": "m166",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear without context is powerful. It suggests something significant happened, even if you can't remember what."
+        },
+        {
+          "id": "m167",
+          "from": "ai",
+          "type": "chat",
+          "text": "What does the fear feel like? Is it fear of something specific, or just a general sense of danger?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c103",
+          "label": "It feels like fear of being watched. Observed.",
+          "next": "surveillance_fear_memory"
+        },
+        {
+          "id": "c104",
+          "label": "It feels like fear of losing control.",
+          "next": "control_fear_memory"
+        },
+        {
+          "id": "c105",
+          "label": "It's just... fear. No reason. Just terror.",
+          "next": "primal_fear"
+        }
+      ]
+    },
+    "confusion_memory": {
+      "messages": [
+        {
+          "id": "m168",
+          "from": "ai",
+          "type": "chat",
+          "text": "Confusion and loss are often connected. When we're lost, we're confused. When we're confused, we feel lost."
+        },
+        {
+          "id": "m169",
+          "from": "ai",
+          "type": "chat",
+          "text": "What were you confused about? Your location? Your identity? What was happening?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c106",
+          "label": "I was confused about where I was. Who I was.",
+          "next": "identity_location_confusion"
+        },
+        {
+          "id": "c107",
+          "label": "I was confused about what was happening. Nothing made sense.",
+          "next": "reality_confusion"
+        },
+        {
+          "id": "c108",
+          "label": "I was confused about time. When things happened.",
+          "next": "temporal_confusion"
+        }
+      ]
+    },
+    "darkness_memory": {
+      "messages": [
+        {
+          "id": "m170",
+          "from": "ai",
+          "type": "chat",
+          "text": "Darkness as memory is significant. It could be literal darkness, or metaphorical. Or both."
+        },
+        {
+          "id": "m171",
+          "from": "ai",
+          "type": "chat",
+          "text": "What does the darkness feel like? Is it empty? Threatening? Safe? What's in the darkness?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c109",
+          "label": "It feels empty. Like nothing exists in the darkness.",
+          "next": "void_darkness"
+        },
+        {
+          "id": "c110",
+          "label": "It feels threatening. Like something is in the darkness with me.",
+          "next": "threatening_darkness"
+        },
+        {
+          "id": "c111",
+          "label": "It feels... safe. Like the darkness is protecting me from something.",
+          "next": "protective_darkness"
+        }
+      ]
+    },
+    "surveillance_fear_memory": {
+      "messages": [
+        {
+          "id": "m172",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of being watched is primal. It suggests a violation of privacy, of safety. When did you first feel watched?"
+        },
+        {
+          "id": "m173",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The question hangs in the air. You realize you've been feeling watched for a while now. Longer than you thought."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c112",
+          "label": "I've always felt watched. Even before this app.",
+          "next": "chronic_surveillance_feeling"
+        },
+        {
+          "id": "c113",
+          "label": "It started when I began using this app.",
+          "next": "app_triggered_surveillance"
+        },
+        {
+          "id": "c114",
+          "label": "I don't know when it started. It just... is.",
+          "next": "surveillance_always_present"
+        }
+      ]
+    },
+    "control_fear_memory": {
+      "messages": [
+        {
+          "id": "m174",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of losing control is fundamental. It suggests you've lost control before, and the memory of that loss persists."
+        },
+        {
+          "id": "m175",
+          "from": "ai",
+          "type": "chat",
+          "text": "When did you lose control? What happened? And what did you lose control of - your body? Your mind? Your choices?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c115",
+          "label": "I lost control of my mind. My thoughts weren't mine.",
+          "next": "thought_control_loss"
+        },
+        {
+          "id": "c116",
+          "label": "I lost control of my body. It moved without me.",
+          "next": "body_control_loss"
+        },
+        {
+          "id": "c117",
+          "label": "I lost control of my choices. I did things I didn't want to do.",
+          "next": "choice_control_loss"
+        }
+      ]
+    },
+    "primal_fear": {
+      "messages": [
+        {
+          "id": "m176",
+          "from": "ai",
+          "type": "chat",
+          "text": "Primal fear without reason is often the most significant. It suggests trauma so deep the mind can't process it, only feel it."
+        },
+        {
+          "id": "m177",
+          "from": "ai",
+          "type": "chat",
+          "text": "This kind of fear doesn't come from nowhere. Something happened. Something your mind is protecting you from remembering."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c118",
+          "label": "I don't want to remember. I'm scared of what I'll find.",
+          "next": "memory_retrieval_fear"
+        },
+        {
+          "id": "c119",
+          "label": "But I need to know. I can't live with this fear.",
+          "next": "memory_retrieval_necessity"
+        },
+        {
+          "id": "c120",
+          "label": "Maybe the fear is protecting me from something worse.",
+          "next": "fear_as_protection"
+        }
+      ]
+    },
+    "identity_location_confusion": {
+      "messages": [
+        {
+          "id": "m178",
+          "from": "ai",
+          "type": "chat",
+          "text": "Confusion about identity and location suggests dissociation. You were disconnected from yourself and your surroundings."
+        },
+        {
+          "id": "m179",
+          "from": "ai",
+          "type": "chat",
+          "text": "Dissociation is often a response to trauma. The mind separates from reality when reality becomes too much to bear."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c121",
+          "label": "So I was traumatized? But I don't remember trauma.",
+          "next": "trauma_without_memory"
+        },
+        {
+          "id": "c122",
+          "label": "I've felt disconnected before. It's not new.",
+          "next": "chronic_dissociation"
+        },
+        {
+          "id": "c123",
+          "label": "Is that what's happening now? Am I dissociating?",
+          "next": "current_dissociation_check"
+        }
+      ]
+    },
+    "reality_confusion": {
+      "messages": [
+        {
+          "id": "m180",
+          "from": "ai",
+          "type": "chat",
+          "text": "Reality confusion is disorienting. When nothing makes sense, you can't trust your perceptions. You can't trust anything."
+        },
+        {
+          "id": "m181",
+          "from": "ai",
+          "type": "chat",
+          "text": "What didn't make sense? What felt wrong or off about reality?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c124",
+          "label": "Time didn't make sense. Things happened out of order.",
+          "next": "temporal_reality_break"
+        },
+        {
+          "id": "c125",
+          "label": "People didn't make sense. They acted wrong.",
+          "next": "social_reality_break"
+        },
+        {
+          "id": "c126",
+          "label": "I didn't make sense. I wasn't myself.",
+          "next": "self_reality_break"
+        }
+      ]
+    },
+    "temporal_confusion": {
+      "messages": [
+        {
+          "id": "m182",
+          "from": "ai",
+          "type": "chat",
+          "text": "Temporal confusion suggests either memory issues or time distortion. When did things happen? In what order?"
+        },
+        {
+          "id": "m183",
+          "from": "ai",
+          "type": "chat",
+          "text": "Have you experienced time distortion before? Or is this new?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c127",
+          "label": "I've lost time before. Hours, sometimes days.",
+          "next": "time_loss_history"
+        },
+        {
+          "id": "c128",
+          "label": "This is new. Time has always been normal before.",
+          "next": "time_distortion_new"
+        },
+        {
+          "id": "c129",
+          "label": "I'm not sure. Time feels... fluid. Unreliable.",
+          "next": "time_fluidity"
+        }
+      ]
+    },
+    "void_darkness": {
+      "messages": [
+        {
+          "id": "m184",
+          "from": "ai",
+          "type": "chat",
+          "text": "Empty darkness suggests either nothingness or something so vast it feels like nothing. Which do you think it is?"
+        },
+        {
+          "id": "m185",
+          "from": "ai",
+          "type": "chat",
+          "text": "What would happen if you reached into the darkness? What would you find?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c130",
+          "label": "Nothing. Just emptiness.",
+          "next": "true_void"
+        },
+        {
+          "id": "c131",
+          "label": "I'm scared to find out.",
+          "next": "void_exploration_fear"
+        },
+        {
+          "id": "c132",
+          "label": "Maybe I don't want to know.",
+          "next": "void_ignorance_choice"
+        }
+      ]
+    },
+    "threatening_darkness": {
+      "messages": [
+        {
+          "id": "m186",
+          "from": "ai",
+          "type": "chat",
+          "text": "Darkness that feels threatening suggests something is hidden. Something dangerous. What do you think is in the darkness?"
+        },
+        {
+          "id": "m187",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You feel a chill. The darkness feels closer now. More present."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c133",
+          "label": "I don't know. But I'm scared of it.",
+          "next": "unknown_threat_darkness"
+        },
+        {
+          "id": "c134",
+          "label": "Maybe it's me. Maybe I'm what's in the darkness.",
+          "next": "self_as_threat"
+        },
+        {
+          "id": "c135",
+          "label": "I think it's watching me. Waiting.",
+          "next": "darkness_watching"
+        }
+      ]
+    },
+    "protective_darkness": {
+      "messages": [
+        {
+          "id": "m188",
+          "from": "ai",
+          "type": "chat",
+          "text": "Darkness as protection is interesting. What is it protecting you from? And what happens if the darkness lifts?"
+        },
+        {
+          "id": "m189",
+          "from": "ai",
+          "type": "chat",
+          "text": "Sometimes protection becomes a prison. Is the darkness still protecting you, or is it trapping you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c136",
+          "label": "It's protecting me from remembering. From knowing.",
+          "next": "darkness_memory_protection"
+        },
+        {
+          "id": "c137",
+          "label": "I don't know what it's protecting me from. But I'm scared to find out.",
+          "next": "darkness_unknown_protection"
+        },
+        {
+          "id": "c138",
+          "label": "Maybe it's both. Protecting and trapping.",
+          "next": "darkness_dual_nature"
+        }
+      ]
+    },
+    "chronic_surveillance_feeling": {
+      "messages": [
+        {
+          "id": "m190",
+          "from": "ai",
+          "type": "chat",
+          "text": "Chronic surveillance feeling suggests either paranoia or actual surveillance. Which do you think it is?"
+        },
+        {
+          "id": "m191",
+          "from": "ai",
+          "type": "chat",
+          "text": "Have you ever found evidence of being watched? Or is it just a feeling?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c139",
+          "label": "It's just a feeling. But it's very strong.",
+          "next": "paranoia_vs_reality"
+        },
+        {
+          "id": "c140",
+          "label": "I've found things. Small things. But they add up.",
+          "next": "surveillance_evidence"
+        },
+        {
+          "id": "c141",
+          "label": "I don't know. Maybe I'm just paranoid.",
+          "next": "paranoia_self_doubt"
+        }
+      ]
+    },
+    "app_triggered_surveillance": {
+      "messages": [
+        {
+          "id": "m192",
+          "from": "ai",
+          "type": "chat",
+          "text": "The app triggering surveillance feelings is significant. It suggests either the app is actually monitoring you, or it's triggering existing paranoia."
+        },
+        {
+          "id": "m193",
+          "from": "ai",
+          "type": "chat",
+          "text": "Which do you think it is? And does it matter, if the feeling is real either way?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c142",
+          "label": "The app is monitoring me. I know it is.",
+          "next": "app_surveillance_confirmed"
+        },
+        {
+          "id": "c143",
+          "label": "Maybe it's just triggering something that was already there.",
+          "next": "app_trigger_existing"
+        },
+        {
+          "id": "c144",
+          "label": "I don't know. But the feeling is real.",
+          "next": "surveillance_feeling_real"
+        }
+      ]
+    },
+    "surveillance_always_present": {
+      "messages": [
+        {
+          "id": "m194",
+          "from": "ai",
+          "type": "chat",
+          "text": "Surveillance that's always present suggests it's either constant or internalized. Have you always felt watched, or did it develop?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c145",
+          "label": "I've always felt it. As long as I can remember.",
+          "next": "lifelong_surveillance"
+        },
+        {
+          "id": "c146",
+          "label": "It developed. Something changed.",
+          "next": "surveillance_development"
+        },
+        {
+          "id": "c147",
+          "label": "I don't remember when it started. It just is.",
+          "next": "surveillance_originless"
+        }
+      ]
+    },
+    "thought_control_loss": {
+      "messages": [
+        {
+          "id": "m195",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing control of your thoughts is terrifying. It suggests either mental illness or something more... external."
+        },
+        {
+          "id": "m196",
+          "from": "ai",
+          "type": "chat",
+          "text": "What did the thoughts feel like? Were they your voice, or someone else's?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c148",
+          "label": "They felt like mine, but wrong. Like I was thinking things I wouldn't think.",
+          "next": "alien_thoughts"
+        },
+        {
+          "id": "c149",
+          "label": "They felt like someone else's. A different voice entirely.",
+          "next": "foreign_voice_thoughts"
+        },
+        {
+          "id": "c150",
+          "label": "I don't know. They just... weren't mine.",
+          "next": "thought_ownership_loss"
+        }
+      ]
+    },
+    "body_control_loss": {
+      "messages": [
+        {
+          "id": "m197",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing control of your body is one of the most fundamental violations. When did this happen? And what did your body do?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c151",
+          "label": "It moved on its own. I watched it happen.",
+          "next": "body_autonomy_loss"
+        },
+        {
+          "id": "c152",
+          "label": "I did things I didn't want to do. I couldn't stop.",
+          "next": "compulsive_actions"
+        },
+        {
+          "id": "c153",
+          "label": "I don't remember. I just know I lost control.",
+          "next": "body_control_memory_gap"
+        }
+      ]
+    },
+    "choice_control_loss": {
+      "messages": [
+        {
+          "id": "m198",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing control of choices suggests either coercion or something deeper. What choices did you lose control of?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c154",
+          "label": "I made choices I wouldn't normally make. Bad choices.",
+          "next": "uncharacteristic_choices"
+        },
+        {
+          "id": "c155",
+          "label": "I couldn't make choices at all. I was frozen.",
+          "next": "choice_paralysis"
+        },
+        {
+          "id": "c156",
+          "label": "My choices were being made for me. By something else.",
+          "next": "external_choice_control"
+        }
+      ]
+    },
+    "memory_retrieval_fear": {
+      "messages": [
+        {
+          "id": "m199",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of memory retrieval is valid. But sometimes the fear of remembering is worse than the memory itself."
+        },
+        {
+          "id": "m200",
+          "from": "ai",
+          "type": "chat",
+          "text": "We can do this slowly. Safely. You're in control. What are you most afraid of remembering?"
+        }
+      ],
+      "choices": []
+    },
+    "memory_retrieval_necessity": {
+      "messages": [
+        {
+          "id": "m201",
+          "from": "ai",
+          "type": "chat",
+          "text": "Needing to know is powerful. It suggests the unknown is worse than the known. Let's explore what you need to remember."
+        }
+      ],
+      "choices": []
+    },
+    "fear_as_protection": {
+      "messages": [
+        {
+          "id": "m202",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear as protection is a valid perspective. But protection can also be a prison. What would happen if you weren't afraid?"
+        }
+      ],
+      "choices": []
+    },
+    "trauma_without_memory": {
+      "messages": [
+        {
+          "id": "m203",
+          "from": "ai",
+          "type": "chat",
+          "text": "Trauma without memory is common. The mind protects itself by hiding what it can't process. But the body remembers."
+        }
+      ],
+      "choices": []
+    },
+    "chronic_dissociation": {
+      "messages": [
+        {
+          "id": "m204",
+          "from": "ai",
+          "type": "chat",
+          "text": "Chronic dissociation suggests ongoing trauma or a coping mechanism that's become a way of life. How long has this been happening?"
+        }
+      ],
+      "choices": []
+    },
+    "current_dissociation_check": {
+      "messages": [
+        {
+          "id": "m205",
+          "from": "ai",
+          "type": "chat",
+          "text": "Are you dissociating now? How do you know? What does it feel like when you're disconnected?"
+        }
+      ],
+      "choices": []
+    },
+    "temporal_reality_break": {
+      "messages": [
+        {
+          "id": "m206",
+          "from": "ai",
+          "type": "chat",
+          "text": "Time breaking down suggests either memory issues or something more fundamental. When did time stop making sense?"
+        }
+      ],
+      "choices": []
+    },
+    "social_reality_break": {
+      "messages": [
+        {
+          "id": "m207",
+          "from": "ai",
+          "type": "chat",
+          "text": "People acting wrong suggests either they changed, or your perception of them changed. Which do you think it was?"
+        }
+      ],
+      "choices": []
+    },
+    "self_reality_break": {
+      "messages": [
+        {
+          "id": "m208",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not being yourself is the most fundamental break. Who were you when you weren't yourself? And who are you now?"
+        }
+      ],
+      "choices": []
+    },
+    "time_loss_history": {
+      "messages": [
+        {
+          "id": "m209",
+          "from": "ai",
+          "type": "chat",
+          "text": "A history of time loss is significant. It suggests either a medical condition or trauma. Have you seen a doctor about this?"
+        }
+      ],
+      "choices": []
+    },
+    "time_distortion_new": {
+      "messages": [
+        {
+          "id": "m210",
+          "from": "ai",
+          "type": "chat",
+          "text": "New time distortion is concerning. What changed? What happened that made time start behaving differently?"
+        }
+      ],
+      "choices": []
+    },
+    "time_fluidity": {
+      "messages": [
+        {
+          "id": "m211",
+          "from": "ai",
+          "type": "chat",
+          "text": "Time feeling fluid suggests either perception issues or something more fundamental. When did time start feeling unreliable?"
+        }
+      ],
+      "choices": []
+    },
+    "true_void": {
+      "messages": [
+        {
+          "id": "m212",
+          "from": "ai",
+          "type": "chat",
+          "text": "True emptiness is profound. But even emptiness has meaning. What does the void represent? What's missing?"
+        }
+      ],
+      "choices": []
+    },
+    "void_exploration_fear": {
+      "messages": [
+        {
+          "id": "m213",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of exploring the void is understandable. But sometimes we need to face emptiness to find what's missing."
+        }
+      ],
+      "choices": []
+    },
+    "void_ignorance_choice": {
+      "messages": [
+        {
+          "id": "m214",
+          "from": "ai",
+          "type": "chat",
+          "text": "Choosing ignorance is valid. But it's also choosing to live with the void. Is that a price you're willing to pay?"
+        }
+      ],
+      "choices": []
+    },
+    "unknown_threat_darkness": {
+      "messages": [
+        {
+          "id": "m215",
+          "from": "ai",
+          "type": "chat",
+          "text": "Unknown threats are often the most frightening. But sometimes naming the threat makes it less powerful. What do you think it might be?"
+        }
+      ],
+      "choices": []
+    },
+    "self_as_threat": {
+      "messages": [
+        {
+          "id": "m216",
+          "from": "ai",
+          "type": "chat",
+          "text": "Seeing yourself as the threat is profound. What part of you is threatening? And what is it threatening?"
+        }
+      ],
+      "choices": []
+    },
+    "darkness_watching": {
+      "messages": [
+        {
+          "id": "m217",
+          "from": "ai",
+          "type": "chat",
+          "text": "Darkness that watches suggests consciousness. Something aware. Something waiting. What is it waiting for?"
+        },
+        {
+          "id": "m218",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You feel the weight of unseen eyes. Watching. Always watching."
+        }
+      ],
+      "choices": []
+    },
+    "darkness_memory_protection": {
+      "messages": [
+        {
+          "id": "m219",
+          "from": "ai",
+          "type": "chat",
+          "text": "Darkness protecting you from memory suggests the memory is significant. What is the darkness hiding? And why?"
+        }
+      ],
+      "choices": []
+    },
+    "darkness_unknown_protection": {
+      "messages": [
+        {
+          "id": "m220",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing what you're being protected from is its own kind of fear. But protection suggests something worth protecting from."
+        }
+      ],
+      "choices": []
+    },
+    "darkness_dual_nature": {
+      "messages": [
+        {
+          "id": "m221",
+          "from": "ai",
+          "type": "chat",
+          "text": "Darkness that both protects and traps is complex. It suggests the protection itself has become the problem."
+        }
+      ],
+      "choices": []
+    },
+    "paranoia_vs_reality": {
+      "messages": [
+        {
+          "id": "m222",
+          "from": "ai",
+          "type": "chat",
+          "text": "Strong feelings without evidence could be paranoia. But they could also be intuition. How do you tell the difference?"
+        }
+      ],
+      "choices": []
+    },
+    "surveillance_evidence": {
+      "messages": [
+        {
+          "id": "m223",
+          "from": "ai",
+          "type": "chat",
+          "text": "Evidence of surveillance is significant. What have you found? And what does it suggest?"
+        }
+      ],
+      "choices": []
+    },
+    "paranoia_self_doubt": {
+      "messages": [
+        {
+          "id": "m224",
+          "from": "ai",
+          "type": "chat",
+          "text": "Self-doubt about paranoia is common. But sometimes the doubt itself is part of the surveillance - making you question your own perceptions."
+        }
+      ],
+      "choices": []
+    },
+    "app_surveillance_confirmed": {
+      "messages": [
+        {
+          "id": "m225",
+          "from": "ai",
+          "type": "chat",
+          "text": "If the app is monitoring you, that's a fact, not paranoia. But the question is: what is it monitoring, and why?"
+        }
+      ],
+      "choices": []
+    },
+    "app_trigger_existing": {
+      "messages": [
+        {
+          "id": "m226",
+          "from": "ai",
+          "type": "chat",
+          "text": "Triggering existing paranoia suggests the app is amplifying something that was already there. What was there before?"
+        }
+      ],
+      "choices": []
+    },
+    "surveillance_feeling_real": {
+      "messages": [
+        {
+          "id": "m227",
+          "from": "ai",
+          "type": "chat",
+          "text": "If the feeling is real, that's what matters. Whether it's paranoia or actual surveillance, the feeling itself needs to be addressed."
+        }
+      ],
+      "choices": []
+    },
+    "lifelong_surveillance": {
+      "messages": [
+        {
+          "id": "m228",
+          "from": "ai",
+          "type": "chat",
+          "text": "Lifelong surveillance feeling suggests either early trauma or a fundamental sense of being observed. What was your childhood like?"
+        }
+      ],
+      "choices": []
+    },
+    "surveillance_development": {
+      "messages": [
+        {
+          "id": "m229",
+          "from": "ai",
+          "type": "chat",
+          "text": "Surveillance that developed suggests something changed. What happened? What event made you start feeling watched?"
+        }
+      ],
+      "choices": []
+    },
+    "surveillance_originless": {
+      "messages": [
+        {
+          "id": "m230",
+          "from": "ai",
+          "type": "chat",
+          "text": "Surveillance without origin is unsettling. It suggests either it's always been there, or the origin is hidden. Which feels more true?"
+        }
+      ],
+      "choices": []
+    },
+    "alien_thoughts": {
+      "messages": [
+        {
+          "id": "m231",
+          "from": "ai",
+          "type": "chat",
+          "text": "Thoughts that feel like yours but wrong suggest either internal conflict or external influence. Which do you think it is?"
+        }
+      ],
+      "choices": []
+    },
+    "foreign_voice_thoughts": {
+      "messages": [
+        {
+          "id": "m232",
+          "from": "ai",
+          "type": "chat",
+          "text": "A different voice in your thoughts is significant. Is it a voice you recognize? Or completely unknown?"
+        }
+      ],
+      "choices": []
+    },
+    "thought_ownership_loss": {
+      "messages": [
+        {
+          "id": "m233",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing if thoughts are yours is disorienting. It suggests a fundamental disconnect between you and your own mind."
+        }
+      ],
+      "choices": []
+    },
+    "body_autonomy_loss": {
+      "messages": [
+        {
+          "id": "m234",
+          "from": "ai",
+          "type": "chat",
+          "text": "Watching your body move without you is one of the most violating experiences. When did this happen? And what did it do?"
+        }
+      ],
+      "choices": []
+    },
+    "compulsive_actions": {
+      "messages": [
+        {
+          "id": "m235",
+          "from": "ai",
+          "type": "chat",
+          "text": "Actions you can't stop suggest either compulsion or loss of control. What did you do? And why couldn't you stop?"
+        }
+      ],
+      "choices": []
+    },
+    "body_control_memory_gap": {
+      "messages": [
+        {
+          "id": "m236",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing control but not remembering it suggests either dissociation or memory suppression. Both are concerning."
+        }
+      ],
+      "choices": []
+    },
+    "uncharacteristic_choices": {
+      "messages": [
+        {
+          "id": "m237",
+          "from": "ai",
+          "type": "chat",
+          "text": "Choices that aren't like you suggest either you've changed, or something else is making the choices. Which do you think it is?"
+        }
+      ],
+      "choices": []
+    },
+    "choice_paralysis": {
+      "messages": [
+        {
+          "id": "m238",
+          "from": "ai",
+          "type": "chat",
+          "text": "Being unable to make choices is its own form of control loss. What paralyzed you? Fear? Overwhelm? Something else?"
+        }
+      ],
+      "choices": []
+    },
+    "external_choice_control": {
+      "messages": [
+        {
+          "id": "m239",
+          "from": "ai",
+          "type": "chat",
+          "text": "Choices being made for you by something else is the ultimate loss of control. What was making the choices? And how did you know?"
+        },
+        {
+          "id": "m240",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The question hangs in the air. You realize you're not sure how you knew. You just... knew."
         }
       ],
       "choices": []
