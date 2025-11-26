@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Switch,
   Animated,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
@@ -60,9 +61,10 @@ const SettingsScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.backButton}
             onPress={handleBack}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+            activeOpacity={0.7}
           >
-            <Text style={styles.backButtonText}>← Back</Text>
+            <Text style={styles.backButtonText}>←</Text>
           </TouchableOpacity>
           <Text style={styles.headerTitle}>Settings</Text>
           <View style={styles.headerSpacer} />
@@ -74,7 +76,7 @@ const SettingsScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           {/* Audio Settings Section */}
-          <View style={styles.section}>
+          <View style={styles.sectionCard}>
             <Text style={styles.sectionTitle}>Audio</Text>
             <View style={styles.settingRow}>
               <View style={styles.settingInfo}>
@@ -87,23 +89,26 @@ const SettingsScreen = ({ navigation }) => {
                 value={audioEnabled}
                 onValueChange={handleAudioToggle}
                 trackColor={{
-                  false: COLORS.dividerStrong,
+                  false: Platform.OS === 'ios' ? 'rgba(255, 255, 255, 0.3)' : COLORS.dividerStrong,
                   true: COLORS.accent.red,
                 }}
-                thumbColor={COLORS.text.primary}
-                ios_backgroundColor={COLORS.dividerStrong}
+                thumbColor={Platform.OS === 'ios' ? '#FFFFFF' : COLORS.text.primary}
+                ios_backgroundColor="rgba(255, 255, 255, 0.3)"
+                style={styles.switch}
               />
             </View>
           </View>
 
           {/* App Info Section */}
-          <View style={styles.section}>
+          <View style={styles.sectionCard}>
             <Text style={styles.sectionTitle}>App Information</Text>
             
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>App Name</Text>
               <Text style={styles.infoValue}>TherapistAI</Text>
             </View>
+
+            <View style={styles.divider} />
 
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Version</Text>
@@ -138,98 +143,133 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.md,
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.divider,
+    paddingTop: SPACING.md,
+    paddingBottom: SPACING.md + 4,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.08)',
   },
   backButton: {
-    paddingVertical: SPACING.xs,
-    paddingHorizontal: SPACING.sm,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    borderRadius: BORDER_RADIUS.sm,
   },
   backButtonText: {
-    ...FONTS.body,
+    ...FONTS.heading,
     color: COLORS.accent.red,
-    fontSize: 16,
+    fontSize: 24,
+    fontWeight: '300',
+    lineHeight: 28,
   },
   headerTitle: {
     ...FONTS.heading,
     color: COLORS.text.primary,
-    fontSize: 20,
+    fontSize: 22,
+    fontWeight: '600',
+    letterSpacing: 0.3,
   },
   headerSpacer: {
-    width: 60, // Match back button width for centering
+    width: 44,
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    padding: SPACING.lg,
-    paddingBottom: SPACING.xxl,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.xl,
+    paddingBottom: SPACING.xxl + SPACING.lg,
   },
-  section: {
-    marginBottom: SPACING.xl,
+  sectionCard: {
+    backgroundColor: COLORS.backgroundTertiary,
+    borderRadius: BORDER_RADIUS.lg,
+    paddingHorizontal: SPACING.lg,
+    paddingTop: SPACING.lg + 4,
+    paddingBottom: SPACING.md,
+    marginBottom: SPACING.lg,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.06)',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 2,
   },
   sectionTitle: {
     ...FONTS.caption,
     color: COLORS.text.secondary,
-    marginBottom: SPACING.md,
-    fontSize: 12,
-    letterSpacing: 1.5,
+    marginBottom: SPACING.md + 4,
+    fontSize: 11,
+    letterSpacing: 1.2,
+    textTransform: 'uppercase',
+    opacity: 0.7,
   },
   settingRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: SPACING.md,
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.divider,
+    paddingVertical: SPACING.sm,
+    minHeight: 64,
   },
   settingInfo: {
     flex: 1,
-    marginRight: SPACING.md,
+    marginRight: SPACING.lg,
+    justifyContent: 'center',
   },
   settingLabel: {
     ...FONTS.bodyBold,
     color: COLORS.text.primary,
-    marginBottom: SPACING.xs,
+    marginBottom: SPACING.xs + 2,
+    fontSize: 16,
+    fontWeight: '500',
+    letterSpacing: 0.1,
   },
   settingDescription: {
-    ...FONTS.caption,
+    ...FONTS.small,
     color: COLORS.text.muted,
-    fontSize: 12,
-    lineHeight: 16,
+    fontSize: 13,
+    lineHeight: 18,
+    opacity: 0.7,
+  },
+  switch: {
+    transform: Platform.OS === 'ios' ? [{ scaleX: 0.9 }, { scaleY: 0.9 }] : [],
   },
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingVertical: SPACING.md,
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLORS.divider,
+    alignItems: 'center',
+    paddingVertical: SPACING.md + 2,
+    minHeight: 52,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    marginVertical: SPACING.xs,
   },
   infoLabel: {
     ...FONTS.body,
     color: COLORS.text.secondary,
-    flex: 1,
-    marginRight: SPACING.md,
+    fontSize: 15,
+    opacity: 0.8,
   },
   infoValue: {
     ...FONTS.body,
     color: COLORS.text.primary,
-    flex: 1,
+    fontSize: 15,
+    fontWeight: '500',
     textAlign: 'right',
   },
   footer: {
-    marginTop: SPACING.xl,
+    marginTop: SPACING.xl + SPACING.md,
     paddingTop: SPACING.lg,
-    borderTopWidth: 0.5,
-    borderTopColor: COLORS.divider,
     alignItems: 'center',
   },
   footerText: {
     ...FONTS.small,
     color: COLORS.text.muted,
-    opacity: 0.6,
+    fontSize: 11,
+    opacity: 0.5,
+    letterSpacing: 0.3,
   },
 });
 

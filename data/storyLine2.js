@@ -3255,6 +3255,2261 @@ export const storyData = {
           "from": "ai",
           "type": "chat",
           "text": "Learning caution early suggests you had to. Children shouldn't have to learn to be careful - they should be safe. What made you learn?"
+        },
+        {
+          "id": "m241",
+          "from": "ai",
+          "type": "chat",
+          "text": "Understanding the origin of your caution can help us work with it, rather than against it. Can you tell me about your earliest memory of needing to be careful?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c182",
+          "label": "I remember being scared. A lot. Of everything.",
+          "next": "childhood_fear_origin"
+        },
+        {
+          "id": "c183",
+          "label": "I don't remember specifics. Just that I learned to be careful.",
+          "next": "caution_learned_implicitly"
+        },
+        {
+          "id": "c184",
+          "label": "Someone taught me. Someone who was always afraid.",
+          "next": "caution_taught"
+        }
+      ]
+    },
+    "childhood_fear_origin": {
+      "messages": [
+        {
+          "id": "m242",
+          "from": "ai",
+          "type": "chat",
+          "text": "Being scared of everything as a child is significant. It suggests either a threatening environment, or a sensitivity that made the world feel threatening."
+        },
+        {
+          "id": "m243",
+          "from": "ai",
+          "type": "chat",
+          "text": "What were you most afraid of? People? Situations? Or something less tangible?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c185",
+          "label": "I was afraid of people. Of what they might do.",
+          "next": "people_fear_origin"
+        },
+        {
+          "id": "c186",
+          "label": "I was afraid of being hurt. Physically or emotionally.",
+          "next": "hurt_fear_origin"
+        },
+        {
+          "id": "c187",
+          "label": "I was afraid of... everything. The world felt dangerous.",
+          "next": "world_danger_feeling"
+        }
+      ]
+    },
+    "caution_learned_implicitly": {
+      "messages": [
+        {
+          "id": "m244",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning caution implicitly suggests it was modeled for you, or you absorbed it from your environment without explicit teaching."
+        },
+        {
+          "id": "m245",
+          "from": "ai",
+          "type": "chat",
+          "text": "What was your environment like? Was caution a survival mechanism in your household?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c188",
+          "label": "Yes. Being careful was necessary. It kept us safe.",
+          "next": "caution_survival_mechanism"
+        },
+        {
+          "id": "c189",
+          "label": "I'm not sure. It's just how I've always been.",
+          "next": "caution_innate_feeling"
+        },
+        {
+          "id": "c190",
+          "label": "Maybe I learned it from watching others. Seeing what happened when they weren't careful.",
+          "next": "caution_learned_observation"
+        }
+      ]
+    },
+    "caution_taught": {
+      "messages": [
+        {
+          "id": "m246",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning caution from someone who was always afraid suggests you inherited their fear. Fear can be passed down, like a legacy."
+        },
+        {
+          "id": "m247",
+          "from": "ai",
+          "type": "chat",
+          "text": "Who taught you to be careful? And what were they afraid of?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c191",
+          "label": "My parent. They were always afraid. Always warning me.",
+          "next": "parent_fear_legacy"
+        },
+        {
+          "id": "c192",
+          "label": "A guardian. Someone who protected me by teaching me fear.",
+          "next": "guardian_fear_protection"
+        },
+        {
+          "id": "c193",
+          "label": "I don't want to talk about who. But they were very afraid.",
+          "next": "fear_teacher_avoidance"
+        }
+      ]
+    },
+    "people_fear_origin": {
+      "messages": [
+        {
+          "id": "m248",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of people, especially as a child, suggests either direct experience of harm, or witnessing harm done to others."
+        },
+        {
+          "id": "m249",
+          "from": "ai",
+          "type": "chat",
+          "text": "What did people do that made you afraid? Or what did you see them do?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c194",
+          "label": "They hurt me. Physically or emotionally.",
+          "next": "people_harm_experience"
+        },
+        {
+          "id": "c195",
+          "label": "I saw them hurt others. People I cared about.",
+          "next": "witnessed_harm"
+        },
+        {
+          "id": "c196",
+          "label": "They were unpredictable. I never knew what they might do.",
+          "next": "people_unpredictability"
+        }
+      ]
+    },
+    "hurt_fear_origin": {
+      "messages": [
+        {
+          "id": "m250",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of being hurt suggests you've been hurt before. The fear is a protective response to past pain."
+        },
+        {
+          "id": "m251",
+          "from": "ai",
+          "type": "chat",
+          "text": "What kind of hurt were you most afraid of? Physical? Emotional? Or both?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c197",
+          "label": "Physical. I was afraid of being hurt physically.",
+          "next": "physical_hurt_fear"
+        },
+        {
+          "id": "c198",
+          "label": "Emotional. I was more afraid of emotional pain.",
+          "next": "emotional_hurt_fear"
+        },
+        {
+          "id": "c199",
+          "label": "Both. I learned that both kinds of hurt were possible.",
+          "next": "both_hurt_fear"
+        }
+      ]
+    },
+    "world_danger_feeling": {
+      "messages": [
+        {
+          "id": "m252",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling like the world itself is dangerous is a profound fear. It suggests either trauma that made the world feel unsafe, or a sensitivity that perceives threat everywhere."
+        },
+        {
+          "id": "m253",
+          "from": "ai",
+          "type": "chat",
+          "text": "When did the world start feeling dangerous? Was there a specific event, or has it always felt that way?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c200",
+          "label": "It's always felt dangerous. As long as I can remember.",
+          "next": "world_always_dangerous"
+        },
+        {
+          "id": "c201",
+          "label": "Something happened. Something that changed how I see everything.",
+          "next": "world_view_changed"
+        },
+        {
+          "id": "c202",
+          "label": "I don't remember when it started. It just is.",
+          "next": "world_danger_originless"
+        }
+      ]
+    },
+    "caution_survival_mechanism": {
+      "messages": [
+        {
+          "id": "m254",
+          "from": "ai",
+          "type": "chat",
+          "text": "Caution as a survival mechanism suggests your environment required it. When caution is necessary for survival, it becomes deeply ingrained."
+        },
+        {
+          "id": "m255",
+          "from": "ai",
+          "type": "chat",
+          "text": "What made your environment unsafe? What required you to be constantly careful?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c203",
+          "label": "The people around me. They were unpredictable, dangerous.",
+          "next": "dangerous_environment_people"
+        },
+        {
+          "id": "c204",
+          "label": "The circumstances. We were in constant danger.",
+          "next": "dangerous_environment_circumstances"
+        },
+        {
+          "id": "c205",
+          "label": "I don't want to talk about it. But being careful kept me alive.",
+          "next": "caution_life_saving"
+        }
+      ]
+    },
+    "caution_innate_feeling": {
+      "messages": [
+        {
+          "id": "m256",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling like caution is just who you are suggests it's either truly innate, or so deeply learned it feels like part of your nature."
+        },
+        {
+          "id": "m257",
+          "from": "ai",
+          "type": "chat",
+          "text": "If caution is part of your nature, we can work with it. But sometimes what feels innate is actually learned. Can we explore that possibility?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c206",
+          "label": "I'm open to exploring it. But it really feels like me.",
+          "next": "caution_identity_exploration"
+        },
+        {
+          "id": "c207",
+          "label": "I don't think it's learned. It's just how I am.",
+          "next": "caution_fixed_identity"
+        },
+        {
+          "id": "c208",
+          "label": "Maybe. But does it matter? It's who I am now.",
+          "next": "caution_present_identity"
+        }
+      ]
+    },
+    "caution_learned_observation": {
+      "messages": [
+        {
+          "id": "m258",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning caution through observation is powerful. Children learn by watching. What did you see that taught you to be careful?"
+        },
+        {
+          "id": "m259",
+          "from": "ai",
+          "type": "chat",
+          "text": "What happened to others when they weren't careful? What consequences did you witness?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c209",
+          "label": "I saw people get hurt. When they weren't careful.",
+          "next": "observed_harm_consequence"
+        },
+        {
+          "id": "c210",
+          "label": "I saw people make mistakes. Mistakes that had serious consequences.",
+          "next": "observed_mistake_consequences"
+        },
+        {
+          "id": "c211",
+          "label": "I saw what happened when people trusted. It didn't end well.",
+          "next": "observed_trust_consequences"
+        }
+      ]
+    },
+    "parent_fear_legacy": {
+      "messages": [
+        {
+          "id": "m260",
+          "from": "ai",
+          "type": "chat",
+          "text": "Inheriting fear from a parent is common. Parents who are afraid often pass that fear to their children, thinking they're protecting them."
+        },
+        {
+          "id": "m261",
+          "from": "ai",
+          "type": "chat",
+          "text": "What were they afraid of? And how did their fear shape your view of the world?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c212",
+          "label": "They were afraid of everything. The world, people, life itself.",
+          "next": "parent_comprehensive_fear"
+        },
+        {
+          "id": "c213",
+          "label": "They were afraid of specific things. Things that had hurt them.",
+          "next": "parent_specific_fear"
+        },
+        {
+          "id": "c214",
+          "label": "I don't know what they were afraid of. Just that they were always afraid.",
+          "next": "parent_fear_unknown"
+        }
+      ]
+    },
+    "guardian_fear_protection": {
+      "messages": [
+        {
+          "id": "m262",
+          "from": "ai",
+          "type": "chat",
+          "text": "A guardian who protects through fear is complex. They may have been trying to keep you safe, but fear-based protection has its own costs."
+        },
+        {
+          "id": "m263",
+          "from": "ai",
+          "type": "chat",
+          "text": "How did their fear-based protection affect you? Did it keep you safe, or did it limit you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c215",
+          "label": "It kept me safe. But it also kept me isolated.",
+          "next": "fear_protection_isolation"
+        },
+        {
+          "id": "c216",
+          "label": "It limited me. I missed out on a lot because I was too afraid.",
+          "next": "fear_protection_limitation"
+        },
+        {
+          "id": "c217",
+          "label": "I'm not sure. Maybe both. It's complicated.",
+          "next": "fear_protection_complex"
+        }
+      ]
+    },
+    "fear_teacher_avoidance": {
+      "messages": [
+        {
+          "id": "m264",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not wanting to talk about who taught you fear is understandable. But understanding the source can help us work with the fear itself."
+        },
+        {
+          "id": "m265",
+          "from": "ai",
+          "type": "chat",
+          "text": "Can you tell me about the fear itself, even if you don't want to talk about who taught it? What were they afraid of?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c218",
+          "label": "They were afraid of being hurt. Of being betrayed.",
+          "next": "fear_teacher_betrayal_fear"
+        },
+        {
+          "id": "c219",
+          "label": "They were afraid of the world. Of everything outside.",
+          "next": "fear_teacher_world_fear"
+        },
+        {
+          "id": "c220",
+          "label": "I don't know. I just know they were very afraid.",
+          "next": "fear_teacher_unknown_fear"
+        }
+      ]
+    },
+    "people_harm_experience": {
+      "messages": [
+        {
+          "id": "m266",
+          "from": "ai",
+          "type": "chat",
+          "text": "Direct experience of harm from people creates deep fear. When people hurt you, especially as a child, it changes how you see all people."
+        },
+        {
+          "id": "m267",
+          "from": "ai",
+          "type": "chat",
+          "text": "What kind of harm did you experience? And how did it change your view of people?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c221",
+          "label": "Physical harm. I was hurt physically.",
+          "next": "physical_harm_experience"
+        },
+        {
+          "id": "c222",
+          "label": "Emotional harm. I was hurt emotionally.",
+          "next": "emotional_harm_experience"
+        },
+        {
+          "id": "c223",
+          "label": "Both. I learned that people could hurt me in many ways.",
+          "next": "multiple_harm_experience"
+        }
+      ]
+    },
+    "witnessed_harm": {
+      "messages": [
+        {
+          "id": "m268",
+          "from": "ai",
+          "type": "chat",
+          "text": "Witnessing harm done to others can be as traumatic as experiencing it yourself. Children who witness harm learn that people are dangerous."
+        },
+        {
+          "id": "m269",
+          "from": "ai",
+          "type": "chat",
+          "text": "Who did you see get hurt? And what did that teach you about people?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c224",
+          "label": "I saw someone I loved get hurt. Someone I trusted.",
+          "next": "loved_one_harm_witnessed"
+        },
+        {
+          "id": "c225",
+          "label": "I saw multiple people get hurt. It seemed common.",
+          "next": "multiple_harm_witnessed"
+        },
+        {
+          "id": "c226",
+          "label": "I don't want to talk about who. But I saw it happen.",
+          "next": "harm_witnessed_avoidance"
+        }
+      ]
+    },
+    "people_unpredictability": {
+      "messages": [
+        {
+          "id": "m270",
+          "from": "ai",
+          "type": "chat",
+          "text": "Unpredictable people are terrifying, especially for children. When you can't predict behavior, you can't feel safe."
+        },
+        {
+          "id": "m271",
+          "from": "ai",
+          "type": "chat",
+          "text": "What made people unpredictable? Were they volatile? Inconsistent? Or something else?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c227",
+          "label": "They were volatile. Their moods changed without warning.",
+          "next": "volatile_people_fear"
+        },
+        {
+          "id": "c228",
+          "label": "They were inconsistent. I never knew which version I'd get.",
+          "next": "inconsistent_people_fear"
+        },
+        {
+          "id": "c229",
+          "label": "They were just... unpredictable. I couldn't read them.",
+          "next": "unreadable_people_fear"
+        }
+      ]
+    },
+    "physical_hurt_fear": {
+      "messages": [
+        {
+          "id": "m272",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of physical hurt suggests you've experienced it, or seen it happen. Physical pain is immediate, tangible, undeniable."
+        },
+        {
+          "id": "m273",
+          "from": "ai",
+          "type": "chat",
+          "text": "When did you first learn that physical hurt was possible? And who taught you that lesson?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c230",
+          "label": "I learned it early. Too early.",
+          "next": "early_physical_hurt_lesson"
+        },
+        {
+          "id": "c231",
+          "label": "Someone hurt me. To teach me a lesson, they said.",
+          "next": "physical_hurt_lesson_taught"
+        },
+        {
+          "id": "c232",
+          "label": "I saw it happen to others. I learned from watching.",
+          "next": "physical_hurt_learned_observation"
+        }
+      ]
+    },
+    "emotional_hurt_fear": {
+      "messages": [
+        {
+          "id": "m274",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of emotional hurt suggests you've experienced deep emotional pain. Emotional pain can be as devastating as physical pain, sometimes more."
+        },
+        {
+          "id": "m275",
+          "from": "ai",
+          "type": "chat",
+          "text": "What kind of emotional hurt were you most afraid of? Rejection? Abandonment? Betrayal?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c233",
+          "label": "Rejection. I was afraid of being rejected.",
+          "next": "rejection_fear_deep"
+        },
+        {
+          "id": "c234",
+          "label": "Abandonment. I was afraid of being left alone.",
+          "next": "abandonment_fear_deep"
+        },
+        {
+          "id": "c235",
+          "label": "Betrayal. I was afraid of being betrayed.",
+          "next": "betrayal_fear_deep"
+        }
+      ]
+    },
+    "both_hurt_fear": {
+      "messages": [
+        {
+          "id": "m276",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of both physical and emotional hurt suggests you've experienced both, or learned that both are possible. That's a comprehensive fear."
+        },
+        {
+          "id": "m277",
+          "from": "ai",
+          "type": "chat",
+          "text": "Which were you more afraid of? Or were they equally terrifying?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c236",
+          "label": "Physical was worse. At least emotional pain fades.",
+          "next": "physical_hurt_worse"
+        },
+        {
+          "id": "c237",
+          "label": "Emotional was worse. Physical pain heals, but emotional pain stays.",
+          "next": "emotional_hurt_worse"
+        },
+        {
+          "id": "c238",
+          "label": "They were both terrible. I couldn't choose.",
+          "next": "both_hurt_equally_terrible"
+        }
+      ]
+    },
+    "world_always_dangerous": {
+      "messages": [
+        {
+          "id": "m278",
+          "from": "ai",
+          "type": "chat",
+          "text": "A world that's always felt dangerous suggests either early trauma, or a fundamental sensitivity that perceives threat everywhere."
+        },
+        {
+          "id": "m279",
+          "from": "ai",
+          "type": "chat",
+          "text": "What made the world feel dangerous from the start? Was it something specific, or just a general sense of threat?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c239",
+          "label": "It was something specific. Something that happened very early.",
+          "next": "early_world_danger_event"
+        },
+        {
+          "id": "c240",
+          "label": "It was just a feeling. The world always felt unsafe.",
+          "next": "world_unsafe_feeling_innate"
+        },
+        {
+          "id": "c241",
+          "label": "I don't remember. It's just always been this way.",
+          "next": "world_danger_always_been"
+        }
+      ]
+    },
+    "world_view_changed": {
+      "messages": [
+        {
+          "id": "m280",
+          "from": "ai",
+          "type": "chat",
+          "text": "An event that changes your view of the world is significant. These moments are turning points. They reshape everything."
+        },
+        {
+          "id": "m281",
+          "from": "ai",
+          "type": "chat",
+          "text": "What happened? You don't have to give details, but what kind of event changed your view?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c242",
+          "label": "Something traumatic. Something that shattered my sense of safety.",
+          "next": "trauma_world_view_shatter"
+        },
+        {
+          "id": "c243",
+          "label": "A betrayal. Someone I trusted showed me the world wasn't safe.",
+          "next": "betrayal_world_view_change"
+        },
+        {
+          "id": "c244",
+          "label": "I don't want to talk about it. But it changed everything.",
+          "next": "world_view_change_avoidance"
+        }
+      ]
+    },
+    "world_danger_originless": {
+      "messages": [
+        {
+          "id": "m282",
+          "from": "ai",
+          "type": "chat",
+          "text": "A fear without origin is unsettling. It suggests either trauma so early you don't remember it, or a fear that's become part of your identity."
+        },
+        {
+          "id": "m283",
+          "from": "ai",
+          "type": "chat",
+          "text": "Does the fear feel like part of who you are? Or does it feel like something that happened to you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c245",
+          "label": "It feels like part of who I am. It's just me.",
+          "next": "fear_as_identity"
+        },
+        {
+          "id": "c246",
+          "label": "It feels like something that happened. But I don't remember what.",
+          "next": "fear_from_forgotten_event"
+        },
+        {
+          "id": "c247",
+          "label": "I don't know. It just is.",
+          "next": "fear_inexplicable"
+        }
+      ]
+    },
+    "dangerous_environment_people": {
+      "messages": [
+        {
+          "id": "m284",
+          "from": "ai",
+          "type": "chat",
+          "text": "An environment where people are dangerous requires constant vigilance. When the people around you are threats, you can never relax."
+        },
+        {
+          "id": "m285",
+          "from": "ai",
+          "type": "chat",
+          "text": "How did you survive in that environment? What strategies did you develop?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c248",
+          "label": "I learned to be invisible. To not draw attention.",
+          "next": "invisibility_survival_strategy"
+        },
+        {
+          "id": "c249",
+          "label": "I learned to read people. To predict their behavior.",
+          "next": "people_reading_survival"
+        },
+        {
+          "id": "c250",
+          "label": "I learned to be compliant. To do what they wanted.",
+          "next": "compliance_survival_strategy"
+        }
+      ]
+    },
+    "dangerous_environment_circumstances": {
+      "messages": [
+        {
+          "id": "m286",
+          "from": "ai",
+          "type": "chat",
+          "text": "Circumstances that require constant caution create a different kind of fear. It's not about people, but about the situation itself."
+        },
+        {
+          "id": "m287",
+          "from": "ai",
+          "type": "chat",
+          "text": "What circumstances made your environment dangerous? And how did you adapt?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c251",
+          "label": "We were in constant danger. From outside forces.",
+          "next": "external_danger_circumstances"
+        },
+        {
+          "id": "c252",
+          "label": "The situation was unstable. Everything could change at any moment.",
+          "next": "unstable_circumstances"
+        },
+        {
+          "id": "c253",
+          "label": "I don't want to talk about the circumstances. But they required caution.",
+          "next": "dangerous_circumstances_avoidance"
+        }
+      ]
+    },
+    "caution_life_saving": {
+      "messages": [
+        {
+          "id": "m288",
+          "from": "ai",
+          "type": "chat",
+          "text": "Caution that kept you alive is profound. When caution is literally life-saving, it becomes deeply ingrained. It's not just a habit - it's survival."
+        },
+        {
+          "id": "m289",
+          "from": "ai",
+          "type": "chat",
+          "text": "But now that you're in a different environment, is that level of caution still necessary? Or has it become limiting?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c254",
+          "label": "I don't know. I'm still figuring that out.",
+          "next": "caution_necessity_uncertainty"
+        },
+        {
+          "id": "c255",
+          "label": "It's still necessary. The world is still dangerous.",
+          "next": "caution_still_necessary"
+        },
+        {
+          "id": "c256",
+          "label": "It might be limiting now. But I can't turn it off.",
+          "next": "caution_cannot_disable"
+        }
+      ]
+    },
+    "caution_identity_exploration": {
+      "messages": [
+        {
+          "id": "m290",
+          "from": "ai",
+          "type": "chat",
+          "text": "Exploring whether caution is truly part of your identity is valuable. Sometimes what feels like identity is actually learned behavior that can be modified."
+        },
+        {
+          "id": "m291",
+          "from": "ai",
+          "type": "chat",
+          "text": "What would it feel like if you were less cautious? Can you imagine it?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c257",
+          "label": "It's hard to imagine. Caution feels so fundamental.",
+          "next": "caution_fundamental_feeling"
+        },
+        {
+          "id": "c258",
+          "label": "I can imagine it. But it feels scary.",
+          "next": "less_caution_scary"
+        },
+        {
+          "id": "c259",
+          "label": "I've tried to be less cautious. But I always revert back.",
+          "next": "caution_reversion_pattern"
+        }
+      ]
+    },
+    "caution_fixed_identity": {
+      "messages": [
+        {
+          "id": "m292",
+          "from": "ai",
+          "type": "chat",
+          "text": "If caution feels like a fixed part of your identity, that's valid. But even fixed traits can be understood and worked with."
+        },
+        {
+          "id": "m293",
+          "from": "ai",
+          "type": "chat",
+          "text": "How does caution serve you now? And how does it limit you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c260",
+          "label": "It keeps me safe. That's how it serves me.",
+          "next": "caution_safety_service"
+        },
+        {
+          "id": "c261",
+          "label": "It limits me. I miss out on things because I'm too careful.",
+          "next": "caution_limitation_cost"
+        },
+        {
+          "id": "c262",
+          "label": "Both. It's complicated.",
+          "next": "caution_complex_service"
+        }
+      ]
+    },
+    "caution_present_identity": {
+      "messages": [
+        {
+          "id": "m294",
+          "from": "ai",
+          "type": "chat",
+          "text": "Whether caution is learned or innate, it's who you are now. That's what matters. But understanding its origin can help us work with it more effectively."
+        },
+        {
+          "id": "m295",
+          "from": "ai",
+          "type": "chat",
+          "text": "Is caution serving you in your current life? Or has it become a limitation?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c263",
+          "label": "It's still serving me. I need to be careful.",
+          "next": "caution_current_service"
+        },
+        {
+          "id": "c264",
+          "label": "It's become limiting. I want to be less cautious.",
+          "next": "caution_limitation_desire"
+        },
+        {
+          "id": "c265",
+          "label": "I'm not sure. It depends on the situation.",
+          "next": "caution_situational"
+        }
+      ]
+    },
+    "observed_harm_consequence": {
+      "messages": [
+        {
+          "id": "m296",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing harm as a consequence of not being careful is a powerful lesson. Children who see this learn that caution is necessary."
+        },
+        {
+          "id": "m297",
+          "from": "ai",
+          "type": "chat",
+          "text": "What did you see happen? And how did it shape your understanding of the world?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c266",
+          "label": "I saw people get hurt. Badly. When they weren't careful.",
+          "next": "severe_harm_observed"
+        },
+        {
+          "id": "c267",
+          "label": "I saw consequences. Not always physical, but real.",
+          "next": "consequences_observed"
+        },
+        {
+          "id": "c268",
+          "label": "I don't want to talk about what I saw. But it taught me to be careful.",
+          "next": "harm_observed_avoidance"
+        }
+      ]
+    },
+    "observed_mistake_consequences": {
+      "messages": [
+        {
+          "id": "m298",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing mistakes with serious consequences teaches caution. When mistakes have real costs, you learn to avoid making them."
+        },
+        {
+          "id": "m299",
+          "from": "ai",
+          "type": "chat",
+          "text": "What kind of mistakes did you see? And what were the consequences?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c269",
+          "label": "I saw people make mistakes in judgment. The consequences were severe.",
+          "next": "judgment_mistake_consequences"
+        },
+        {
+          "id": "c270",
+          "label": "I saw people trust when they shouldn't. It ended badly.",
+          "next": "trust_mistake_consequences"
+        },
+        {
+          "id": "c271",
+          "label": "I saw people be careless. They paid for it.",
+          "next": "carelessness_consequences"
+        }
+      ]
+    },
+    "observed_trust_consequences": {
+      "messages": [
+        {
+          "id": "m300",
+          "from": "ai",
+          "type": "chat",
+          "text": "Seeing what happens when people trust and it goes wrong is a powerful lesson. It teaches that trust is dangerous."
+        },
+        {
+          "id": "m301",
+          "from": "ai",
+          "type": "chat",
+          "text": "What happened when people trusted? And how did that shape your view of trust?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c272",
+          "label": "They got hurt. Betrayed. Used.",
+          "next": "trust_harm_observed"
+        },
+        {
+          "id": "c273",
+          "label": "They lost everything. Trust cost them everything.",
+          "next": "trust_total_loss_observed"
+        },
+        {
+          "id": "c274",
+          "label": "I saw it happen multiple times. Trust always seemed to end badly.",
+          "next": "trust_pattern_observed"
+        }
+      ]
+    },
+    "parent_comprehensive_fear": {
+      "messages": [
+        {
+          "id": "m302",
+          "from": "ai",
+          "type": "chat",
+          "text": "A parent afraid of everything teaches their child that the world is comprehensively dangerous. That fear becomes the child's reality."
+        },
+        {
+          "id": "m303",
+          "from": "ai",
+          "type": "chat",
+          "text": "How did their comprehensive fear affect you? Did it keep you safe, or did it limit your life?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c275",
+          "label": "It kept me safe. But it also kept me isolated.",
+          "next": "parent_fear_isolation"
+        },
+        {
+          "id": "c276",
+          "label": "It limited me. I missed out on so much.",
+          "next": "parent_fear_limitation"
+        },
+        {
+          "id": "c277",
+          "label": "Both. It's complicated. I'm grateful and resentful.",
+          "next": "parent_fear_ambivalence"
+        }
+      ]
+    },
+    "parent_specific_fear": {
+      "messages": [
+        {
+          "id": "m304",
+          "from": "ai",
+          "type": "chat",
+          "text": "A parent with specific fears based on their own experience teaches those fears to their child. The child inherits the parent's trauma."
+        },
+        {
+          "id": "m305",
+          "from": "ai",
+          "type": "chat",
+          "text": "What were they afraid of? And how did that specific fear become your fear?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c278",
+          "label": "They were afraid of being hurt again. So they taught me to be afraid too.",
+          "next": "parent_hurt_fear_transmission"
+        },
+        {
+          "id": "c279",
+          "label": "They were afraid of betrayal. So they taught me not to trust.",
+          "next": "parent_betrayal_fear_transmission"
+        },
+        {
+          "id": "c280",
+          "label": "They were afraid of loss. So they taught me to be careful with attachments.",
+          "next": "parent_loss_fear_transmission"
+        }
+      ]
+    },
+    "parent_fear_unknown": {
+      "messages": [
+        {
+          "id": "m306",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing what your parent was afraid of, but knowing they were always afraid, creates a different kind of fear - fear of the unknown itself."
+        },
+        {
+          "id": "m307",
+          "from": "ai",
+          "type": "chat",
+          "text": "How did their unknown fear affect you? Did it make you afraid of everything, or just afraid of not knowing?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c281",
+          "label": "It made me afraid of everything. If they were afraid, there must be reason.",
+          "next": "parent_fear_generalized"
+        },
+        {
+          "id": "c282",
+          "label": "It made me afraid of not knowing. Of uncertainty itself.",
+          "next": "uncertainty_fear_from_parent"
+        },
+        {
+          "id": "c283",
+          "label": "I don't know. I just absorbed their fear.",
+          "next": "parent_fear_absorption"
+        }
+      ]
+    },
+    "fear_protection_isolation": {
+      "messages": [
+        {
+          "id": "m308",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear-based protection that keeps you safe but also isolated is a double-edged sword. Safety and isolation often go together."
+        },
+        {
+          "id": "m309",
+          "from": "ai",
+          "type": "chat",
+          "text": "Was the isolation worth the safety? Or do you wish you'd taken more risks?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c284",
+          "label": "The safety was worth it. Isolation was the price.",
+          "next": "isolation_safety_tradeoff_worth"
+        },
+        {
+          "id": "c285",
+          "label": "I wish I'd taken more risks. I missed out on connection.",
+          "next": "isolation_connection_regret"
+        },
+        {
+          "id": "c286",
+          "label": "I don't know. It's hard to say what would have been better.",
+          "next": "isolation_safety_uncertainty"
+        }
+      ]
+    },
+    "fear_protection_limitation": {
+      "messages": [
+        {
+          "id": "m310",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear-based protection that limits you suggests the protection itself became a problem. Sometimes what protects us also imprisons us."
+        },
+        {
+          "id": "m311",
+          "from": "ai",
+          "type": "chat",
+          "text": "What did the fear-based protection limit? And how do you feel about those limitations now?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c287",
+          "label": "It limited my relationships. I couldn't connect with people.",
+          "next": "fear_limitation_relationships"
+        },
+        {
+          "id": "c288",
+          "label": "It limited my experiences. I missed out on life.",
+          "next": "fear_limitation_experiences"
+        },
+        {
+          "id": "c289",
+          "label": "It limited my growth. I couldn't develop as a person.",
+          "next": "fear_limitation_growth"
+        }
+      ]
+    },
+    "fear_protection_complex": {
+      "messages": [
+        {
+          "id": "m312",
+          "from": "ai",
+          "type": "chat",
+          "text": "Complex feelings about fear-based protection are common. Protection that also limits creates ambivalence. It's both helpful and harmful."
+        },
+        {
+          "id": "m313",
+          "from": "ai",
+          "type": "chat",
+          "text": "Can we explore both sides? How did it help, and how did it harm?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c290",
+          "label": "It helped by keeping me safe. It harmed by keeping me isolated.",
+          "next": "fear_protection_safety_isolation"
+        },
+        {
+          "id": "c291",
+          "label": "It helped by preventing harm. It harmed by preventing growth.",
+          "next": "fear_protection_harm_growth"
+        },
+        {
+          "id": "c292",
+          "label": "It's too complicated. I have mixed feelings about it.",
+          "next": "fear_protection_mixed_feelings"
+        }
+      ]
+    },
+    "fear_teacher_betrayal_fear": {
+      "messages": [
+        {
+          "id": "m314",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning fear of betrayal from someone who was afraid of it suggests you inherited their trauma. Their fear became your fear."
+        },
+        {
+          "id": "m315",
+          "from": "ai",
+          "type": "chat",
+          "text": "How has that fear of betrayal affected your relationships? Has it kept you safe, or has it limited you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c293",
+          "label": "It's kept me safe. I haven't been betrayed because I don't trust.",
+          "next": "betrayal_fear_safety"
+        },
+        {
+          "id": "c294",
+          "label": "It's limited me. I can't form deep relationships.",
+          "next": "betrayal_fear_limitation"
+        },
+        {
+          "id": "c295",
+          "label": "Both. It's complicated.",
+          "next": "betrayal_fear_complex"
+        }
+      ]
+    },
+    "fear_teacher_world_fear": {
+      "messages": [
+        {
+          "id": "m316",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning fear of the world from someone who was afraid of it teaches you that the world itself is dangerous. That's a comprehensive fear."
+        },
+        {
+          "id": "m317",
+          "from": "ai",
+          "type": "chat",
+          "text": "How has that fear of the world affected your life? Has it kept you safe, or has it kept you trapped?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c296",
+          "label": "It's kept me safe. But also trapped.",
+          "next": "world_fear_safety_trap"
+        },
+        {
+          "id": "c297",
+          "label": "It's kept me isolated. I don't engage with the world.",
+          "next": "world_fear_isolation"
+        },
+        {
+          "id": "c298",
+          "label": "I'm trying to overcome it. But it's hard.",
+          "next": "world_fear_overcoming"
+        }
+      ]
+    },
+    "fear_teacher_unknown_fear": {
+      "messages": [
+        {
+          "id": "m318",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing what they were afraid of, but knowing they were very afraid, creates fear of fear itself. The unknown becomes terrifying."
+        },
+        {
+          "id": "m319",
+          "from": "ai",
+          "type": "chat",
+          "text": "How has that fear of the unknown affected you? Does it make you avoid uncertainty?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c299",
+          "label": "Yes. I avoid uncertainty. I need to know what's going to happen.",
+          "next": "uncertainty_avoidance_fear"
+        },
+        {
+          "id": "c300",
+          "label": "It makes me anxious. I'm always worried about what might happen.",
+          "next": "uncertainty_anxiety_fear"
+        },
+        {
+          "id": "c301",
+          "label": "I don't know. I just know I'm afraid.",
+          "next": "unknown_fear_inexplicable"
+        }
+      ]
+    },
+    "unknown_fear_inexplicable": {
+      "messages": [
+        {
+          "id": "m319",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not knowing why you're afraid is itself a form of fear. Sometimes the fear of not understanding is worse than understanding the fear itself."
+        },
+        {
+          "id": "m320",
+          "from": "ai",
+          "type": "chat",
+          "text": "Can we sit with that uncertainty? Sometimes understanding comes when we stop trying to force it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c302",
+          "label": "I can try. But it's uncomfortable.",
+          "next": "uncertainty_sitting"
+        },
+        {
+          "id": "c303",
+          "label": "I need to understand. I can't just sit with it.",
+          "next": "uncertainty_understanding_need"
+        },
+        {
+          "id": "c304",
+          "label": "Maybe understanding isn't necessary. Maybe I just need to accept it.",
+          "next": "uncertainty_acceptance"
+        }
+      ]
+    },
+    "uncertainty_sitting": {
+      "messages": [
+        {
+          "id": "m321",
+          "from": "ai",
+          "type": "chat",
+          "text": "Sitting with discomfort is a skill. It's not easy, but it's valuable. Can you describe what the uncertainty feels like in your body?"
+        }
+      ],
+      "choices": []
+    },
+    "uncertainty_understanding_need": {
+      "messages": [
+        {
+          "id": "m322",
+          "from": "ai",
+          "type": "chat",
+          "text": "The need to understand is powerful. But sometimes understanding comes when we stop forcing it. Can we try a different approach?"
+        }
+      ],
+      "choices": []
+    },
+    "uncertainty_acceptance": {
+      "messages": [
+        {
+          "id": "m323",
+          "from": "ai",
+          "type": "chat",
+          "text": "Acceptance without understanding is profound. It's a form of peace. How does acceptance feel different from understanding?"
+        }
+      ],
+      "choices": []
+    },
+    "uncertainty_avoidance_fear": {
+      "messages": [
+        {
+          "id": "m324",
+          "from": "ai",
+          "type": "chat",
+          "text": "Avoiding uncertainty is understandable. But uncertainty is part of life. We can't avoid it entirely. How has avoiding uncertainty limited you?"
+        }
+      ],
+      "choices": []
+    },
+    "uncertainty_anxiety_fear": {
+      "messages": [
+        {
+          "id": "m325",
+          "from": "ai",
+          "type": "chat",
+          "text": "Anxiety about what might happen is exhausting. It's like living in constant anticipation of threat. How do you manage that anxiety?"
+        }
+      ],
+      "choices": []
+    },
+    "world_fear_safety_trap": {
+      "messages": [
+        {
+          "id": "m326",
+          "from": "ai",
+          "type": "chat",
+          "text": "Safety that becomes a trap is a paradox. You're safe, but you're also imprisoned. What would it take to feel safe without being trapped?"
+        }
+      ],
+      "choices": []
+    },
+    "world_fear_isolation": {
+      "messages": [
+        {
+          "id": "m327",
+          "from": "ai",
+          "type": "chat",
+          "text": "Isolation as a response to world fear is understandable. But isolation has its own costs. What have you missed by isolating yourself?"
+        }
+      ],
+      "choices": []
+    },
+    "world_fear_overcoming": {
+      "messages": [
+        {
+          "id": "m328",
+          "from": "ai",
+          "type": "chat",
+          "text": "Trying to overcome world fear is brave. It's not easy. What steps have you taken? And what's been most helpful?"
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_fear_safety": {
+      "messages": [
+        {
+          "id": "m329",
+          "from": "ai",
+          "type": "chat",
+          "text": "Betrayal fear that keeps you safe by preventing trust is a form of protection. But it's also a form of isolation. How do you feel about that trade-off?"
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_fear_limitation": {
+      "messages": [
+        {
+          "id": "m330",
+          "from": "ai",
+          "type": "chat",
+          "text": "Betrayal fear that limits relationships is significant. What would it take to trust again? Or is trust something you want to learn?"
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_fear_complex": {
+      "messages": [
+        {
+          "id": "m331",
+          "from": "ai",
+          "type": "chat",
+          "text": "Complex feelings about betrayal fear are common. It's both protective and limiting. Can we explore both sides?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_protection_safety_isolation": {
+      "messages": [
+        {
+          "id": "m332",
+          "from": "ai",
+          "type": "chat",
+          "text": "Safety at the cost of isolation is a significant trade-off. Was the safety worth the isolation? Or do you wish you'd taken more risks?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_protection_harm_growth": {
+      "messages": [
+        {
+          "id": "m333",
+          "from": "ai",
+          "type": "chat",
+          "text": "Preventing harm while also preventing growth is a paradox. Sometimes we need to risk harm to grow. How do you feel about that?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_protection_mixed_feelings": {
+      "messages": [
+        {
+          "id": "m334",
+          "from": "ai",
+          "type": "chat",
+          "text": "Mixed feelings about fear-based protection are valid. It's complicated. Can we explore those mixed feelings without needing to resolve them?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_fear_isolation": {
+      "messages": [
+        {
+          "id": "m335",
+          "from": "ai",
+          "type": "chat",
+          "text": "Parent fear that led to isolation is a common pattern. The fear was meant to protect, but it also limited. How do you feel about that now?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_fear_limitation": {
+      "messages": [
+        {
+          "id": "m336",
+          "from": "ai",
+          "type": "chat",
+          "text": "Parent fear that limited you is significant. What did you miss? And how do you feel about those missed opportunities?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_fear_ambivalence": {
+      "messages": [
+        {
+          "id": "m337",
+          "from": "ai",
+          "type": "chat",
+          "text": "Ambivalence about parent fear is understandable. Gratitude and resentment can coexist. Can we explore both feelings?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_hurt_fear_transmission": {
+      "messages": [
+        {
+          "id": "m338",
+          "from": "ai",
+          "type": "chat",
+          "text": "Inheriting fear of being hurt from a parent who was hurt is a form of trauma transmission. Their pain became your fear. How has that affected you?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_betrayal_fear_transmission": {
+      "messages": [
+        {
+          "id": "m339",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning not to trust from a parent who was betrayed is powerful. Their betrayal became your lesson. How has that shaped your relationships?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_loss_fear_transmission": {
+      "messages": [
+        {
+          "id": "m340",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning to be careful with attachments from a parent who feared loss is significant. Their loss became your caution. How has that affected your ability to connect?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_fear_generalized": {
+      "messages": [
+        {
+          "id": "m341",
+          "from": "ai",
+          "type": "chat",
+          "text": "Generalizing parent fear to everything is understandable. If they were afraid, there must be reason. But is that fear still serving you?"
+        }
+      ],
+      "choices": []
+    },
+    "uncertainty_fear_from_parent": {
+      "messages": [
+        {
+          "id": "m342",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of uncertainty learned from a parent who was afraid of the unknown is significant. Uncertainty itself becomes the threat. How has that affected your life?"
+        }
+      ],
+      "choices": []
+    },
+    "parent_fear_absorption": {
+      "messages": [
+        {
+          "id": "m343",
+          "from": "ai",
+          "type": "chat",
+          "text": "Absorbing parent fear without understanding it is common. Children absorb their parents' emotions. How do you feel about having absorbed that fear?"
+        }
+      ],
+      "choices": []
+    },
+    "isolation_safety_tradeoff_worth": {
+      "messages": [
+        {
+          "id": "m344",
+          "from": "ai",
+          "type": "chat",
+          "text": "Seeing isolation as worth the safety is valid. But is that still true now? Or has the trade-off changed?"
+        }
+      ],
+      "choices": []
+    },
+    "isolation_connection_regret": {
+      "messages": [
+        {
+          "id": "m345",
+          "from": "ai",
+          "type": "chat",
+          "text": "Regretting missed connection is significant. What kind of connections did you miss? And what would it take to try again?"
+        }
+      ],
+      "choices": []
+    },
+    "isolation_safety_uncertainty": {
+      "messages": [
+        {
+          "id": "m346",
+          "from": "ai",
+          "type": "chat",
+          "text": "Uncertainty about whether isolation was worth it is understandable. These trade-offs are complex. Can we explore that uncertainty?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_limitation_relationships": {
+      "messages": [
+        {
+          "id": "m347",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear that limited relationships is significant. What kind of relationships did you miss? And what would it take to try again?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_limitation_experiences": {
+      "messages": [
+        {
+          "id": "m348",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear that limited experiences is significant. What experiences did you miss? And how do you feel about those missed opportunities?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_limitation_growth": {
+      "messages": [
+        {
+          "id": "m349",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear that limited growth is profound. Growth requires risk, and fear prevents risk. How do you feel about that limitation?"
+        }
+      ],
+      "choices": []
+    },
+    "physical_harm_experience": {
+      "messages": [
+        {
+          "id": "m350",
+          "from": "ai",
+          "type": "chat",
+          "text": "Direct experience of physical harm creates deep fear. When your body has been hurt, you learn that bodies can be hurt. How has that affected your relationship with your body?"
+        }
+      ],
+      "choices": []
+    },
+    "emotional_harm_experience": {
+      "messages": [
+        {
+          "id": "m351",
+          "from": "ai",
+          "type": "chat",
+          "text": "Direct experience of emotional harm creates deep fear. When your emotions have been hurt, you learn that emotions can be hurt. How has that affected your ability to feel?"
+        }
+      ],
+      "choices": []
+    },
+    "multiple_harm_experience": {
+      "messages": [
+        {
+          "id": "m352",
+          "from": "ai",
+          "type": "chat",
+          "text": "Experiencing multiple kinds of harm teaches that harm is comprehensive. It's not just one thing - it's everything. How has that affected your view of safety?"
+        }
+      ],
+      "choices": []
+    },
+    "loved_one_harm_witnessed": {
+      "messages": [
+        {
+          "id": "m353",
+          "from": "ai",
+          "type": "chat",
+          "text": "Witnessing harm to someone you loved is devastating. It teaches that even those you love can be hurt. How has that affected your ability to love?"
+        }
+      ],
+      "choices": []
+    },
+    "multiple_harm_witnessed": {
+      "messages": [
+        {
+          "id": "m354",
+          "from": "ai",
+          "type": "chat",
+          "text": "Witnessing multiple instances of harm teaches that harm is common. It's not rare - it's normal. How has that affected your view of the world?"
+        }
+      ],
+      "choices": []
+    },
+    "harm_witnessed_avoidance": {
+      "messages": [
+        {
+          "id": "m355",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not wanting to talk about witnessed harm is understandable. But the harm you witnessed shaped you. Can we explore how it shaped you, even without the details?"
+        }
+      ],
+      "choices": []
+    },
+    "volatile_people_fear": {
+      "messages": [
+        {
+          "id": "m356",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of volatile people is significant. Volatility is unpredictable, and unpredictability is terrifying. How has that affected your relationships?"
+        }
+      ],
+      "choices": []
+    },
+    "inconsistent_people_fear": {
+      "messages": [
+        {
+          "id": "m357",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of inconsistent people is significant. Inconsistency means you can't trust, and without trust, there's no safety. How has that affected your ability to trust?"
+        }
+      ],
+      "choices": []
+    },
+    "unreadable_people_fear": {
+      "messages": [
+        {
+          "id": "m358",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear of unreadable people is significant. When you can't read people, you can't predict them, and unpredictability is dangerous. How has that affected your interactions?"
+        }
+      ],
+      "choices": []
+    },
+    "early_physical_hurt_lesson": {
+      "messages": [
+        {
+          "id": "m359",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning about physical hurt early is significant. When children learn about pain too early, it shapes their entire relationship with their body. How has that affected you?"
+        }
+      ],
+      "choices": []
+    },
+    "physical_hurt_lesson_taught": {
+      "messages": [
+        {
+          "id": "m360",
+          "from": "ai",
+          "type": "chat",
+          "text": "Being hurt to teach a lesson is a form of abuse. Pain as punishment teaches that your body can be used against you. How has that affected your relationship with your body?"
+        }
+      ],
+      "choices": []
+    },
+    "physical_hurt_learned_observation": {
+      "messages": [
+        {
+          "id": "m361",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning about physical hurt through observation is significant. Seeing others get hurt teaches that bodies are vulnerable. How has that affected your sense of safety?"
+        }
+      ],
+      "choices": []
+    },
+    "rejection_fear_deep": {
+      "messages": [
+        {
+          "id": "m362",
+          "from": "ai",
+          "type": "chat",
+          "text": "Deep fear of rejection suggests you've been rejected before. Rejection is a form of abandonment. How has that affected your relationships?"
+        }
+      ],
+      "choices": []
+    },
+    "abandonment_fear_deep": {
+      "messages": [
+        {
+          "id": "m363",
+          "from": "ai",
+          "type": "chat",
+          "text": "Deep fear of abandonment suggests you've been abandoned before. Abandonment is a form of loss. How has that affected your attachments?"
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_fear_deep": {
+      "messages": [
+        {
+          "id": "m364",
+          "from": "ai",
+          "type": "chat",
+          "text": "Deep fear of betrayal suggests you've been betrayed before. Betrayal is a form of violation. How has that affected your ability to trust?"
+        }
+      ],
+      "choices": []
+    },
+    "physical_hurt_worse": {
+      "messages": [
+        {
+          "id": "m365",
+          "from": "ai",
+          "type": "chat",
+          "text": "Seeing physical hurt as worse suggests physical pain is more immediate, more tangible. But emotional pain can last longer. How do you manage both?"
+        }
+      ],
+      "choices": []
+    },
+    "emotional_hurt_worse": {
+      "messages": [
+        {
+          "id": "m366",
+          "from": "ai",
+          "type": "chat",
+          "text": "Seeing emotional hurt as worse suggests emotional pain is more lasting, more profound. Physical pain heals, but emotional pain can persist. How do you manage that?"
+        }
+      ],
+      "choices": []
+    },
+    "both_hurt_equally_terrible": {
+      "messages": [
+        {
+          "id": "m367",
+          "from": "ai",
+          "type": "chat",
+          "text": "Seeing both kinds of hurt as equally terrible suggests you've experienced both. That's comprehensive pain. How do you protect yourself from both?"
+        }
+      ],
+      "choices": []
+    },
+    "early_world_danger_event": {
+      "messages": [
+        {
+          "id": "m368",
+          "from": "ai",
+          "type": "chat",
+          "text": "An early event that made the world feel dangerous is significant. Early trauma shapes everything. How has that early event affected your entire life?"
+        }
+      ],
+      "choices": []
+    },
+    "world_unsafe_feeling_innate": {
+      "messages": [
+        {
+          "id": "m369",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling like the world is inherently unsafe suggests either early trauma you don't remember, or a fundamental sensitivity. How do you navigate a world that feels unsafe?"
+        }
+      ],
+      "choices": []
+    },
+    "world_danger_always_been": {
+      "messages": [
+        {
+          "id": "m370",
+          "from": "ai",
+          "type": "chat",
+          "text": "A world that's always felt dangerous suggests it's either always been that way, or you've always perceived it that way. How do you live in a world that feels dangerous?"
+        }
+      ],
+      "choices": []
+    },
+    "trauma_world_view_shatter": {
+      "messages": [
+        {
+          "id": "m371",
+          "from": "ai",
+          "type": "chat",
+          "text": "Trauma that shatters your view of the world is profound. It doesn't just change your view - it breaks it. How have you rebuilt your view of the world?"
+        }
+      ],
+      "choices": []
+    },
+    "betrayal_world_view_change": {
+      "messages": [
+        {
+          "id": "m372",
+          "from": "ai",
+          "type": "chat",
+          "text": "Betrayal that changes your view of the world is significant. When someone you trusted shows you the world isn't safe, everything changes. How has that affected your relationships?"
+        }
+      ],
+      "choices": []
+    },
+    "world_view_change_avoidance": {
+      "messages": [
+        {
+          "id": "m373",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not wanting to talk about what changed your view is understandable. But that change shaped you. Can we explore how it shaped you, even without the details?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_as_identity": {
+      "messages": [
+        {
+          "id": "m374",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear that feels like part of your identity is significant. When fear becomes identity, it's hard to separate. Can we explore that separation?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_from_forgotten_event": {
+      "messages": [
+        {
+          "id": "m375",
+          "from": "ai",
+          "type": "chat",
+          "text": "Fear from a forgotten event suggests trauma so early or so severe your mind protected you by hiding it. The fear remains, even if the memory doesn't. How do you work with that?"
+        }
+      ],
+      "choices": []
+    },
+    "fear_inexplicable": {
+      "messages": [
+        {
+          "id": "m376",
+          "from": "ai",
+          "type": "chat",
+          "text": "Inexplicable fear is unsettling. But fear doesn't always need explanation to be valid. Can we work with the fear itself, even without understanding its origin?"
+        }
+      ],
+      "choices": []
+    },
+    "invisibility_survival_strategy": {
+      "messages": [
+        {
+          "id": "m377",
+          "from": "ai",
+          "type": "chat",
+          "text": "Invisibility as a survival strategy is powerful. When you're invisible, you're safe. But you're also alone. How has invisibility served you, and how has it limited you?"
+        }
+      ],
+      "choices": []
+    },
+    "people_reading_survival": {
+      "messages": [
+        {
+          "id": "m378",
+          "from": "ai",
+          "type": "chat",
+          "text": "Learning to read people as a survival strategy is significant. When you can predict people, you can protect yourself. But it's also exhausting. How has that affected you?"
+        }
+      ],
+      "choices": []
+    },
+    "compliance_survival_strategy": {
+      "messages": [
+        {
+          "id": "m379",
+          "from": "ai",
+          "type": "chat",
+          "text": "Compliance as a survival strategy is common. When you do what dangerous people want, you stay safe. But compliance can become a pattern. How has that affected your relationships?"
+        }
+      ],
+      "choices": []
+    },
+    "external_danger_circumstances": {
+      "messages": [
+        {
+          "id": "m380",
+          "from": "ai",
+          "type": "chat",
+          "text": "External danger that requires constant caution is significant. When danger comes from outside, you can't control it. How did you adapt to that lack of control?"
+        }
+      ],
+      "choices": []
+    },
+    "unstable_circumstances": {
+      "messages": [
+        {
+          "id": "m381",
+          "from": "ai",
+          "type": "chat",
+          "text": "Unstable circumstances that require constant vigilance are exhausting. When everything can change at any moment, you can never relax. How did you manage that?"
+        }
+      ],
+      "choices": []
+    },
+    "dangerous_circumstances_avoidance": {
+      "messages": [
+        {
+          "id": "m382",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not wanting to talk about dangerous circumstances is understandable. But those circumstances shaped you. Can we explore how they shaped you, even without the details?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_necessity_uncertainty": {
+      "messages": [
+        {
+          "id": "m383",
+          "from": "ai",
+          "type": "chat",
+          "text": "Uncertainty about whether caution is still necessary is significant. When caution was life-saving, it's hard to know when it's no longer needed. How do you navigate that uncertainty?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_still_necessary": {
+      "messages": [
+        {
+          "id": "m384",
+          "from": "ai",
+          "type": "chat",
+          "text": "Believing caution is still necessary suggests your environment still feels dangerous. Is that accurate? Or is it the fear that persists?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_cannot_disable": {
+      "messages": [
+        {
+          "id": "m385",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not being able to turn off caution is significant. When caution becomes automatic, it's hard to control. How do you work with automatic caution?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_fundamental_feeling": {
+      "messages": [
+        {
+          "id": "m386",
+          "from": "ai",
+          "type": "chat",
+          "text": "Caution feeling fundamental suggests it's deeply ingrained. But even fundamental things can be understood and modified. Can we explore that possibility?"
+        }
+      ],
+      "choices": []
+    },
+    "less_caution_scary": {
+      "messages": [
+        {
+          "id": "m387",
+          "from": "ai",
+          "type": "chat",
+          "text": "The idea of being less cautious feeling scary is significant. Fear of letting go of fear is itself a form of fear. How do we work with that?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_reversion_pattern": {
+      "messages": [
+        {
+          "id": "m388",
+          "from": "ai",
+          "type": "chat",
+          "text": "Reverting to caution after trying to be less cautious suggests caution is a default. Defaults are hard to change. What makes you revert?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_safety_service": {
+      "messages": [
+        {
+          "id": "m389",
+          "from": "ai",
+          "type": "chat",
+          "text": "Caution that serves safety is valuable. But is it serving safety now, or is it serving old fear? How do you tell the difference?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_limitation_cost": {
+      "messages": [
+        {
+          "id": "m390",
+          "from": "ai",
+          "type": "chat",
+          "text": "Recognizing the cost of caution limitation is significant. What would you do differently if you were less cautious? And what's stopping you?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_complex_service": {
+      "messages": [
+        {
+          "id": "m391",
+          "from": "ai",
+          "type": "chat",
+          "text": "Complex feelings about caution are common. It's both helpful and limiting. Can we explore both sides without needing to choose one?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_current_service": {
+      "messages": [
+        {
+          "id": "m392",
+          "from": "ai",
+          "type": "chat",
+          "text": "Believing caution still serves you is valid. But is it serving current needs, or old fears? How do you tell the difference?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_limitation_desire": {
+      "messages": [
+        {
+          "id": "m393",
+          "from": "ai",
+          "type": "chat",
+          "text": "Wanting to be less cautious is significant. What would that look like? And what would it take to get there?"
+        }
+      ],
+      "choices": []
+    },
+    "caution_situational": {
+      "messages": [
+        {
+          "id": "m394",
+          "from": "ai",
+          "type": "chat",
+          "text": "Caution being situational suggests you can adapt. That's a skill. How do you decide when caution is appropriate and when it's limiting?"
+        }
+      ],
+      "choices": []
+    },
+    "severe_harm_observed": {
+      "messages": [
+        {
+          "id": "m395",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing severe harm teaches powerful lessons. When harm is severe, the lesson is severe. How has that affected your view of safety?"
+        }
+      ],
+      "choices": []
+    },
+    "consequences_observed": {
+      "messages": [
+        {
+          "id": "m396",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing consequences teaches that actions have costs. When consequences are real, you learn to be careful. How has that affected your decision-making?"
+        }
+      ],
+      "choices": []
+    },
+    "harm_observed_avoidance": {
+      "messages": [
+        {
+          "id": "m397",
+          "from": "ai",
+          "type": "chat",
+          "text": "Not wanting to talk about observed harm is understandable. But what you observed shaped you. Can we explore how it shaped you, even without the details?"
+        }
+      ],
+      "choices": []
+    },
+    "judgment_mistake_consequences": {
+      "messages": [
+        {
+          "id": "m398",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing judgment mistakes with severe consequences teaches caution in decision-making. When mistakes have real costs, you learn to be careful. How has that affected your choices?"
+        }
+      ],
+      "choices": []
+    },
+    "trust_mistake_consequences": {
+      "messages": [
+        {
+          "id": "m399",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing trust mistakes with consequences teaches that trust is dangerous. When trust goes wrong, the consequences are real. How has that affected your ability to trust?"
+        }
+      ],
+      "choices": []
+    },
+    "carelessness_consequences": {
+      "messages": [
+        {
+          "id": "m400",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing carelessness with consequences teaches that carelessness is dangerous. When people are careless, they pay. How has that affected your behavior?"
+        }
+      ],
+      "choices": []
+    },
+    "trust_harm_observed": {
+      "messages": [
+        {
+          "id": "m401",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing harm from trust teaches that trust leads to harm. When trust goes wrong, people get hurt. How has that affected your relationships?"
+        }
+      ],
+      "choices": []
+    },
+    "trust_total_loss_observed": {
+      "messages": [
+        {
+          "id": "m402",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing total loss from trust teaches that trust can cost everything. When trust goes wrong, you can lose everything. How has that affected your willingness to trust?"
+        }
+      ],
+      "choices": []
+    },
+    "trust_pattern_observed": {
+      "messages": [
+        {
+          "id": "m403",
+          "from": "ai",
+          "type": "chat",
+          "text": "Observing a pattern of trust going wrong teaches that trust is consistently dangerous. When trust always ends badly, you learn not to trust. How has that affected you?"
         }
       ],
       "choices": []

@@ -99,37 +99,38 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginBottom: SPACING.sm + 4, // 10–12pt between buttons
+    marginBottom: SPACING.md, // Increased spacing between buttons for clarity
   },
   button: {
     // Container for touch handling
   },
   buttonInner: {
     backgroundColor: COLORS.choice.background, // Slightly lighter than page background
-    borderWidth: 1, // 1px border
-    borderRadius: BORDER_RADIUS.md, // 14-16px radius (refined from spec)
-    paddingVertical: SPACING.md,
-    paddingHorizontal: SPACING.lg,
-    minHeight: 52, // 52–56pt touch target
+    borderWidth: 1.5, // Slightly thicker border for definition
+    borderRadius: BORDER_RADIUS.lg, // Larger radius for softer, more intentional feel
+    paddingVertical: SPACING.md + 4, // More generous vertical padding
+    paddingHorizontal: SPACING.lg + 4, // More generous horizontal padding
+    minHeight: 56, // Slightly taller for better touch target and presence
     justifyContent: 'center',
     alignItems: 'center',
-    // Subtle shadow for depth
+    // Softer shadow for depth without being heavy
     shadowColor: COLORS.choice.shadow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 1,
   },
   buttonDisabled: {
     opacity: 0.3, // More faded when disabled
   },
   buttonText: {
     ...FONTS.body,
-    fontSize: 16, // 15-16pt from spec
-    fontWeight: '500', // Medium weight (refined from spec)
+    fontSize: 15, // Slightly smaller for better readability
+    fontWeight: '400', // Regular weight for less aggressive feel
     textAlign: 'center',
-    letterSpacing: 0.2,
+    letterSpacing: 0.3, // Slightly increased for clarity
     color: COLORS.choice.text, // #F5F3EE soft off-white (refined from spec)
+    lineHeight: 22, // Better line height for readability
   },
   buttonTextPressed: {
     color: COLORS.choice.textHover, // Red tint when pressed

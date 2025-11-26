@@ -10,52 +10,35 @@ import storyLineManager from '../utils/storyLineManager';
 import { initializeAudio, playBackgroundMusic, stopBackgroundMusic, getAudioEnabled } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
 
-// Session Library theme - Black Mirror-style session hub
+// Session Library theme - Premium therapeutic design
 const SESSION_THEME = {
   // Colors
   background: '#050608',
-  surface: '#111317', // Card background
+  surface: '#0F1115', // Card background - refined for better contrast
   surfaceSelected: '#151920', // Selected card background
+  surfaceGradient: ['#0F1115', '#111317'], // Subtle gradient for depth
   accent: '#F45C4E',
-  accentBorder: 'rgba(244, 92, 78, 0.4)',
-  accentBorderSelected: 'rgba(244, 92, 78, 0.7)',
+  accentBorder: 'rgba(244, 92, 78, 0.25)', // Softer border
+  accentBorderSelected: 'rgba(244, 92, 78, 0.5)', // More visible when selected
   primaryText: '#F5F3EE',
-  secondaryText: 'rgba(154, 158, 164, 0.6)',
-  mutedText: 'rgba(154, 158, 164, 0.4)',
+  secondaryText: 'rgba(154, 158, 164, 0.7)', // Improved contrast
+  mutedText: 'rgba(154, 158, 164, 0.5)',
   footerText: 'rgba(245, 243, 238, 0.4)',
   
   // Opacities
-  microcopyOpacity: 0.45,
-  activityDotOpacity: 0.6,
+  microcopyOpacity: 0.5,
+  activityDotOpacity: 0.4, // More subtle
   
   // Spacing
-  cardSpacing: 16,
+  cardSpacing: 12, // Tighter spacing for cleaner look
   headerPadding: SPACING.lg,
+  cardPadding: 20, // More generous padding
   
   // Typography
-  titleSize: 26,
-  titleLetterSpacing: 1.2,
-  subtitleSize: 12,
+  titleSize: 28, // Slightly larger for hierarchy
+  titleLetterSpacing: 0.8,
+  subtitleSize: 13,
   microcopySize: 11,
-};
-
-// Session metadata with enhanced descriptions
-const SESSION_METADATA = {
-  'therapy_ai_session_1': {
-    tag: null,
-    description: 'Anxious first-time user, standard onboarding.',
-    duration: '~45 min',
-  },
-  'therapy_ai_session_2': {
-    tag: 'RECOMMENDED',
-    description: 'Returning patient with escalating dependency.',
-    duration: '~50 min',
-  },
-  'therapy_ai_session_3': {
-    tag: 'EXPERIMENTAL',
-    description: 'Experimental profile with reduced safeguards.',
-    duration: '~55 min',
-  },
 };
 
 const StartScreen = ({ navigation }) => {
@@ -201,11 +184,11 @@ const StartScreen = ({ navigation }) => {
         </View>
 
         {/* Brand Header */}
-        <HeaderBrand logoPulse={logoPulse} activityDotOpacity={activityDotOpacity} lastAnalyzed={lastAnalyzed} />
+        <HeaderBrand logoPulse={logoPulse} activityDotOpacity={activityDotOpacity} />
 
         {/* Session Library Section */}
         <View style={styles.sessionSection}>
-          <Text style={styles.sectionLabel}>Choose a profile to evaluate</Text>
+          <Text style={styles.sectionLabel}>Select Session</Text>
           
           <ScrollView 
             style={styles.sessionList}
@@ -213,7 +196,6 @@ const StartScreen = ({ navigation }) => {
             contentContainerStyle={styles.sessionListContent}
           >
             {storyLines.map((storyLine) => {
-              const metadata = SESSION_METADATA[storyLine.id] || {};
               const hasSaved = sessionProgress[storyLine.id] || false;
               const isSelected = selectedStoryLine === storyLine.id;
               
@@ -221,7 +203,6 @@ const StartScreen = ({ navigation }) => {
                 <SessionCard
                   key={storyLine.id}
                   storyLine={storyLine}
-                  metadata={metadata}
                   hasProgress={hasSaved}
                   isSelected={isSelected}
                   onSelect={() => handleSessionSelect(storyLine.id)}
@@ -252,21 +233,13 @@ const StartScreen = ({ navigation }) => {
 };
 
 // Brand Header Component
-const HeaderBrand = ({ logoPulse, activityDotOpacity, lastAnalyzed }) => {
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: false 
-    });
-  };
-
+const HeaderBrand = ({ logoPulse, activityDotOpacity }) => {
   return (
     <View style={styles.headerWrapper}>
-      {/* Radial gradient halo */}
+      {/* Subtle radial gradient halo */}
       <View style={styles.headerHalo}>
         <LinearGradient
-          colors={['rgba(74, 158, 158, 0.15)', 'transparent']}
+          colors={['rgba(74, 158, 158, 0.08)', 'transparent']}
           start={{ x: 0.5, y: 0.5 }}
           end={{ x: 0.5, y: 1 }}
           style={styles.headerHaloGradient}
@@ -274,7 +247,7 @@ const HeaderBrand = ({ logoPulse, activityDotOpacity, lastAnalyzed }) => {
       </View>
 
       <View style={styles.headerContent}>
-        {/* Robot icon with glow */}
+        {/* Robot icon with subtle glow */}
         <View style={styles.iconContainer}>
           <View style={styles.iconGlow} />
           <Animated.View style={{ transform: [{ scale: logoPulse }] }}>
@@ -290,33 +263,30 @@ const HeaderBrand = ({ logoPulse, activityDotOpacity, lastAnalyzed }) => {
         <View style={styles.headerText}>
           <Text style={styles.headerTitle}>Therapy AI</Text>
           <Text style={styles.headerSubtitle}>Clinical conversational support</Text>
-          <View style={styles.microcopyRow}>
-            <Text style={styles.headerMicrocopy}>Cognitive profile syncing…</Text>
-            <Animated.View 
-              style={[
-                styles.activityDot,
-                { opacity: activityDotOpacity }
-              ]} 
-            />
-          </View>
         </View>
       </View>
 
-      {/* Last analyzed timestamp */}
-      <Text style={styles.lastAnalyzed}>
-        Last analyzed: {formatTime(lastAnalyzed)}
-      </Text>
+      {/* Subtle background indicator for cognitive syncing */}
+      <View style={styles.syncIndicator}>
+        <Animated.View 
+          style={[
+            styles.syncDot,
+            { opacity: activityDotOpacity }
+          ]} 
+        />
+        <Text style={styles.syncText}>Profile syncing</Text>
+      </View>
     </View>
   );
 };
 
 // Session Card Component
-const SessionCard = ({ storyLine, metadata, hasProgress, isSelected, onSelect }) => {
+const SessionCard = ({ storyLine, hasProgress, isSelected, onSelect }) => {
   const cardScale = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
     Animated.spring(cardScale, {
-      toValue: 0.97,
+      toValue: 0.98,
       useNativeDriver: true,
       tension: 300,
       friction: 10,
@@ -343,28 +313,28 @@ const SessionCard = ({ storyLine, metadata, hasProgress, isSelected, onSelect })
         onPress={onSelect}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        activeOpacity={0.9}
+        activeOpacity={0.95}
       >
-        {/* Tag badge */}
-        {metadata.tag && (
-          <View style={styles.tagContainer}>
-            <Text style={styles.tagText}>{metadata.tag}</Text>
-          </View>
-        )}
+        {/* Subtle gradient overlay for depth */}
+        <LinearGradient
+          colors={SESSION_THEME.surfaceGradient}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.cardGradient}
+        />
 
         {/* Card content */}
         <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{storyLine.title}</Text>
-          <Text style={styles.cardDescription}>{metadata.description || storyLine.description}</Text>
-          
-          {/* Metadata row */}
-          <View style={styles.cardMetadata}>
-            <Text style={styles.metadataText}>
-              {hasProgress ? 'Progress: Active' : 'Not started'}
-            </Text>
-            <Text style={styles.metadataText}>•</Text>
-            <Text style={styles.metadataText}>{metadata.duration || '~45 min'}</Text>
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardTitle}>{storyLine.title}</Text>
+            {hasProgress && (
+              <View style={styles.progressIndicator}>
+                <View style={styles.progressDot} />
+                <Text style={styles.progressText}>Active</Text>
+              </View>
+            )}
           </View>
+          <Text style={styles.cardDescription}>{storyLine.description}</Text>
         </View>
       </TouchableOpacity>
     </Animated.View>
@@ -407,7 +377,7 @@ const PrimaryActionBar = ({ hasProgress, onContinue, onStart, onStartOver }) => 
               onPress={onContinue}
               onPressIn={() => handlePressIn('primary')}
               onPressOut={() => handlePressOut('primary')}
-              activeOpacity={0.9}
+              activeOpacity={0.95}
             >
               <Text style={styles.primaryButtonLabel}>Continue Session</Text>
             </TouchableOpacity>
@@ -421,7 +391,7 @@ const PrimaryActionBar = ({ hasProgress, onContinue, onStart, onStartOver }) => 
               onPress={onStartOver}
               onPressIn={() => handlePressIn('secondary')}
               onPressOut={() => handlePressOut('secondary')}
-              activeOpacity={0.9}
+              activeOpacity={0.95}
             >
               <Text style={styles.secondaryButtonLabel}>Start Over</Text>
             </TouchableOpacity>
@@ -434,7 +404,7 @@ const PrimaryActionBar = ({ hasProgress, onContinue, onStart, onStartOver }) => 
             onPress={onStart}
             onPressIn={() => handlePressIn('primary')}
             onPressOut={() => handlePressOut('primary')}
-            activeOpacity={0.9}
+            activeOpacity={0.95}
           >
             <Text style={styles.primaryButtonLabel}>Start Session</Text>
           </TouchableOpacity>
@@ -485,7 +455,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   headerWrapper: {
-    marginBottom: SPACING.xl,
+    marginBottom: SPACING.xl + 4,
     position: 'relative',
   },
   headerHalo: {
@@ -493,41 +463,40 @@ const styles = StyleSheet.create({
     top: -SPACING.lg,
     left: -SPACING.xl,
     right: -SPACING.xl,
-    height: 120,
+    height: 100,
     alignItems: 'center',
     justifyContent: 'center',
     pointerEvents: 'none',
   },
   headerHaloGradient: {
-    width: 280,
-    height: 120,
-    borderRadius: 140,
+    width: 260,
+    height: 100,
+    borderRadius: 130,
   },
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: SPACING.sm,
   },
   iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: SPACING.md,
+    marginRight: SPACING.md + 2,
     position: 'relative',
   },
   iconGlow: {
     position: 'absolute',
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     backgroundColor: COLORS.accent.cyan,
-    opacity: 0.2,
+    opacity: 0.15,
   },
   robotIcon: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     zIndex: 2,
   },
   headerText: {
@@ -538,37 +507,34 @@ const styles = StyleSheet.create({
     fontSize: SESSION_THEME.titleSize,
     letterSpacing: SESSION_THEME.titleLetterSpacing,
     color: SESSION_THEME.primaryText,
-    marginBottom: 2,
+    marginBottom: 4,
+    fontWeight: '600',
   },
   headerSubtitle: {
     ...FONTS.titleScreen.tagline,
     fontSize: SESSION_THEME.subtitleSize,
     color: SESSION_THEME.secondaryText,
-    marginBottom: 4,
+    lineHeight: 18,
   },
-  microcopyRow: {
+  syncIndicator: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: SPACING.sm + 2,
+    paddingLeft: 2,
   },
-  headerMicrocopy: {
-    ...FONTS.small,
-    fontSize: SESSION_THEME.microcopySize,
-    color: SESSION_THEME.secondaryText,
-    opacity: SESSION_THEME.microcopyOpacity,
-  },
-  activityDot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
+  syncDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
     backgroundColor: SESSION_THEME.accent,
-    marginLeft: SPACING.xs,
+    marginRight: SPACING.xs + 2,
   },
-  lastAnalyzed: {
+  syncText: {
     ...FONTS.small,
     fontSize: 10,
     color: SESSION_THEME.mutedText,
-    marginTop: SPACING.xs,
-    letterSpacing: 0.5,
+    letterSpacing: 0.4,
+    opacity: 0.6,
   },
   sessionSection: {
     flex: 1,
@@ -578,8 +544,9 @@ const styles = StyleSheet.create({
     ...FONTS.caption,
     fontSize: 11,
     color: SESSION_THEME.secondaryText,
-    marginBottom: SPACING.md,
-    letterSpacing: 1,
+    marginBottom: SPACING.md + 2,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
   },
   sessionList: {
     flex: 1,
@@ -589,58 +556,75 @@ const styles = StyleSheet.create({
   },
   sessionCard: {
     backgroundColor: SESSION_THEME.surface,
-    borderRadius: BORDER_RADIUS.md,
-    padding: SPACING.md,
+    borderRadius: BORDER_RADIUS.lg,
     marginBottom: SESSION_THEME.cardSpacing,
     borderWidth: 1,
     borderColor: SESSION_THEME.accentBorder,
     position: 'relative',
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 3,
   },
   sessionCardSelected: {
     backgroundColor: SESSION_THEME.surfaceSelected,
     borderColor: SESSION_THEME.accentBorderSelected,
     borderWidth: 1.5,
+    shadowOpacity: 0.4,
+    shadowRadius: 12,
+    elevation: 5,
   },
-  tagContainer: {
-    position: 'absolute',
-    top: SPACING.sm,
-    right: SPACING.sm,
-    backgroundColor: SESSION_THEME.accent,
-    paddingHorizontal: SPACING.xs + 2,
-    paddingVertical: 2,
-    borderRadius: BORDER_RADIUS.sm,
-  },
-  tagText: {
-    ...FONTS.caption,
-    fontSize: 9,
-    color: '#FEF7F4',
-    letterSpacing: 0.8,
+  cardGradient: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.5,
   },
   cardContent: {
-    paddingRight: SPACING.lg, // Space for tag
+    padding: SESSION_THEME.cardPadding,
+    position: 'relative',
+    zIndex: 1,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: SPACING.sm,
   },
   cardTitle: {
     ...FONTS.bodyBold,
-    fontSize: 16,
+    fontSize: 17,
     color: SESSION_THEME.primaryText,
-    marginBottom: SPACING.xs,
+    flex: 1,
+    lineHeight: 24,
+    letterSpacing: 0.2,
+  },
+  progressIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: SPACING.sm,
+  },
+  progressDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: SESSION_THEME.accent,
+    marginRight: SPACING.xs,
+    opacity: 0.8,
+  },
+  progressText: {
+    ...FONTS.small,
+    fontSize: 11,
+    color: SESSION_THEME.accent,
+    opacity: 0.8,
+    letterSpacing: 0.3,
   },
   cardDescription: {
     ...FONTS.body,
-    fontSize: 13,
+    fontSize: 14,
     color: SESSION_THEME.secondaryText,
-    lineHeight: 18,
-    marginBottom: SPACING.sm,
-  },
-  cardMetadata: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  metadataText: {
-    ...FONTS.small,
-    fontSize: 11,
-    color: SESSION_THEME.mutedText,
-    marginRight: SPACING.xs,
+    lineHeight: 20,
+    letterSpacing: 0.1,
   },
   microcopy: {
     ...FONTS.small,
@@ -661,19 +645,19 @@ const styles = StyleSheet.create({
     minHeight: 56,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: SPACING.md,
+    paddingVertical: SPACING.md + 2,
     shadowColor: SESSION_THEME.accent,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
-    shadowRadius: 10,
-    elevation: 4,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 3,
   },
   primaryButtonLabel: {
     ...FONTS.bodyBold,
     color: '#FEF7F4',
     fontSize: 16,
-    letterSpacing: 0.4,
-    textTransform: 'uppercase',
+    letterSpacing: 0.3,
+    fontWeight: '500',
   },
   buttonSpacer: {
     height: SPACING.sm,

@@ -1,17 +1,49 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
 /**
- * ChatMessage component - premium styled chat messages
+ * ChatMessage component - premium styled chat messages with empathetic micro-interactions
  * Features refined styling with character avatar for AI messages
  */
-const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message, isLatest = false }) => {
   const { from, type, text } = message;
   
   const isAI = from === 'ai';
   const isNarrator = from === 'narrator';
   const isPlayer = from === 'player';
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const glowAnim = useRef(new Animated.Value(0.1)).current;
+
+  useEffect(() => {
+    // Gentle fade-in for new messages
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+
+    // Subtle breathing glow for latest AI message (empathetic cue)
+    if (isAI && isLatest) {
+      const breathing = Animated.loop(
+        Animated.sequence([
+          Animated.timing(glowAnim, {
+            toValue: 0.15,
+            duration: 2000,
+            useNativeDriver: false,
+          }),
+          Animated.timing(glowAnim, {
+            toValue: 0.1,
+            duration: 2000,
+            useNativeDriver: false,
+          }),
+        ])
+      );
+      breathing.start();
+      return () => breathing.stop();
+    }
+  }, [isAI, isLatest]);
 
   const getStyles = () => {
     if (isAI) {
@@ -38,7 +70,7 @@ const ChatMessage = ({ message }) => {
   const bubbleStyles = getStyles();
 
   return (
-    <View style={[styles.messageWrapper, bubbleStyles.wrapper]}>
+    <Animated.View style={[styles.messageWrapper, bubbleStyles.wrapper, { opacity: fadeAnim }]}>
       {isAI && (
         <View style={styles.avatarContainer} pointerEvents="none">
           <Image
@@ -46,28 +78,33 @@ const ChatMessage = ({ message }) => {
             style={styles.characterImage}
             resizeMode="contain"
           />
-          {/* Very faint teal glow to keep the avatar feeling clinical, not playful */}
-          <View style={styles.avatarGlow} />
+          {/* Gentle breathing glow for empathetic presence */}
+          <Animated.View 
+            style={[
+              styles.avatarGlow,
+              { opacity: isLatest ? glowAnim : 0.1 }
+            ]} 
+          />
         </View>
       )}
       <View style={[styles.bubble, bubbleStyles.container]}>
         <Text style={bubbleStyles.text}>{text}</Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   messageWrapper: {
-    // Base vertical rhythm; individual variants can add extra margin.
-    marginBottom: SPACING.sm,
+    // Improved vertical rhythm with more breathing room
+    marginBottom: SPACING.md + 2, // Increased from sm to md+2 for better spacing
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.xs,
+    paddingVertical: SPACING.xs + 2,
   },
   aiWrapper: {
     alignItems: 'flex-start',
     flexDirection: 'row',
-    gap: SPACING.sm + 2, // Gap between avatar and bubble
+    gap: SPACING.md, // Increased gap for better visual separation
   },
   playerWrapper: {
     alignItems: 'flex-end',
@@ -75,7 +112,7 @@ const styles = StyleSheet.create({
   narratorWrapper: {
     alignItems: 'center',
     width: '100%',
-    marginBottom: SPACING.lg, // Extra separation so narrator feels like its own beat
+    marginBottom: SPACING.lg + 4, // Extra separation so narrator feels like its own beat
   },
   avatarContainer: {
     position: 'relative',
@@ -93,18 +130,18 @@ const styles = StyleSheet.create({
   },
   avatarGlow: {
     position: 'absolute',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: COLORS.accent.cyan,
-    opacity: 0.12, // 10–15% opacity for clinical teal glow
+    opacity: 0.1, // Subtle glow for empathetic presence
     zIndex: 0,
   },
   bubble: {
-    maxWidth: '82%',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.md, // single consistent padding value
-    borderRadius: BORDER_RADIUS.sm,
+    maxWidth: '80%', // Slightly narrower for better readability
+    paddingHorizontal: SPACING.md + 4, // More generous horizontal padding
+    paddingVertical: SPACING.md + 2, // More generous vertical padding
+    borderRadius: BORDER_RADIUS.md, // Slightly larger radius for softer feel
     borderWidth: 1,
   },
   aiContainer: {

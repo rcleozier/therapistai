@@ -312,9 +312,16 @@ const GameScreen = ({ route, navigation }) => {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            {displayedMessages.map((message, index) => (
-              <ChatMessage key={message.id || index} message={message} />
-            ))}
+            {displayedMessages.map((message, index) => {
+              const isLatest = index === displayedMessages.length - 1;
+              return (
+                <ChatMessage 
+                  key={message.id || index} 
+                  message={message} 
+                  isLatest={isLatest}
+                />
+              );
+            })}
           </ScrollView>
         </Animated.View>
 
@@ -354,8 +361,8 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 0,
-    paddingTop: SPACING.md,
-    paddingBottom: SPACING.xl, // leaves room above the response panel
+    paddingTop: SPACING.lg, // More top padding for breathing room
+    paddingBottom: SPACING.xxl + SPACING.md, // More space above response panel for clarity
   },
   endingContainer: {
     paddingHorizontal: SPACING.lg,

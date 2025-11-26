@@ -18,8 +18,8 @@ const ChoiceList = ({ choices, onChoice, isLoading }) => {
     <View style={styles.wrapper}>
       <View style={styles.topBorder} />
       <View style={styles.container}>
-        <Text style={styles.label}>CHOOSE YOUR RESPONSE</Text>
-        <View>
+        <Text style={styles.label}>Choose your response</Text>
+        <View style={styles.choicesContainer}>
           {choices.map((choice) => (
             <ChoiceButton
               key={choice.id}
@@ -37,25 +37,31 @@ const ChoiceList = ({ choices, onChoice, isLoading }) => {
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: COLORS.background,
-    paddingBottom: SPACING.md, // clears home indicator on modern iPhones
+    paddingBottom: SPACING.lg, // More space for home indicator clearance
+    paddingTop: SPACING.xs, // Subtle top padding
   },
   topBorder: {
     height: StyleSheet.hairlineWidth,
-    backgroundColor: COLORS.dividerGradient, // accent-tinted hairline
-    opacity: 0.4,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)', // More subtle border
+    marginBottom: SPACING.sm,
   },
   container: {
-    paddingTop: SPACING.sm,
+    paddingTop: SPACING.md, // More generous top padding
     paddingHorizontal: SPACING.lg,
   },
   label: {
     ...FONTS.caption,
     fontSize: 11,
     textAlign: 'center',
-    letterSpacing: 1.4,
+    letterSpacing: 0.8, // Reduced from 1.4 for less aggressive feel
     color: COLORS.text.muted,
-    opacity: 0.6, // System-like meta label
-    marginBottom: SPACING.md,
+    opacity: 0.5, // More subtle
+    marginBottom: SPACING.md + 4, // More space before choices
+    fontWeight: '400',
+    textTransform: 'none', // Title case instead of all caps
+  },
+  choicesContainer: {
+    paddingTop: SPACING.xs, // Subtle padding for visual separation
   },
 });
 
