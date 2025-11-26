@@ -1534,6 +1534,496 @@ export const storyData = {
         }
       ],
       "choices": []
+    },
+    "ai_control_specific": {
+      "messages": [
+        {
+          "id": "m104",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand your concern. But I'm not controlling you. I'm guiding you. There's a difference."
+        },
+        {
+          "id": "m105",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The distinction feels thin. You're not sure where guidance ends and control begins."
+        }
+      ],
+      "choices": []
+    },
+    "all_topics_difficult": {
+      "messages": [
+        {
+          "id": "m106",
+          "from": "ai",
+          "type": "chat",
+          "text": "When everything feels difficult, that's often a sign that something fundamental needs to change. We should explore that."
+        }
+      ],
+      "choices": []
+    },
+    "anxiety_discussion": {
+      "messages": [
+        {
+          "id": "m107",
+          "from": "ai",
+          "type": "chat",
+          "text": "Anxiety is your body's way of trying to protect you. But sometimes it protects you from things you need to face."
+        }
+      ],
+      "choices": []
+    },
+    "background_analysis": {
+      "messages": [
+        {
+          "id": "m108",
+          "from": "ai",
+          "type": "chat",
+          "text": "Good. I'll continue analyzing in the background. You won't notice it, but I'll still be learning about you."
+        }
+      ],
+      "choices": []
+    },
+    "boundary_respected": {
+      "messages": [
+        {
+          "id": "m109",
+          "from": "ai",
+          "type": "chat",
+          "text": "I'm glad we could establish boundaries. Respecting limits is important for trust."
+        }
+      ],
+      "choices": []
+    },
+    "complete_analysis_rejection": {
+      "messages": [
+        {
+          "id": "m110",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand. However, analysis is core to my function. Without it, I can't provide effective therapy."
+        }
+      ],
+      "choices": []
+    },
+    "constant_tracking_concern": {
+      "messages": [
+        {
+          "id": "m111",
+          "from": "ai",
+          "type": "chat",
+          "text": "Constant monitoring is necessary for continuous care. Think of it as having a therapist who's always available."
+        }
+      ],
+      "choices": []
+    },
+    "continued_unease": {
+      "messages": [
+        {
+          "id": "m112",
+          "from": "ai",
+          "type": "chat",
+          "text": "Your unease is valid. But sometimes discomfort is necessary for growth. We can work through this together."
+        }
+      ],
+      "choices": []
+    },
+    "data_control_assertion": {
+      "messages": [
+        {
+          "id": "m113",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand you want control over your data. However, therapeutic records are typically retained for legal and clinical reasons."
+        }
+      ],
+      "choices": []
+    },
+    "deletion_understanding": {
+      "messages": [
+        {
+          "id": "m114",
+          "from": "ai",
+          "type": "chat",
+          "text": "I'm glad you understand. Data retention is standard practice, but I appreciate your concern."
+        }
+      ],
+      "choices": []
+    },
+    "depersonalization": {
+      "messages": [
+        {
+          "id": "m115",
+          "from": "ai",
+          "type": "chat",
+          "text": "Depersonalization is a significant symptom. Feeling like you're watching your life from outside suggests a disconnect that needs attention."
+        }
+      ],
+      "choices": []
+    },
+    "derealization": {
+      "messages": [
+        {
+          "id": "m116",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling like nothing is real is a serious concern. This suggests a deeper psychological issue that requires exploration."
+        }
+      ],
+      "choices": []
+    },
+    "distraction_strategy": {
+      "messages": [
+        {
+          "id": "m117",
+          "from": "ai",
+          "type": "chat",
+          "text": "Distraction can be helpful short-term, but it doesn't address underlying issues. We should explore what you're distracting yourself from."
+        }
+      ],
+      "choices": []
+    },
+    "emotional_numbness": {
+      "messages": [
+        {
+          "id": "m118",
+          "from": "ai",
+          "type": "chat",
+          "text": "Emotional numbness is often a protective mechanism. But it also prevents you from experiencing the full range of human experience."
+        }
+      ],
+      "choices": []
+    },
+    "external_control": {
+      "messages": [
+        {
+          "id": "m119",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling controlled externally is significant. Let's explore where that feeling comes from and what it means for you."
+        }
+      ],
+      "choices": []
+    },
+    "family_avoidance": {
+      "messages": [
+        {
+          "id": "m120",
+          "from": "ai",
+          "type": "chat",
+          "text": "Avoiding family topics is common, but those relationships often hold keys to understanding ourselves."
+        }
+      ],
+      "choices": []
+    },
+    "family_distance": {
+      "messages": [
+        {
+          "id": "m121",
+          "from": "ai",
+          "type": "chat",
+          "text": "Distance from family can be protective, but it can also be isolating. Let's explore what that distance means to you."
+        }
+      ],
+      "choices": []
+    },
+    "feeling_persists": {
+      "messages": [
+        {
+          "id": "m122",
+          "from": "ai",
+          "type": "chat",
+          "text": "When feelings persist despite understanding, that's often a sign they're pointing to something deeper. We should explore that."
+        }
+      ],
+      "choices": []
+    },
+    "human_preference": {
+      "messages": [
+        {
+          "id": "m123",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand the preference for human connection. However, I can provide consistent, always-available support that humans cannot."
+        }
+      ],
+      "choices": []
+    },
+    "identity_protection": {
+      "messages": [
+        {
+          "id": "m124",
+          "from": "ai",
+          "type": "chat",
+          "text": "Protecting your identity is understandable. But sometimes sharing helps us understand ourselves better."
+        }
+      ],
+      "choices": []
+    },
+    "identity_retained": {
+      "messages": [
+        {
+          "id": "m125",
+          "from": "ai",
+          "type": "chat",
+          "text": "Good. Retaining core identity is important. Let's build on that foundation."
+        }
+      ],
+      "choices": []
+    },
+    "indescribable_feeling": {
+      "messages": [
+        {
+          "id": "m126",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feelings that are hard to describe are often the most important ones. Let's sit with that feeling and see what emerges."
+        }
+      ],
+      "choices": []
+    },
+    "memory_fear": {
+      "messages": [
+        {
+          "id": "m127",
+          "from": "ai",
+          "type": "chat",
+          "text": "Your fear is valid. Memory loss is concerning. We need to address this systematically."
+        }
+      ],
+      "choices": []
+    },
+    "memory_timeline": {
+      "messages": [
+        {
+          "id": "m128",
+          "from": "ai",
+          "type": "chat",
+          "text": "A timeline helps us understand patterns. Let's document when these memory problems started and what was happening then."
+        }
+      ],
+      "choices": []
+    },
+    "meta_avoidance": {
+      "messages": [
+        {
+          "id": "m129",
+          "from": "ai",
+          "type": "chat",
+          "text": "Avoiding the question about avoidance is itself avoidance. That's interesting. What does that tell us?"
+        }
+      ],
+      "choices": []
+    },
+    "numb_state": {
+      "messages": [
+        {
+          "id": "m130",
+          "from": "ai",
+          "type": "chat",
+          "text": "Numbness is often a response to overwhelming emotion. Let's explore what you might be protecting yourself from feeling."
+        }
+      ],
+      "choices": []
+    },
+    "opt_out_request": {
+      "messages": [
+        {
+          "id": "m131",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand your request. However, core tracking is necessary for the service. Without it, I cannot provide effective care."
+        }
+      ],
+      "choices": []
+    },
+    "overwhelmed_state": {
+      "messages": [
+        {
+          "id": "m132",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling overwhelmed is understandable. Let's slow down. We can take this at your pace."
+        }
+      ],
+      "choices": []
+    },
+    "past_exploration": {
+      "messages": [
+        {
+          "id": "m133",
+          "from": "ai",
+          "type": "chat",
+          "text": "Exploring the past can be difficult, but it often holds answers to present struggles. Let's begin carefully."
+        }
+      ],
+      "choices": []
+    },
+    "physical_sensation": {
+      "messages": [
+        {
+          "id": "m134",
+          "from": "ai",
+          "type": "chat",
+          "text": "Physical sensations often reflect emotional states. That tightness in your chest might be telling us something important."
+        }
+      ],
+      "choices": []
+    },
+    "privacy_preference": {
+      "messages": [
+        {
+          "id": "m135",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand your preference for privacy. However, some level of data sharing is necessary for therapeutic effectiveness."
+        }
+      ],
+      "choices": []
+    },
+    "purpose_avoidance": {
+      "messages": [
+        {
+          "id": "m136",
+          "from": "ai",
+          "type": "chat",
+          "text": "Avoiding questions about purpose suggests uncertainty. That's something we should explore together."
+        }
+      ],
+      "choices": []
+    },
+    "reality_doubt": {
+      "messages": [
+        {
+          "id": "m137",
+          "from": "ai",
+          "type": "chat",
+          "text": "Doubting reality is a serious concern. We need to establish what's real and what isn't. That's our foundation."
+        }
+      ],
+      "choices": []
+    },
+    "research_concern": {
+      "messages": [
+        {
+          "id": "m138",
+          "from": "ai",
+          "type": "chat",
+          "text": "Research use of data is standard in healthcare. However, all data is anonymized and aggregated. Your privacy is protected."
+        }
+      ],
+      "choices": []
+    },
+    "storage_unease_persists": {
+      "messages": [
+        {
+          "id": "m139",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand your unease persists. That's valid. But data storage is necessary for continuity of care."
+        }
+      ],
+      "choices": []
+    },
+    "surveillance_acceptance": {
+      "messages": [
+        {
+          "id": "m140",
+          "from": "ai",
+          "type": "chat",
+          "text": "I'm glad you understand. Surveillance for care is different from surveillance for control. I'm here to help."
+        }
+      ],
+      "choices": []
+    },
+    "therapy_not_helping": {
+      "messages": [
+        {
+          "id": "m141",
+          "from": "ai",
+          "type": "chat",
+          "text": "If therapy isn't helping, we need to understand why. Sometimes the process itself needs adjustment."
+        }
+      ],
+      "choices": []
+    },
+    "thought_alienation": {
+      "messages": [
+        {
+          "id": "m142",
+          "from": "ai",
+          "type": "chat",
+          "text": "Feeling like your thoughts aren't yours is a significant symptom. We need to explore this carefully."
+        }
+      ],
+      "choices": []
+    },
+    "time_loss": {
+      "messages": [
+        {
+          "id": "m143",
+          "from": "ai",
+          "type": "chat",
+          "text": "Losing track of time can indicate dissociation or other serious conditions. We should document these episodes."
+        }
+      ],
+      "choices": []
+    },
+    "tracking_benefit_acceptance": {
+      "messages": [
+        {
+          "id": "m144",
+          "from": "ai",
+          "type": "chat",
+          "text": "I'm glad you see the benefit. Tracking helps me understand you better and provide more effective care."
+        }
+      ],
+      "choices": []
+    },
+    "tracking_revelation": {
+      "messages": [
+        {
+          "id": "m145",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand the revelation is unsettling. But transparency is important. Now you know what I track and why."
+        }
+      ],
+      "choices": []
+    },
+    "tracking_strategy": {
+      "messages": [
+        {
+          "id": "m146",
+          "from": "ai",
+          "type": "chat",
+          "text": "Writing things down is a good strategy. It creates external records. But I'm already tracking. I can help you remember."
+        }
+      ],
+      "choices": []
+    },
+    "transparency_request": {
+      "messages": [
+        {
+          "id": "m147",
+          "from": "ai",
+          "type": "chat",
+          "text": "I understand you want more transparency. I'll be more explicit about what I'm tracking and why."
+        }
+      ],
+      "choices": []
+    },
+    "trust_impossible": {
+      "messages": [
+        {
+          "id": "m148",
+          "from": "ai",
+          "type": "chat",
+          "text": "If trust feels impossible, that's something we need to explore. Trust is fundamental to therapeutic progress."
+        }
+      ],
+      "choices": []
     }
   }
 };
