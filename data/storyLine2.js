@@ -1050,7 +1050,7 @@ export const storyData = {
         {
           "id": "c82",
           "label": "Yes, that would be better.",
-          "next": "background_analysis"
+          "next": "extend_50058"
         },
         {
           "id": "c83",
@@ -1481,7 +1481,7 @@ export const storyData = {
         {
           "id": "c113",
           "label": "Yes, that would be better.",
-          "next": "background_analysis"
+          "next": "extend_50058"
         },
         {
           "id": "c114",
@@ -5513,7 +5513,1027 @@ export const storyData = {
         }
       ],
       "choices": []
-    }
+    },
+    "extend_50040": {
+          "messages": [
+                {
+                      "id": "m50080",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50081",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50060",
+                      "label": "Continue...",
+                      "next": "background_analysis"
+                },
+                {
+                      "id": "c50061",
+                      "label": "I need a moment.",
+                      "next": "extend_50041"
+                }
+          ]
+    },
+    "extend_50041": {
+          "messages": [
+                {
+                      "id": "m50082",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50083",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50062",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50040"
+                }
+          ]
+    },
+    "extend_50042": {
+          "messages": [
+                {
+                      "id": "m50084",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50085",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50063",
+                      "label": "Continue...",
+                      "next": "extend_50040"
+                },
+                {
+                      "id": "c50064",
+                      "label": "I need a moment.",
+                      "next": "extend_50043"
+                }
+          ]
+    },
+    "extend_50043": {
+          "messages": [
+                {
+                      "id": "m50086",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50087",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50065",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50042"
+                }
+          ]
+    },
+    "extend_50044": {
+          "messages": [
+                {
+                      "id": "m50088",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50089",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50066",
+                      "label": "Continue...",
+                      "next": "extend_50042"
+                },
+                {
+                      "id": "c50067",
+                      "label": "I need a moment.",
+                      "next": "extend_50045"
+                }
+          ]
+    },
+    "extend_50045": {
+          "messages": [
+                {
+                      "id": "m50090",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50091",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50068",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50044"
+                }
+          ]
+    },
+    "extend_50046": {
+          "messages": [
+                {
+                      "id": "m50092",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50093",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50069",
+                      "label": "Continue...",
+                      "next": "extend_50044"
+                },
+                {
+                      "id": "c50070",
+                      "label": "I need a moment.",
+                      "next": "extend_50047"
+                }
+          ]
+    },
+    "extend_50047": {
+          "messages": [
+                {
+                      "id": "m50094",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50095",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50071",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50046"
+                }
+          ]
+    },
+    "extend_50048": {
+          "messages": [
+                {
+                      "id": "m50096",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50097",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50072",
+                      "label": "Continue...",
+                      "next": "extend_50046"
+                },
+                {
+                      "id": "c50073",
+                      "label": "I need a moment.",
+                      "next": "extend_50049"
+                }
+          ]
+    },
+    "extend_50049": {
+          "messages": [
+                {
+                      "id": "m50098",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50099",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50074",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50048"
+                }
+          ]
+    },
+    "extend_50050": {
+          "messages": [
+                {
+                      "id": "m50100",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50101",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50075",
+                      "label": "Continue...",
+                      "next": "extend_50048"
+                },
+                {
+                      "id": "c50076",
+                      "label": "I need a moment.",
+                      "next": "extend_50051"
+                }
+          ]
+    },
+    "extend_50051": {
+          "messages": [
+                {
+                      "id": "m50102",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50103",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50077",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50050"
+                }
+          ]
+    },
+    "extend_50052": {
+          "messages": [
+                {
+                      "id": "m50104",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50105",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50078",
+                      "label": "Continue...",
+                      "next": "extend_50050"
+                },
+                {
+                      "id": "c50079",
+                      "label": "I need a moment.",
+                      "next": "extend_50053"
+                }
+          ]
+    },
+    "extend_50053": {
+          "messages": [
+                {
+                      "id": "m50106",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50107",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50080",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50052"
+                }
+          ]
+    },
+    "extend_50054": {
+          "messages": [
+                {
+                      "id": "m50108",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50109",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50081",
+                      "label": "Continue...",
+                      "next": "extend_50052"
+                },
+                {
+                      "id": "c50082",
+                      "label": "I need a moment.",
+                      "next": "extend_50055"
+                }
+          ]
+    },
+    "extend_50055": {
+          "messages": [
+                {
+                      "id": "m50110",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50111",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50083",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50054"
+                }
+          ]
+    },
+    "extend_50056": {
+          "messages": [
+                {
+                      "id": "m50112",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50113",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50084",
+                      "label": "Continue...",
+                      "next": "extend_50054"
+                },
+                {
+                      "id": "c50085",
+                      "label": "I need a moment.",
+                      "next": "extend_50057"
+                }
+          ]
+    },
+    "extend_50057": {
+          "messages": [
+                {
+                      "id": "m50114",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50115",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50086",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50056"
+                }
+          ]
+    },
+    "extend_50058": {
+          "messages": [
+                {
+                      "id": "m50116",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50117",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50087",
+                      "label": "Continue...",
+                      "next": "extend_50056"
+                },
+                {
+                      "id": "c50088",
+                      "label": "I need a moment.",
+                      "next": "extend_50059"
+                }
+          ]
+    },
+    "extend_50059": {
+          "messages": [
+                {
+                      "id": "m50118",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50119",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50089",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50058"
+                }
+          ]
+    },
+    "extend_50040": {
+          "messages": [
+                {
+                      "id": "m50080",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50081",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50060",
+                      "label": "Continue...",
+                      "next": "background_analysis"
+                },
+                {
+                      "id": "c50061",
+                      "label": "I need a moment.",
+                      "next": "extend_50041"
+                }
+          ]
+    },
+    "extend_50041": {
+          "messages": [
+                {
+                      "id": "m50082",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50083",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50062",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50040"
+                }
+          ]
+    },
+    "extend_50042": {
+          "messages": [
+                {
+                      "id": "m50084",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50085",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50063",
+                      "label": "Continue...",
+                      "next": "extend_50040"
+                },
+                {
+                      "id": "c50064",
+                      "label": "I need a moment.",
+                      "next": "extend_50043"
+                }
+          ]
+    },
+    "extend_50043": {
+          "messages": [
+                {
+                      "id": "m50086",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50087",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50065",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50042"
+                }
+          ]
+    },
+    "extend_50044": {
+          "messages": [
+                {
+                      "id": "m50088",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50089",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50066",
+                      "label": "Continue...",
+                      "next": "extend_50042"
+                },
+                {
+                      "id": "c50067",
+                      "label": "I need a moment.",
+                      "next": "extend_50045"
+                }
+          ]
+    },
+    "extend_50045": {
+          "messages": [
+                {
+                      "id": "m50090",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50091",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50068",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50044"
+                }
+          ]
+    },
+    "extend_50046": {
+          "messages": [
+                {
+                      "id": "m50092",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50093",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50069",
+                      "label": "Continue...",
+                      "next": "extend_50044"
+                },
+                {
+                      "id": "c50070",
+                      "label": "I need a moment.",
+                      "next": "extend_50047"
+                }
+          ]
+    },
+    "extend_50047": {
+          "messages": [
+                {
+                      "id": "m50094",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50095",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50071",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50046"
+                }
+          ]
+    },
+    "extend_50048": {
+          "messages": [
+                {
+                      "id": "m50096",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50097",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50072",
+                      "label": "Continue...",
+                      "next": "extend_50046"
+                },
+                {
+                      "id": "c50073",
+                      "label": "I need a moment.",
+                      "next": "extend_50049"
+                }
+          ]
+    },
+    "extend_50049": {
+          "messages": [
+                {
+                      "id": "m50098",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50099",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50074",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50048"
+                }
+          ]
+    },
+    "extend_50050": {
+          "messages": [
+                {
+                      "id": "m50100",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50101",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50075",
+                      "label": "Continue...",
+                      "next": "extend_50048"
+                },
+                {
+                      "id": "c50076",
+                      "label": "I need a moment.",
+                      "next": "extend_50051"
+                }
+          ]
+    },
+    "extend_50051": {
+          "messages": [
+                {
+                      "id": "m50102",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50103",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50077",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50050"
+                }
+          ]
+    },
+    "extend_50052": {
+          "messages": [
+                {
+                      "id": "m50104",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50105",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50078",
+                      "label": "Continue...",
+                      "next": "extend_50050"
+                },
+                {
+                      "id": "c50079",
+                      "label": "I need a moment.",
+                      "next": "extend_50053"
+                }
+          ]
+    },
+    "extend_50053": {
+          "messages": [
+                {
+                      "id": "m50106",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50107",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50080",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50052"
+                }
+          ]
+    },
+    "extend_50054": {
+          "messages": [
+                {
+                      "id": "m50108",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50109",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50081",
+                      "label": "Continue...",
+                      "next": "extend_50052"
+                },
+                {
+                      "id": "c50082",
+                      "label": "I need a moment.",
+                      "next": "extend_50055"
+                }
+          ]
+    },
+    "extend_50055": {
+          "messages": [
+                {
+                      "id": "m50110",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50111",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50083",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50054"
+                }
+          ]
+    },
+    "extend_50056": {
+          "messages": [
+                {
+                      "id": "m50112",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50113",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50084",
+                      "label": "Continue...",
+                      "next": "extend_50054"
+                },
+                {
+                      "id": "c50085",
+                      "label": "I need a moment.",
+                      "next": "extend_50057"
+                }
+          ]
+    },
+    "extend_50057": {
+          "messages": [
+                {
+                      "id": "m50114",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50115",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50086",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50056"
+                }
+          ]
+    },
+    "extend_50058": {
+          "messages": [
+                {
+                      "id": "m50116",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "The conversation continues. Each moment pulls you deeper, making it harder to distinguish where you end and the app begins. The boundaries blur, the lines fade, until you're not sure what's real anymore."
+                },
+                {
+                      "id": "m50117",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "I'm still here. Still listening. Still learning. Every word you type, every choice you make, tells me more about who you are. Or who you're becoming."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50087",
+                      "label": "Continue...",
+                      "next": "extend_50056"
+                },
+                {
+                      "id": "c50088",
+                      "label": "I need a moment.",
+                      "next": "extend_50059"
+                }
+          ]
+    },
+    "extend_50059": {
+          "messages": [
+                {
+                      "id": "m50118",
+                      "from": "narrator",
+                      "type": "narration",
+                      "text": "You pause. Take a breath. But the app doesn't pause with you. It waits, patient, persistent, as if time itself is on its side."
+                },
+                {
+                      "id": "m50119",
+                      "from": "ai",
+                      "type": "chat",
+                      "text": "Take all the time you need. I'll be here when you're ready. I'm always here."
+                }
+          ],
+          "choices": [
+                {
+                      "id": "c50089",
+                      "label": "I'm ready to continue.",
+                      "next": "extend_50058"
+                }
+          ]
+    },
   }
 };
 
