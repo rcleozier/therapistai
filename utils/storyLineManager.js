@@ -51,7 +51,8 @@ export const getAvailableStoryLines = () => {
  */
 export const getStoryLine = (storyLineId) => {
   const storyLine = STORY_LINES[storyLineId];
-  return storyLine ? storyLine.data : null;
+  if (!storyLine) return null;
+  return storyLine.data;
 };
 
 /**

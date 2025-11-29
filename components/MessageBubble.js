@@ -17,9 +17,11 @@ const ChatMessage = ({ message, isLatest = false }) => {
   const glowAnim = useRef(new Animated.Value(0.1)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
+  // Calculate if this is an initial message (available in render scope)
+  const isInitial = message.id === 'm1' || message.id === 'm2' || message.id === 'm3';
+
   useEffect(() => {
     // Welcoming fade-in with gentle scale for initial messages
-    const isInitial = message.id === 'm1' || message.id === 'm2' || message.id === 'm3';
     
     if (isInitial && isAI) {
       scaleAnim.setValue(0.96);
@@ -64,10 +66,9 @@ const ChatMessage = ({ message, isLatest = false }) => {
       return () => breathing.stop();
     } else if (isAI) {
       // Set initial glow for non-latest messages
-      const isInitial = message.id === 'm1' || message.id === 'm2' || message.id === 'm3';
       glowAnim.setValue(isInitial ? 0.15 : 0.1);
     }
-  }, [isAI, isLatest, message.id]);
+  }, [isAI, isLatest, message.id, isInitial]);
 
   const getStyles = () => {
     if (isAI) {

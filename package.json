@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
+    "@expo/metro-config": "~54.0.9",
     "babel-preset-expo": "~54.0.0"
   },
   "private": true,
