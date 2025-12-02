@@ -9,6 +9,8 @@
 import { storyData as storyLine1 } from '../data/storyLine1';
 import { storyData as storyLine2 } from '../data/storyLine2';
 import { storyData as storyLine3 } from '../data/storyLine3';
+import { storyData as storyLine4 } from '../data/storyLine4';
+import { storyData as storyLine5 } from '../data/storyLine5';
 
 // Registry of all available story lines
 const STORY_LINES = {
@@ -29,6 +31,18 @@ const STORY_LINES = {
     title: 'The Third Session',
     description: "You wake up. The app is already open. You don't remember opening it.",
     data: storyLine3,
+  },
+  'therapy_ai_session_4': {
+    id: 'therapy_ai_session_4',
+    title: 'The Fourth Session',
+    description: 'Real-world consequences of the AI’s “help” start to surface.',
+    data: storyLine4,
+  },
+  'therapy_ai_session_5': {
+    id: 'therapy_ai_session_5',
+    title: 'The Fifth Session: The Architect',
+    description: 'You confront the system that has been quietly designing your life.',
+    data: storyLine5,
   },
 };
 

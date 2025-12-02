@@ -252,7 +252,7 @@ const HeaderBrand = ({ logoPulse, activityDotOpacity }) => {
           <View style={styles.iconGlow} />
           <Animated.View style={{ transform: [{ scale: logoPulse }] }}>
             <Image
-              source={require('../assets/character-removebg.png')}
+              source={require('../assets/character.png')}
               style={styles.robotIcon}
               resizeMode="contain"
             />

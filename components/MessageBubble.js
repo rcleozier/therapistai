@@ -108,7 +108,7 @@ const ChatMessage = ({ message, isLatest = false }) => {
       {isAI && (
         <View style={styles.avatarContainer} pointerEvents="none">
           <Image
-            source={require('../assets/character-removebg.png')}
+            source={require('../assets/character.png')}
             style={styles.characterImage}
             resizeMode="contain"
           />
