@@ -3,6 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import ChoiceButton from './ChoiceButton';
 
+// Chat content horizontal padding constant - matches header and messages
+const CHAT_CONTENT_PADDING = SPACING.lg;
+
 /**
  * ChoiceList
  *
@@ -47,21 +50,21 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: SPACING.md, // More generous top padding
-    paddingHorizontal: SPACING.lg,
+    paddingHorizontal: CHAT_CONTENT_PADDING, // Consistent with header and messages
   },
   label: {
     ...FONTS.caption,
     fontSize: 11,
-    textAlign: 'center',
-    letterSpacing: 0.8, // Reduced from 1.4 for less aggressive feel
-    color: COLORS.text.muted,
-    opacity: 0.5, // More subtle
-    marginBottom: SPACING.md + 4, // More space before choices
-    fontWeight: '400',
-    textTransform: 'none', // Title case instead of all caps
+    textAlign: 'left', // Left-aligned for consistency
+    letterSpacing: 1.0, // Small caps feel with letter-spacing
+    color: COLORS.text.secondary, // Higher contrast gray (rgba(154, 158, 164, 0.7))
+    opacity: 0.8, // More legible
+    marginBottom: SPACING.md + 2, // Space before choices
+    fontWeight: '500', // Medium weight for section label
+    textTransform: 'uppercase', // Small caps
   },
   choicesContainer: {
-    paddingTop: SPACING.xs, // Subtle padding for visual separation
+    // Tighter vertical spacing between buttons but still tappable
   },
 });
 

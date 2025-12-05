@@ -2,9 +2,16 @@ import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Image, Animated } from 'react-native';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
+// Chat content horizontal padding constant - matches header
+const CHAT_CONTENT_PADDING = SPACING.lg;
+// Avatar size constant
+const AVATAR_SIZE = 44; // 40-48px range
+// Horizontal gutter between avatar and bubble
+const AVATAR_BUBBLE_GUTTER = SPACING.md;
+
 /**
  * ChatMessage component - premium styled chat messages with empathetic micro-interactions
- * Features refined styling with character avatar for AI messages
+ * Features refined styling with square character avatar for AI messages
  */
 const ChatMessage = ({ message, isLatest = false }) => {
   const { from, type, text } = message;
@@ -51,12 +58,12 @@ const ChatMessage = ({ message, isLatest = false }) => {
       const breathing = Animated.loop(
         Animated.sequence([
           Animated.timing(glowAnim, {
-            toValue: 0.18, // Slightly brighter for more welcoming feel
+            toValue: 0.12, // Subtle glow
             duration: 2500, // Slower, more calming
             useNativeDriver: false,
           }),
           Animated.timing(glowAnim, {
-            toValue: 0.12,
+            toValue: 0.08,
             duration: 2500,
             useNativeDriver: false,
           }),
@@ -66,7 +73,7 @@ const ChatMessage = ({ message, isLatest = false }) => {
       return () => breathing.stop();
     } else if (isAI) {
       // Set initial glow for non-latest messages
-      glowAnim.setValue(isInitial ? 0.15 : 0.1);
+      glowAnim.setValue(isInitial ? 0.1 : 0.08);
     }
   }, [isAI, isLatest, message.id, isInitial]);
 
@@ -106,39 +113,49 @@ const ChatMessage = ({ message, isLatest = false }) => {
       ]}
     >
       {isAI && (
-        <View style={styles.avatarContainer} pointerEvents="none">
-          <Image
-            source={require('../assets/character.png')}
-            style={styles.characterImage}
-            resizeMode="contain"
-          />
-          {/* Gentle breathing glow for empathetic presence */}
-          <Animated.View 
-            style={[
-              styles.avatarGlow,
-              { opacity: isLatest ? glowAnim : (isInitial ? 0.15 : 0.1) }
-            ]} 
-          />
+        <View style={styles.aiMessageGroup}>
+          {/* Square avatar with border and glow */}
+          <View style={styles.avatarContainer} pointerEvents="none">
+            <Animated.View 
+              style={[
+                styles.avatarGlow,
+                { opacity: isLatest ? glowAnim : (isInitial ? 0.1 : 0.08) }
+              ]} 
+            />
+            <Image
+              source={require('../assets/character.png')}
+              style={styles.avatarImage}
+              resizeMode="contain"
+            />
+          </View>
+          {/* Message bubble aligned with avatar */}
+          <View style={styles.aiBubbleWrapper}>
+            <Text style={styles.therapistLabel}>Therapist</Text>
+            <View style={[styles.bubble, bubbleStyles.container]}>
+              <Text style={bubbleStyles.text}>{text}</Text>
+            </View>
+          </View>
         </View>
       )}
-      <View style={[styles.bubble, bubbleStyles.container]}>
-        <Text style={bubbleStyles.text}>{text}</Text>
-      </View>
+      {!isAI && (
+        <View style={styles.bubbleWrapper}>
+          <View style={[styles.bubble, bubbleStyles.container]}>
+            <Text style={bubbleStyles.text}>{text}</Text>
+          </View>
+        </View>
+      )}
     </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   messageWrapper: {
-    // Improved vertical rhythm with more breathing room
-    marginBottom: SPACING.md + 2, // Increased from sm to md+2 for better spacing
-    paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.xs + 2,
+    marginBottom: SPACING.md + 4, // More vertical spacing between messages
+    paddingHorizontal: CHAT_CONTENT_PADDING, // Consistent with header
+    paddingVertical: SPACING.xs,
   },
   aiWrapper: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: SPACING.md, // Increased gap for better visual separation
+    // Legacy - kept for compatibility
   },
   playerWrapper: {
     alignItems: 'flex-end',
@@ -148,52 +165,75 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: SPACING.lg + 4, // Extra separation so narrator feels like its own beat
   },
+  // AI message group - avatar and bubble as single unit
+  aiMessageGroup: {
+    flexDirection: 'row',
+    alignItems: 'flex-start', // Start from top, avatar will center with bubble via marginTop
+    width: '100%',
+  },
   avatarContainer: {
     position: 'relative',
-    width: 36,
-    height: 36,
-    justifyContent: 'flex-start',
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: BORDER_RADIUS.avatar, // 7px rounded corners
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: SPACING.xs, // Align with top of bubble
+    marginRight: AVATAR_BUBBLE_GUTTER, // Consistent horizontal gutter
+    marginTop: SPACING.xs + 2, // Vertically center with bubble (accounting for "Therapist" label)
+    borderWidth: 1,
+    borderColor: 'rgba(242, 92, 77, 0.25)', // Thin border with accent color at low opacity
+    backgroundColor: 'rgba(15, 17, 21, 0.6)',
+    overflow: 'hidden',
   },
-  characterImage: {
-    width: 32,
-    height: 32,
-    opacity: 0.9, // Slight transparency (refined from spec)
-    zIndex: 1,
+  avatarImage: {
+    width: AVATAR_SIZE - 6, // Slightly smaller to show border
+    height: AVATAR_SIZE - 6,
+    zIndex: 2,
   },
   avatarGlow: {
     position: 'absolute',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: COLORS.accent.cyan,
-    opacity: 0.1, // Subtle glow for empathetic presence
+    width: AVATAR_SIZE + 6,
+    height: AVATAR_SIZE + 6,
+    borderRadius: BORDER_RADIUS.avatar + 1,
+    backgroundColor: COLORS.accent.red,
     zIndex: 0,
   },
+  aiBubbleWrapper: {
+    flex: 1,
+    maxWidth: '80%', // Prevent bubble from getting too wide
+  },
+  therapistLabel: {
+    ...FONTS.small,
+    fontSize: 10,
+    color: COLORS.text.muted,
+    opacity: 0.6,
+    marginBottom: SPACING.xs,
+    letterSpacing: 0.3,
+  },
+  bubbleWrapper: {
+    // Wrapper for player/narrator bubbles
+  },
   bubble: {
-    maxWidth: '80%', // Slightly narrower for better readability
-    paddingHorizontal: SPACING.md + 4, // More generous horizontal padding
-    paddingVertical: SPACING.md + 2, // More generous vertical padding
-    borderRadius: BORDER_RADIUS.md, // Slightly larger radius for softer feel
+    paddingHorizontal: SPACING.md + 6, // More generous horizontal padding
+    paddingVertical: SPACING.md + 4, // More generous vertical padding so text doesn't hug border
+    borderRadius: BORDER_RADIUS.sm, // Tighter corner radius (12px) for more modern feel
     borderWidth: 1,
   },
   aiContainer: {
-    backgroundColor: COLORS.message.ai.background, // #111318 (refined from spec)
+    backgroundColor: '#13151A', // Slightly lighter than screen background (#050608)
     borderColor: COLORS.message.ai.border, // Desaturated red-orange at 40% opacity
-    // Softer, more welcoming glow effect with depth
+    // Subtle glow effect
     shadowColor: COLORS.message.ai.borderGlow,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.18, // More visible for welcoming depth
-    shadowRadius: 14, // Larger, softer shadow
-    elevation: 3,
-    // Subtle inner depth
-    borderWidth: 1.5, // Slightly thicker for definition
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
   },
   playerContainer: {
     backgroundColor: COLORS.message.player.background,
     borderColor: COLORS.message.player.border,
-    borderWidth: 0.5,
+    borderWidth: 1,
     shadowColor: COLORS.message.player.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -211,7 +251,7 @@ const styles = StyleSheet.create({
   },
   aiText: {
     color: COLORS.message.ai.text, // #F3E4D8 muted warm off-white (refined from spec)
-    ...FONTS.aiMessage,
+    ...FONTS.aiMessage, // Now includes increased line height (26px)
   },
   playerText: {
     color: COLORS.message.player.text,

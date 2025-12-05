@@ -97,12 +97,13 @@ export const SPACING = {
 };
 
 export const BORDER_RADIUS = {
-  sm: 12, // Refined: 12-16 for message bubbles
-  md: 14, // Refined: 14-16 for choice buttons
+  sm: 12, // Message bubbles - tighter, more modern
+  md: 14, // Choice buttons
   lg: 16,
   xl: 24,
   xxl: 32,
   full: 9999,
+  avatar: 7, // Square avatar with rounded corners (6-8px range)
 };
 
 export const FONTS = {
@@ -161,7 +162,7 @@ export const FONTS = {
     fontSize: 16, // 15-16pt from spec
     fontWeight: '400', // Medium weight
     fontFamily: Platform.select({ ios: 'SF Pro Text', android: 'Roboto' }),
-    lineHeight: 24, // Generous line height
+    lineHeight: 26, // Increased for better readability of longer sentences
     letterSpacing: 0.2, // Refined spacing
   },
   // Narrator - ethereal, ghostly

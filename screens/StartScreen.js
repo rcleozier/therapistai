@@ -25,18 +25,46 @@ const SESSION_THEME = {
   mutedText: 'rgba(154, 158, 164, 0.5)',
   footerText: 'rgba(245, 243, 238, 0.4)',
   
+  // Hero card colors
+  heroBackground: '#08090b',
+  heroBackgroundGradient: ['#08090b', '#0a0b0d'], // Faint vertical gradient
+  heroBorderRadius: 16,
+  heroShadowOpacity: 0.3,
+  heroShadowRadius: 12,
+  
+  // Avatar constants
+  avatarSize: 60, // 56-64px range
+  avatarBorderRadius: 8, // 6-10px range
+  avatarBorderWidth: 1.5,
+  avatarBorderColor: 'rgba(244, 92, 78, 0.2)', // Low-opacity accent
+  avatarGlowOpacity: 0.12,
+  
+  // Status pill
+  statusPillBackground: 'rgba(244, 92, 78, 0.15)',
+  statusPillText: '#F45C4E',
+  statusPillBorderRadius: 12,
+  
   // Opacities
   microcopyOpacity: 0.5,
   activityDotOpacity: 0.4, // More subtle
+  settingsButtonOpacity: 0.4, // Reduced for hero alignment
   
   // Spacing
   cardSpacing: 12, // Tighter spacing for cleaner look
-  headerPadding: SPACING.lg,
+  heroPaddingVertical: SPACING.lg + 4, // Increased vertical padding
+  heroPaddingHorizontal: SPACING.lg + 2,
+  heroMarginBottom: SPACING.xl + 8, // Consistent spacing to session label
   cardPadding: 20, // More generous padding
   
   // Typography
-  titleSize: 28, // Slightly larger for hierarchy
-  titleLetterSpacing: 0.8,
+  heroTitleSize: 24, // Dominant, semi-bold
+  heroTitleWeight: '600', // Semi-bold
+  heroSubtitleSize: 13, // Smaller
+  heroSubtitleWeight: '400', // Medium weight
+  heroSubtitleColor: 'rgba(154, 158, 164, 0.65)', // Desaturated gray
+  statusPillTextSize: 11,
+  syncLabelSize: 10,
+  titleLetterSpacing: 0.5,
   subtitleSize: 13,
   microcopySize: 11,
 };
@@ -177,14 +205,13 @@ const StartScreen = ({ navigation }) => {
       <View style={styles.vignetteOverlay} pointerEvents="none" />
 
       <Animated.View style={[styles.content, { opacity: screenOpacity }]}>
-        {/* Top settings button */}
-        <View style={styles.topBar}>
-          <View style={styles.topBarSpacer} />
+        {/* Brand Header Hero Card */}
+        <HeaderBrand logoPulse={logoPulse} activityDotOpacity={activityDotOpacity} />
+
+        {/* Settings button aligned with hero */}
+        <View style={styles.heroSettingsContainer}>
           <SettingsButton style={styles.settingsButton} />
         </View>
-
-        {/* Brand Header */}
-        <HeaderBrand logoPulse={logoPulse} activityDotOpacity={activityDotOpacity} />
 
         {/* Session Library Section */}
         <View style={styles.sessionSection}>
@@ -232,49 +259,55 @@ const StartScreen = ({ navigation }) => {
   );
 };
 
-// Brand Header Component
+// Brand Header Component - Hero Card Design
 const HeaderBrand = ({ logoPulse, activityDotOpacity }) => {
   return (
-    <View style={styles.headerWrapper}>
-      {/* Subtle radial gradient halo */}
-      <View style={styles.headerHalo}>
-        <LinearGradient
-          colors={['rgba(74, 158, 158, 0.08)', 'transparent']}
-          start={{ x: 0.5, y: 0.5 }}
-          end={{ x: 0.5, y: 1 }}
-          style={styles.headerHaloGradient}
-        />
-      </View>
-
-      <View style={styles.headerContent}>
-        {/* Robot icon with subtle glow */}
-        <View style={styles.iconContainer}>
-          <View style={styles.iconGlow} />
+    <View style={styles.heroCard}>
+      {/* Faint vertical gradient background */}
+      <LinearGradient
+        colors={SESSION_THEME.heroBackgroundGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.heroGradient}
+      />
+      
+      <View style={styles.heroContent}>
+        {/* Square avatar with border and glow */}
+        <View style={styles.avatarContainer}>
+          <View style={styles.avatarGlow} />
           <Animated.View style={{ transform: [{ scale: logoPulse }] }}>
             <Image
               source={require('../assets/character.png')}
-              style={styles.robotIcon}
+              style={styles.avatarImage}
               resizeMode="contain"
             />
           </Animated.View>
         </View>
 
-        {/* Text stack */}
-        <View style={styles.headerText}>
-          <Text style={styles.headerTitle}>Therapy AI</Text>
-          <Text style={styles.headerSubtitle}>Clinical conversational support</Text>
+        {/* Text block with status pill */}
+        <View style={styles.heroTextBlock}>
+          <View style={styles.heroTitleRow}>
+            <Text style={styles.heroTitle}>Therapy AI</Text>
+            <View style={styles.statusPill}>
+              <View style={styles.statusDot} />
+              <Text style={styles.statusText}>Online</Text>
+            </View>
+          </View>
+          
+          <View style={styles.heroSubtitleRow}>
+            <Text style={styles.heroSubtitle}>Clinical conversational support</Text>
+            {/* Profile syncing inline label */}
+            <View style={styles.syncLabel}>
+              <Animated.View 
+                style={[
+                  styles.syncDot,
+                  { opacity: activityDotOpacity }
+                ]} 
+              />
+              <Text style={styles.syncLabelText}>Profile syncing</Text>
+            </View>
+          </View>
         </View>
-      </View>
-
-      {/* Subtle background indicator for cognitive syncing */}
-      <View style={styles.syncIndicator}>
-        <Animated.View 
-          style={[
-            styles.syncDot,
-            { opacity: activityDotOpacity }
-          ]} 
-        />
-        <Text style={styles.syncText}>Profile syncing</Text>
       </View>
     </View>
   );
@@ -439,113 +472,147 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: SPACING.xl,
-    paddingTop: SPACING.md,
+    paddingHorizontal: SPACING.lg + 2,
+    paddingTop: SPACING.md + 4,
     paddingBottom: SPACING.lg,
   },
-  topBar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginBottom: SPACING.md,
-  },
-  topBarSpacer: {
-    flex: 1,
-  },
-  settingsButton: {
-    opacity: 0.5,
-  },
-  headerWrapper: {
-    marginBottom: SPACING.xl + 4,
-    position: 'relative',
-  },
-  headerHalo: {
-    position: 'absolute',
-    top: -SPACING.lg,
-    left: -SPACING.xl,
-    right: -SPACING.xl,
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    pointerEvents: 'none',
-  },
-  headerHaloGradient: {
-    width: 260,
-    height: 100,
-    borderRadius: 130,
-  },
-  headerContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: SESSION_THEME.headerPadding,
-    paddingVertical: SPACING.md,
-    marginHorizontal: SPACING.lg,
-    borderRadius: BORDER_RADIUS.xl,
-    backgroundColor: 'rgba(15, 17, 21, 0.96)', // Soft pill behind avatar + title
-    borderWidth: 1,
-    borderColor: SESSION_THEME.accentBorder,
+  // Hero Card Styles
+  heroCard: {
+    width: '100%',
+    borderRadius: SESSION_THEME.heroBorderRadius,
+    marginBottom: SESSION_THEME.heroMarginBottom,
+    marginHorizontal: -(SPACING.lg + 2), // Negative margin to extend to edges (full-width within safe area)
+    overflow: 'hidden',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 16 },
-    shadowOpacity: 0.4,
-    shadowRadius: 26,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: SESSION_THEME.heroShadowOpacity,
+    shadowRadius: SESSION_THEME.heroShadowRadius,
+    elevation: 4,
   },
-  iconContainer: {
-    width: 52,
-    height: 44,
-    borderRadius: BORDER_RADIUS.md, // More squared-off avatar to sit better in pill
+  heroGradient: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  heroContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: SESSION_THEME.heroPaddingVertical,
+    paddingHorizontal: SESSION_THEME.heroPaddingHorizontal,
+    backgroundColor: SESSION_THEME.heroBackground,
+  },
+  avatarContainer: {
+    width: SESSION_THEME.avatarSize,
+    height: SESSION_THEME.avatarSize,
+    borderRadius: SESSION_THEME.avatarBorderRadius,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: SPACING.md + 2,
+    marginRight: SPACING.md + 4,
     position: 'relative',
+    borderWidth: SESSION_THEME.avatarBorderWidth,
+    borderColor: SESSION_THEME.avatarBorderColor,
+    backgroundColor: 'rgba(15, 17, 21, 0.6)',
   },
-  iconGlow: {
+  avatarGlow: {
     position: 'absolute',
-    width: 52,
-    height: 44,
-    borderRadius: BORDER_RADIUS.md,
-    backgroundColor: COLORS.accent.cyan,
-    opacity: 0.15,
+    width: SESSION_THEME.avatarSize + 8,
+    height: SESSION_THEME.avatarSize + 8,
+    borderRadius: SESSION_THEME.avatarBorderRadius + 2,
+    backgroundColor: SESSION_THEME.accent,
+    opacity: SESSION_THEME.avatarGlowOpacity,
+    zIndex: 0,
   },
-  robotIcon: {
-    width: 40,
-    height: 40,
+  avatarImage: {
+    width: SESSION_THEME.avatarSize - 8,
+    height: SESSION_THEME.avatarSize - 8,
     zIndex: 2,
   },
-  headerText: {
+  heroTextBlock: {
     flex: 1,
+    justifyContent: 'center',
   },
-  headerTitle: {
-    ...FONTS.titleScreen.title,
-    fontSize: SESSION_THEME.titleSize,
-    letterSpacing: SESSION_THEME.titleLetterSpacing,
-    color: SESSION_THEME.primaryText,
-    marginBottom: 4,
-    fontWeight: '600',
-  },
-  headerSubtitle: {
-    ...FONTS.titleScreen.tagline,
-    fontSize: SESSION_THEME.subtitleSize,
-    color: SESSION_THEME.secondaryText,
-    lineHeight: 18,
-  },
-  syncIndicator: {
+  heroTitleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: SPACING.sm,
-    paddingLeft: SESSION_THEME.headerPadding + SPACING.xs,
+    marginBottom: SPACING.xs + 2,
+    flexWrap: 'wrap',
+  },
+  heroTitle: {
+    ...FONTS.titleScreen.title,
+    fontSize: SESSION_THEME.heroTitleSize,
+    fontWeight: SESSION_THEME.heroTitleWeight,
+    color: SESSION_THEME.primaryText,
+    letterSpacing: SESSION_THEME.titleLetterSpacing,
+    marginRight: SPACING.sm,
+    lineHeight: 30,
+  },
+  statusPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: SESSION_THEME.statusPillBackground,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: SPACING.xs,
+    borderRadius: SESSION_THEME.statusPillBorderRadius,
+    borderWidth: 1,
+    borderColor: SESSION_THEME.accentBorder,
+  },
+  statusDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: SESSION_THEME.statusPillText,
+    marginRight: SPACING.xs,
+  },
+  statusText: {
+    ...FONTS.caption,
+    fontSize: SESSION_THEME.statusPillTextSize,
+    color: SESSION_THEME.statusPillText,
+    letterSpacing: 0.5,
+    fontWeight: '500',
+  },
+  heroSubtitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  heroSubtitle: {
+    ...FONTS.titleScreen.tagline,
+    fontSize: SESSION_THEME.heroSubtitleSize,
+    fontWeight: SESSION_THEME.heroSubtitleWeight,
+    color: SESSION_THEME.heroSubtitleColor,
+    lineHeight: 18,
+    letterSpacing: 0.2,
+  },
+  syncLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: SPACING.sm,
   },
   syncDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: SESSION_THEME.accent,
-    marginRight: SPACING.xs + 2,
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: SESSION_THEME.mutedText,
+    marginRight: SPACING.xs,
   },
-  syncText: {
+  syncLabelText: {
     ...FONTS.small,
-    fontSize: 10,
+    fontSize: SESSION_THEME.syncLabelSize,
     color: SESSION_THEME.mutedText,
-    letterSpacing: 0.6,
-    opacity: 0.8,
+    letterSpacing: 0.4,
+    opacity: 0.6,
+  },
+  // Settings button aligned with hero
+  heroSettingsContainer: {
+    position: 'absolute',
+    top: SESSION_THEME.heroPaddingVertical + SPACING.md + 4, // Account for content paddingTop
+    right: SESSION_THEME.heroPaddingHorizontal, // Align with hero card's right padding
+    zIndex: 10,
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  settingsButton: {
+    opacity: SESSION_THEME.settingsButtonOpacity,
   },
   sessionSection: {
     flex: 1,
@@ -555,9 +622,10 @@ const styles = StyleSheet.create({
     ...FONTS.caption,
     fontSize: 11,
     color: SESSION_THEME.secondaryText,
-    marginBottom: SPACING.md + 2,
+    marginBottom: SPACING.md + 4,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
+    lineHeight: 16,
   },
   sessionList: {
     flex: 1,
@@ -607,7 +675,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: SESSION_THEME.primaryText,
     flex: 1,
-    lineHeight: 24,
+    lineHeight: 22,
     letterSpacing: 0.2,
   },
   progressIndicator: {
@@ -636,6 +704,7 @@ const styles = StyleSheet.create({
     color: SESSION_THEME.secondaryText,
     lineHeight: 20,
     letterSpacing: 0.1,
+    marginTop: 2, // Small spacing from title
   },
   microcopy: {
     ...FONTS.small,
@@ -645,6 +714,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: SPACING.md,
     letterSpacing: 0.3,
+    lineHeight: 16,
   },
   actionBar: {
     width: '100%',

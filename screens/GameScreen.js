@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: 0,
-    paddingTop: SPACING.lg, // More top padding for breathing room
+    paddingTop: SPACING.xl + 4, // More vertical spacing between header and first message
     paddingBottom: SPACING.xxl + SPACING.md, // More space above response panel for clarity
   },
   endingContainer: {

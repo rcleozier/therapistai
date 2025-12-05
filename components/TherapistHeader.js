@@ -34,14 +34,17 @@ const TherapistHeader = ({ onBack, onRestart, showRestart = false }) => {
   );
 };
 
+// Chat content horizontal padding constant - used for alignment
+const CHAT_CONTENT_PADDING = SPACING.lg;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: SPACING.lg + 4,
-    paddingTop: SPACING.md + 2,
-    paddingBottom: SPACING.md,
+    paddingHorizontal: CHAT_CONTENT_PADDING, // Aligned with chat content margins
+    paddingTop: SPACING.md + 4,
+    paddingBottom: SPACING.md + 2,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: 'rgba(255, 255, 255, 0.06)', // More subtle divider
     backgroundColor: 'transparent',
@@ -59,28 +62,31 @@ const styles = StyleSheet.create({
   backButton: {
     paddingHorizontal: SPACING.xs,
     paddingVertical: SPACING.xs,
-    minWidth: 44, // Better touch target
+    minWidth: 44, // 44x44pt touch target
     minHeight: 44,
     justifyContent: 'center',
   },
   backText: {
     ...FONTS.caption,
     color: COLORS.text.primary,
-    opacity: 0.5, // More subtle
+    opacity: 0.4, // Reduced opacity - title is visual anchor
     letterSpacing: 0.8,
     fontSize: 12,
     fontWeight: '400',
   },
   title: {
     ...FONTS.heading,
-    fontSize: 17, // Slightly smaller for cleaner look
+    fontSize: 20, // Larger and bolder
     letterSpacing: 0.5,
     color: COLORS.text.primary,
-    fontWeight: '500',
+    fontWeight: '600', // Semi-bold for visual anchor
   },
   restartButton: {
     paddingHorizontal: SPACING.sm,
     paddingVertical: SPACING.xs,
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
   },
   restartText: {
     ...FONTS.caption,
@@ -89,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   settingsButton: {
-    opacity: 0.55, // Better balanced with back button
+    opacity: 0.4, // Reduced opacity - title is visual anchor
   },
 });
 

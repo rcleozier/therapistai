@@ -3,9 +3,13 @@ import { TouchableOpacity, Text, StyleSheet, Animated } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, BORDER_RADIUS, SPACING } from '../constants/colors';
 
+// Chat content horizontal padding constant - matches header, messages, and choices
+const CHAT_CONTENT_PADDING = SPACING.lg;
+
 const ChoiceButton = ({ choice, onPress, disabled = false }) => {
   const [scaleAnim] = useState(new Animated.Value(1));
   const [borderAnim] = useState(new Animated.Value(0));
+  const [backgroundAnim] = useState(new Animated.Value(0));
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {
@@ -13,12 +17,17 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
       setIsPressed(true);
       Animated.parallel([
         Animated.spring(scaleAnim, {
-          toValue: 0.97, // Slight scale down (0.97 from spec)
+          toValue: 0.97, // Slight scale down
           useNativeDriver: true,
           tension: 300,
           friction: 10,
         }),
         Animated.timing(borderAnim, {
+          toValue: 1,
+          duration: 150,
+          useNativeDriver: false,
+        }),
+        Animated.timing(backgroundAnim, {
           toValue: 1,
           duration: 150,
           useNativeDriver: false,
@@ -41,6 +50,11 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
         duration: 200,
         useNativeDriver: false,
       }),
+      Animated.timing(backgroundAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false,
+      }),
     ]).start();
   };
 
@@ -55,6 +69,11 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
   const borderColor = borderAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [COLORS.choice.border, COLORS.choice.borderHover],
+  });
+
+  const backgroundColor = backgroundAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [COLORS.choice.background, COLORS.choice.backgroundPressed],
   });
 
   return (
@@ -79,6 +98,7 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
             styles.buttonInner,
             {
               borderColor: borderColor,
+              backgroundColor: backgroundColor,
             },
           ]}
         >
@@ -99,18 +119,20 @@ const ChoiceButton = ({ choice, onPress, disabled = false }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    marginBottom: SPACING.md, // Increased spacing between buttons for clarity
+    marginBottom: SPACING.sm + 4, // Tighter vertical spacing but still tappable
+    width: '100%', // Consistent width
   },
   button: {
     // Container for touch handling
+    width: '100%',
   },
   buttonInner: {
-    backgroundColor: COLORS.choice.background, // Slightly lighter than page background
-    borderWidth: 1.5, // Slightly thicker border for definition
-    borderRadius: BORDER_RADIUS.lg + 2, // Even smoother corners (18px)
-    paddingVertical: SPACING.md + 6, // More generous vertical padding
-    paddingHorizontal: SPACING.lg + 6, // More generous horizontal padding
-    minHeight: 58, // Slightly taller for better touch target and presence
+    // Background color handled by animation
+    borderWidth: 1, // Border in accent color
+    borderRadius: BORDER_RADIUS.md, // Consistent with design system
+    paddingVertical: SPACING.md + 4, // Generous vertical padding
+    paddingHorizontal: SPACING.lg + 4, // Generous horizontal padding
+    minHeight: 56, // Good touch target
     justifyContent: 'center',
     alignItems: 'center',
     // Enhanced shadow for better depth and contrast

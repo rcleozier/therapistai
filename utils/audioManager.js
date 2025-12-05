@@ -9,6 +9,8 @@ const STORY_LINE_MUSIC = {
   'therapy_ai_session_1': require('../assets/music/therapy_ai_session_1.mp3'),
   'therapy_ai_session_2': require('../assets/music/therapy_ai_session_2.mp3'),
   'therapy_ai_session_3': require('../assets/music/therapy_ai_session_3.mp3'),
+  'therapy_ai_session_4': require('../assets/music/therapy_ai_session_4.mp3'),
+  'therapy_ai_session_5': require('../assets/music/therapy_ai_session_5.mp3'),
 };
 
 // Default to first story line if not specified
