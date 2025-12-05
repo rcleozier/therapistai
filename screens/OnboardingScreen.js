@@ -15,14 +15,16 @@ import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import userProfile from '../utils/userProfile';
 import * as Haptics from 'expo-haptics';
 
-// Avatar options (using emoji or you can use image assets)
+// Avatar options (using image assets)
 const AVATAR_OPTIONS = [
-  { id: '1', emoji: '👤', label: 'Default' },
-  { id: '2', emoji: '🧑', label: 'Person' },
-  { id: '3', emoji: '👨', label: 'Man' },
-  { id: '4', emoji: '👩', label: 'Woman' },
-  { id: '5', emoji: '🧑‍🦱', label: 'Curly Hair' },
-  { id: '6', emoji: '🧑‍🦰', label: 'Red Hair' },
+  { id: '1', image: require('../assets/player-avatars/1.png'), label: 'Avatar 1' },
+  { id: '2', image: require('../assets/player-avatars/2.png'), label: 'Avatar 2' },
+  { id: '3', image: require('../assets/player-avatars/3.png'), label: 'Avatar 3' },
+  { id: '4', image: require('../assets/player-avatars/4.png'), label: 'Avatar 4' },
+  { id: '5', image: require('../assets/player-avatars/5.png'), label: 'Avatar 5' },
+  { id: '6', image: require('../assets/player-avatars/6.png'), label: 'Avatar 6' },
+  { id: '7', image: require('../assets/player-avatars/7.png'), label: 'Avatar 7' },
+  { id: '8', image: require('../assets/player-avatars/8.png'), label: 'Avatar 8' },
 ];
 
 const GENDER_OPTIONS = [
@@ -214,7 +216,13 @@ const OnboardingScreen = ({ navigation, route }) => {
               setSelectedAvatar(avatar.id);
             }}
           >
-            <Text style={styles.avatarEmoji}>{avatar.emoji}</Text>
+            <View style={styles.avatarImageContainer}>
+              <Image
+                source={avatar.image}
+                style={styles.avatarImage}
+                resizeMode="cover"
+              />
+            </View>
             <Text
               style={[
                 styles.avatarLabel,
@@ -427,13 +435,37 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: BORDER_RADIUS.md,
   },
+  avatarImageContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: BORDER_RADIUS.avatar,
+    overflow: 'hidden',
+    marginBottom: SPACING.xs,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  avatarImage: {
+    width: '100%',
+    height: '100%',
+  },
   avatarOptionSelected: {
     backgroundColor: 'rgba(74, 158, 158, 0.15)',
     borderColor: COLORS.accent.cyan,
   },
-  avatarEmoji: {
-    fontSize: 48,
+  avatarImageContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: BORDER_RADIUS.avatar,
+    overflow: 'hidden',
     marginBottom: SPACING.xs,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  avatarImage: {
+    width: '100%',
+    height: '100%',
   },
   avatarLabel: {
     ...FONTS.small,

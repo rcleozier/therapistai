@@ -11,12 +11,14 @@ const AVATAR_BUBBLE_GUTTER = SPACING.md;
 
 // Avatar options for player (matching onboarding)
 const AVATAR_OPTIONS = [
-  { id: '1', emoji: '👤' },
-  { id: '2', emoji: '🧑' },
-  { id: '3', emoji: '👨' },
-  { id: '4', emoji: '👩' },
-  { id: '5', emoji: '🧑‍🦱' },
-  { id: '6', emoji: '🧑‍🦰' },
+  { id: '1', image: require('../assets/player-avatars/1.png') },
+  { id: '2', image: require('../assets/player-avatars/2.png') },
+  { id: '3', image: require('../assets/player-avatars/3.png') },
+  { id: '4', image: require('../assets/player-avatars/4.png') },
+  { id: '5', image: require('../assets/player-avatars/5.png') },
+  { id: '6', image: require('../assets/player-avatars/6.png') },
+  { id: '7', image: require('../assets/player-avatars/7.png') },
+  { id: '8', image: require('../assets/player-avatars/8.png') },
 ];
 
 /**
@@ -30,10 +32,10 @@ const ChatMessage = ({ message, isLatest = false, shouldAnimate = true, userProf
   const isNarrator = from === 'narrator';
   const isPlayer = from === 'player';
   
-  // Get player avatar emoji
-  const playerAvatar = userProfile?.avatar 
-    ? AVATAR_OPTIONS.find(a => a.id === userProfile.avatar)?.emoji || AVATAR_OPTIONS[0].emoji
-    : AVATAR_OPTIONS[0].emoji;
+  // Get player avatar image
+  const playerAvatarImage = userProfile?.avatar 
+    ? AVATAR_OPTIONS.find(a => a.id === userProfile.avatar)?.image || AVATAR_OPTIONS[0].image
+    : AVATAR_OPTIONS[0].image;
   
   // Get player name
   const playerName = userProfile?.name || 'You';
@@ -149,7 +151,7 @@ const ChatMessage = ({ message, isLatest = false, shouldAnimate = true, userProf
             <Image
               source={require('../assets/character.png')}
               style={styles.avatarImage}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
           {/* Message bubble aligned with avatar */}
@@ -173,7 +175,11 @@ const ChatMessage = ({ message, isLatest = false, shouldAnimate = true, userProf
           {/* Player avatar */}
           <View style={styles.playerAvatarContainer} pointerEvents="none">
             <View style={styles.playerAvatarGlow} />
-            <Text style={styles.playerAvatarEmoji}>{playerAvatar}</Text>
+            <Image
+              source={playerAvatarImage}
+              style={styles.playerAvatarImage}
+              resizeMode="cover"
+            />
           </View>
         </View>
       )}
@@ -253,9 +259,11 @@ const styles = StyleSheet.create({
     zIndex: 0,
     opacity: 0.08,
   },
-  playerAvatarEmoji: {
-    fontSize: AVATAR_SIZE - 12,
+  playerAvatarImage: {
+    width: AVATAR_SIZE - 6,
+    height: AVATAR_SIZE - 6,
     zIndex: 2,
+    borderRadius: BORDER_RADIUS.avatar - 1,
   },
   narratorWrapper: {
     alignItems: 'center',
@@ -290,6 +298,7 @@ const styles = StyleSheet.create({
     width: AVATAR_SIZE - 6, // Slightly smaller to show border
     height: AVATAR_SIZE - 6,
     zIndex: 2,
+    borderRadius: BORDER_RADIUS.avatar - 1,
   },
   avatarGlow: {
     position: 'absolute',
