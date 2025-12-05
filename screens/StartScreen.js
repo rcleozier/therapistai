@@ -476,11 +476,22 @@ const styles = StyleSheet.create({
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: SESSION_THEME.headerPadding,
+    paddingVertical: SPACING.md,
+    marginHorizontal: SPACING.lg,
+    borderRadius: BORDER_RADIUS.xl,
+    backgroundColor: 'rgba(15, 17, 21, 0.96)', // Soft pill behind avatar + title
+    borderWidth: 1,
+    borderColor: SESSION_THEME.accentBorder,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 16 },
+    shadowOpacity: 0.4,
+    shadowRadius: 26,
   },
   iconContainer: {
     width: 52,
-    height: 52,
-    borderRadius: 26,
+    height: 44,
+    borderRadius: BORDER_RADIUS.md, // More squared-off avatar to sit better in pill
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: SPACING.md + 2,
@@ -489,14 +500,14 @@ const styles = StyleSheet.create({
   iconGlow: {
     position: 'absolute',
     width: 52,
-    height: 52,
-    borderRadius: 26,
+    height: 44,
+    borderRadius: BORDER_RADIUS.md,
     backgroundColor: COLORS.accent.cyan,
     opacity: 0.15,
   },
   robotIcon: {
-    width: 44,
-    height: 44,
+    width: 40,
+    height: 40,
     zIndex: 2,
   },
   headerText: {
@@ -519,8 +530,8 @@ const styles = StyleSheet.create({
   syncIndicator: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: SPACING.sm + 2,
-    paddingLeft: 2,
+    marginTop: SPACING.sm,
+    paddingLeft: SESSION_THEME.headerPadding + SPACING.xs,
   },
   syncDot: {
     width: 5,
@@ -533,8 +544,8 @@ const styles = StyleSheet.create({
     ...FONTS.small,
     fontSize: 10,
     color: SESSION_THEME.mutedText,
-    letterSpacing: 0.4,
-    opacity: 0.6,
+    letterSpacing: 0.6,
+    opacity: 0.8,
   },
   sessionSection: {
     flex: 1,

@@ -179,8 +179,19 @@ const GameScreen = ({ route, navigation }) => {
       const nextNode = storyEngine.makeChoice(choiceId);
       
       if (nextNode) {
+        // Create a player message so the selected choice appears in the thread
+        const playerMessage = {
+          id: `choice_${choiceId}_${Date.now()}`,
+          from: 'player',
+          type: 'chat',
+          text: choiceLabel,
+        };
+
+        // Prepend the player message to the next node's messages so it shows right before the AI/narrator replies
+        const combinedMessages = [playerMessage, ...(nextNode.messages || [])];
+
         setCurrentNode(nextNode);
-        setMessages(nextNode.messages);
+        setMessages(combinedMessages);
         setChoices(nextNode.choices);
         setDisplayedMessageIndex(0);
         
