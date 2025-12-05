@@ -33,7 +33,7 @@ const SESSION_THEME = {
   heroShadowRadius: 12,
   
   // Avatar constants
-  avatarSize: 60, // 56-64px range
+  avatarSize: 44, // Match chat avatar size
   avatarBorderRadius: 8, // 6-10px range
   avatarBorderWidth: 1.5,
   avatarBorderColor: 'rgba(244, 92, 78, 0.2)', // Low-opacity accent
@@ -524,9 +524,10 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   avatarImage: {
-    width: SESSION_THEME.avatarSize - 8,
-    height: SESSION_THEME.avatarSize - 8,
+    width: SESSION_THEME.avatarSize,
+    height: SESSION_THEME.avatarSize,
     zIndex: 2,
+    borderRadius: SESSION_THEME.avatarBorderRadius,
   },
   heroTextBlock: {
     flex: 1,

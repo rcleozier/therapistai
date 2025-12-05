@@ -75,7 +75,7 @@ const TypingIndicator = () => {
           <Image
             source={require('../assets/character.png')}
             style={styles.avatarImage}
-            resizeMode="contain"
+            resizeMode="cover"
           />
         </View>
         {/* Typing bubble */}
@@ -132,10 +132,10 @@ const styles = StyleSheet.create({
     opacity: 0.08,
   },
   avatarImage: {
-    width: AVATAR_SIZE - 6,
-    height: AVATAR_SIZE - 6,
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
     zIndex: 2,
-    opacity: 0.9,
+    borderRadius: BORDER_RADIUS.avatar,
   },
   aiBubbleWrapper: {
     flex: 1,

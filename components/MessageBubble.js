@@ -260,10 +260,10 @@ const styles = StyleSheet.create({
     opacity: 0.08,
   },
   playerAvatarImage: {
-    width: AVATAR_SIZE - 6,
-    height: AVATAR_SIZE - 6,
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
     zIndex: 2,
-    borderRadius: BORDER_RADIUS.avatar - 1,
+    borderRadius: BORDER_RADIUS.avatar,
   },
   narratorWrapper: {
     alignItems: 'center',
@@ -295,10 +295,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end', // Force to bottom
   },
   avatarImage: {
-    width: AVATAR_SIZE - 6, // Slightly smaller to show border
-    height: AVATAR_SIZE - 6,
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
     zIndex: 2,
-    borderRadius: BORDER_RADIUS.avatar - 1,
+    borderRadius: BORDER_RADIUS.avatar,
   },
   avatarGlow: {
     position: 'absolute',
