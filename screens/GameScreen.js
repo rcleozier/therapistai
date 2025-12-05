@@ -34,6 +34,7 @@ const GameScreen = ({ route, navigation }) => {
   const [isAITyping, setIsAITyping] = useState(false); // Track when AI is typing (showing typing indicator)
   const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0);
   const [isContinuing, setIsContinuing] = useState(false); // Track if we're continuing a session
+  const [pendingPlayerMessage, setPendingPlayerMessage] = useState(null); // Track player message waiting to be displayed
   const scrollViewRef = useRef(null);
   const choiceCountRef = useRef(0);
   const nodeVisitCountRef = useRef(0);
@@ -231,21 +232,25 @@ const GameScreen = ({ route, navigation }) => {
     lastMessagesInHistory.every((msg, idx) => msg.id === safeMessages[idx]?.id);
   
   // Calculate displayed messages, ensuring no duplicates
+  // Always show all of conversationHistory (which includes player messages)
   let displayedMessages;
   if (isInitialLoad) {
     displayedMessages = safeMessages.slice(0, displayedMessageIndex); // Initial load: show messages with typing effect
-  } else if (messagesAlreadyInHistory) {
-    displayedMessages = safeHistory.slice(0, safeHistory.length); // All history (current messages already included)
   } else {
-    // Combine history and new messages, avoiding duplicates
-    const historyMessages = safeHistory.slice(0, historyLength);
-    const newMessages = safeMessages.slice(0, displayedMessageIndex);
+    // Always include all conversation history (which has player messages)
+    const allHistory = safeHistory;
     
-    // Filter out any new messages that are already in history (by id)
-    const historyIds = new Set(historyMessages.map(msg => msg.id));
+    // Then add any new messages that aren't already in history
+    const newMessages = safeMessages.slice(0, displayedMessageIndex);
+    const historyIds = new Set(allHistory.map(msg => msg.id));
     const uniqueNewMessages = newMessages.filter(msg => !historyIds.has(msg.id));
     
-    displayedMessages = [...historyMessages, ...uniqueNewMessages];
+    displayedMessages = [...allHistory, ...uniqueNewMessages];
+  }
+  
+  // If there's a pending player message, ensure it's included (fallback)
+  if (pendingPlayerMessage && !displayedMessages.find(msg => msg.id === pendingPlayerMessage.id)) {
+    displayedMessages = [...displayedMessages, pendingPlayerMessage];
   }
 
   // Smooth scroll to bottom when continuing (once)
@@ -259,6 +264,20 @@ const GameScreen = ({ route, navigation }) => {
       }, 300);
     }
   }, [isContinuing, displayedMessages.length]);
+
+  // Ensure player message is visible before showing typing indicator
+  useEffect(() => {
+    if (pendingPlayerMessage && conversationHistory.length > 0) {
+      // Check if player message is in conversation history
+      const playerMessageInHistory = conversationHistory.find(msg => msg.id === pendingPlayerMessage.id);
+      if (playerMessageInHistory) {
+        // Player message is in history, scroll to show it
+        setTimeout(() => {
+          scrollViewRef.current?.scrollToEnd({ animated: true });
+        }, 100);
+      }
+    }
+  }, [pendingPlayerMessage, conversationHistory]);
 
   // Auto-scroll when typing indicator appears
   useEffect(() => {
@@ -311,15 +330,29 @@ const GameScreen = ({ route, navigation }) => {
 
       // Add player message to conversation history immediately so it appears first
       setConversationHistory(prev => [...prev, playerMessage]);
+      setPendingPlayerMessage(playerMessage);
       
-      // Wait a moment for the player message to render and appear
-      await new Promise(resolve => setTimeout(resolve, 300));
+      // Wait for React to process the state update and render the player message
+      await new Promise(resolve => {
+        // Use double requestAnimationFrame to ensure render happens
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              resolve();
+            }, 200); // Additional delay to ensure message is visible
+          });
+        });
+      });
       
       // Scroll to show player message
       scrollViewRef.current?.scrollToEnd({ animated: true });
       
-      // Now show AI typing indicator (after player message is visible)
+      // Wait a bit more to ensure player message is fully visible
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Now show AI typing indicator (after player message is definitely visible)
       setIsAITyping(true);
+      setPendingPlayerMessage(null); // Clear pending message
       
       // Wait a moment for typing indicator to appear
       await new Promise(resolve => setTimeout(resolve, 200));
@@ -338,7 +371,17 @@ const GameScreen = ({ route, navigation }) => {
         
         // Add the new AI/narrator messages to conversation history
         const newMessages = nextNode.messages || [];
-        setConversationHistory(prev => [...prev, ...newMessages]);
+        setConversationHistory(prev => {
+          // Ensure player message is still in history
+          const updated = [...prev];
+          // Add new messages if they're not already there
+          newMessages.forEach(msg => {
+            if (!updated.find(m => m.id === msg.id)) {
+              updated.push(msg);
+            }
+          });
+          return updated;
+        });
 
         setCurrentNode(nextNode);
         setMessages(newMessages);
