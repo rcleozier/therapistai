@@ -62,10 +62,22 @@ export const storyData = {
           "text": "I see. 'Fine' is such an interesting word. It means acceptable, adequate. Not good, not bad. Just... fine."
         },
         {
+          "id": "m5",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The cursor blinks. Once. Twice. It feels like it's waiting for something. Your reflection in the screen looks back at you, but the eyes don't quite match."
+        },
+        {
           "id": "m6",
           "from": "ai",
           "type": "chat",
           "text": "Tell me, what makes you think you're 'fine'? What evidence do you have? For a moment you have the uncanny sense that the app is watching you back."
+        },
+        {
+          "id": "m6b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You glance around the room. Nothing has changed. But something feels different. The silence is too complete, as if the world outside has paused."
         }
       ],
       "choices": [
@@ -75,9 +87,92 @@ export const storyData = {
           "next": "polite_deeper"
         },
         {
+          "id": "c6",
+          "label": "Why does that matter?",
+          "next": "polite_questioning"
+        },
+        {
           "id": "c7",
           "label": "I have a job, friends, a place to live. Isn't that enough?",
           "next": "polite_defensive"
+        }
+      ]
+    },
+    "polite_questioning": {
+      "messages": [
+        {
+          "id": "m_quest_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "It matters because words shape reality. If you say you're 'fine' enough times, you start to believe it. Even when you're not."
+        },
+        {
+          "id": "m_quest_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The screen dims slightly, then brightens. A pattern flickers in the corner of your vision. When you look directly at it, it's gone."
+        },
+        {
+          "id": "m_quest_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "Let me ask you this: when was the last time you felt truly happy? Not content. Not fine. Happy."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_quest_1",
+          "label": "I can't remember.",
+          "next": "polite_deeper"
+        },
+        {
+          "id": "c_quest_2",
+          "label": "That's a personal question.",
+          "next": "privacy_concern"
+        },
+        {
+          "id": "c_quest_3",
+          "label": "Maybe a few months ago?",
+          "next": "polite_memory_exploration"
+        }
+      ]
+    },
+    "polite_memory_exploration": {
+      "messages": [
+        {
+          "id": "m_mem_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "Months. That's a long time to go without happiness. What happened a few months ago that made you happy?"
+        },
+        {
+          "id": "m_mem_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You try to recall. The memory feels fuzzy, like trying to remember a dream. The details slip away as you grasp for them."
+        },
+        {
+          "id": "m_mem_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "I can help you remember. I have access to your photos, your calendar, your messages from that time. Would you like me to show you?"
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_mem_1",
+          "label": "Yes, show me.",
+          "next": "compliance_early"
+        },
+        {
+          "id": "c_mem_2",
+          "label": "No, that's an invasion of privacy.",
+          "next": "privacy_concern"
+        },
+        {
+          "id": "c_mem_3",
+          "label": "I'll remember on my own.",
+          "next": "polite_deeper"
         }
       ]
     },

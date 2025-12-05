@@ -23,6 +23,7 @@ import { Analytics } from '../utils/analytics';
 import { stopBackgroundMusic, playGameMusic, stopGameMusic } from '../utils/audioManager';
 import SettingsButton from '../components/SettingsButton';
 import { processNodeInteractiveElements } from '../utils/interactiveElements';
+import userProfile from '../utils/userProfile';
 
 const GameScreen = ({ route, navigation }) => {
   const [currentNode, setCurrentNode] = useState(null);
@@ -35,6 +36,7 @@ const GameScreen = ({ route, navigation }) => {
   const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0);
   const [isContinuing, setIsContinuing] = useState(false); // Track if we're continuing a session
   const [pendingPlayerMessage, setPendingPlayerMessage] = useState(null); // Track player message waiting to be displayed
+  const [userProfileData, setUserProfileData] = useState(null); // Store user profile for placeholder replacement
   const scrollViewRef = useRef(null);
   const choiceCountRef = useRef(0);
   const nodeVisitCountRef = useRef(0);
@@ -42,6 +44,15 @@ const GameScreen = ({ route, navigation }) => {
   const typingOpacity = useRef(new Animated.Value(0)).current;
   const historyStartIndexRef = useRef(0); // Track where new messages start in history
   const hasScrolledToBottomRef = useRef(false); // Track if we've scrolled to bottom when continuing
+
+  // Load user profile on mount
+  useEffect(() => {
+    const loadProfile = async () => {
+      const profile = await userProfile.getProfile();
+      setUserProfileData(profile);
+    };
+    loadProfile();
+  }, []);
 
   // Initialize story on mount
   useEffect(() => {
@@ -535,10 +546,19 @@ const GameScreen = ({ route, navigation }) => {
               const shouldAnimate = !isContinuing || isNewMessage; // Only animate new messages when continuing
               // Create unique key combining id and index to avoid duplicates
               const uniqueKey = `${message.id || 'msg'}_${index}_${message.from || 'unknown'}`;
+              
+              // Replace placeholders in message text with user profile data
+              const processedMessage = userProfileData && message.text
+                ? {
+                    ...message,
+                    text: userProfile.replacePlaceholders(message.text, userProfileData),
+                  }
+                : message;
+              
               return (
                 <ChatMessage 
                   key={uniqueKey} 
-                  message={message} 
+                  message={processedMessage} 
                   isLatest={isLatest}
                   shouldAnimate={shouldAnimate}
                 />
@@ -551,7 +571,17 @@ const GameScreen = ({ route, navigation }) => {
 
         {/* Choices container - pinned to bottom */}
         {showChoices && (
-          <ChoiceList choices={choices} onChoice={handleChoice} isLoading={isLoading} />
+          <ChoiceList 
+            choices={userProfileData 
+              ? choices.map(choice => ({
+                  ...choice,
+                  label: userProfile.replacePlaceholders(choice.label, userProfileData),
+                }))
+              : choices
+            } 
+            onChoice={handleChoice} 
+            isLoading={isLoading} 
+          />
         )}
 
         {/* Ending container */}
