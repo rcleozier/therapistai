@@ -27,6 +27,7 @@ const GameScreen = ({ route, navigation }) => {
   const [currentNode, setCurrentNode] = useState(null);
   const [messages, setMessages] = useState([]);
   const [choices, setChoices] = useState([]);
+  const [conversationHistory, setConversationHistory] = useState([]); // Persistent conversation log
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0);
@@ -35,6 +36,7 @@ const GameScreen = ({ route, navigation }) => {
   const nodeVisitCountRef = useRef(0);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const typingOpacity = useRef(new Animated.Value(0)).current;
+  const historyStartIndexRef = useRef(0); // Track where new messages start in history
 
   // Initialize story on mount
   useEffect(() => {
@@ -49,13 +51,18 @@ const GameScreen = ({ route, navigation }) => {
         };
         setupAudio();
         let initialNode;
+        let savedConversationHistory = null;
 
         if (startNew) {
           // Clear any saved state and start fresh
           await storyEngine.clearGameState(storyLineId);
           initialNode = storyEngine.start(storyLineId);
         } else {
-          // Continue from saved state
+          // Continue from saved state - load saved state first to get conversation history
+          const savedState = await storyEngine.loadGameState(storyLineId);
+          if (savedState && savedState.conversationHistory) {
+            savedConversationHistory = savedState.conversationHistory;
+          }
           initialNode = await storyEngine.continue(storyLineId);
         }
 
@@ -63,7 +70,47 @@ const GameScreen = ({ route, navigation }) => {
           setCurrentNode(initialNode);
           setMessages(initialNode.messages);
           setChoices(initialNode.choices);
-          setDisplayedMessageIndex(0);
+          
+          // Initialize conversation history
+          if (startNew) {
+            // New game: start with initial messages
+            setConversationHistory(initialNode.messages || []);
+            historyStartIndexRef.current = 0;
+            setDisplayedMessageIndex(0);
+          } else {
+            // Continue: restore conversation history from saved state
+            if (savedConversationHistory && savedConversationHistory.length > 0) {
+              // Restore full conversation history
+              setConversationHistory(savedConversationHistory);
+              
+              // Calculate how many messages have already been displayed
+              const currentMessagesCount = (initialNode.messages || []).length;
+              
+              // Check if the last messages in history match current node messages
+              const lastMessagesInHistory = savedConversationHistory.slice(-currentMessagesCount);
+              const messagesMatch = currentMessagesCount > 0 && 
+                lastMessagesInHistory.length === currentMessagesCount &&
+                lastMessagesInHistory.every((msg, idx) => 
+                  msg.id === initialNode.messages[idx]?.id
+                );
+              
+              if (messagesMatch) {
+                // Current node messages are already in history - show all history immediately
+                // Set displayedMessageIndex to the full count so all messages are visible
+                // Since messages are already in history, we show all history and mark all as displayed
+                setDisplayedMessageIndex(currentMessagesCount); // All current messages are "displayed"
+              } else {
+                // Current node has new messages not in history yet - show with typing effect
+                // All previous history will be shown, new messages will appear with typing effect
+                setDisplayedMessageIndex(0);
+              }
+            } else {
+              // No saved history, start with current messages
+              setConversationHistory(initialNode.messages || []);
+              historyStartIndexRef.current = 0;
+              setDisplayedMessageIndex(0);
+            }
+          }
           
           // Fade in animation
           Animated.timing(fadeAnim, {
@@ -91,8 +138,12 @@ const GameScreen = ({ route, navigation }) => {
             processNodeInteractiveElements(initialNode, 500);
           }, 1000);
 
-          // Save initial state
-          await storyEngine.saveGameState();
+          // Save initial state with conversation history
+          // Use the history we just set (or will set)
+          const historyToSave = startNew 
+            ? (initialNode.messages || []) 
+            : (savedConversationHistory || initialNode.messages || []);
+          await storyEngine.saveGameState(historyToSave);
         }
       } catch (error) {
         console.error('Failed to initialize story:', error);
@@ -103,10 +154,18 @@ const GameScreen = ({ route, navigation }) => {
   }, [route?.params?.startNew, route?.params?.storyLineId]);
 
   // Display messages one at a time with typing effect
+  // Only applies to new messages, not the conversation history
   useEffect(() => {
-    if (messages.length === 0) return;
+    if (!messages || messages.length === 0) return;
+    if (!conversationHistory) return;
 
-    if (displayedMessageIndex < messages.length) {
+    // Calculate how many new messages we're displaying
+    const newMessagesCount = messages.length;
+    const historyLength = (conversationHistory.length || 0) - newMessagesCount;
+    
+    // displayedMessageIndex tracks how many of the NEW messages have been shown
+    // All previous history is already visible
+    if (displayedMessageIndex < newMessagesCount) {
       setIsTyping(true);
       
       // Animate typing indicator
@@ -139,7 +198,7 @@ const GameScreen = ({ route, navigation }) => {
           }
         }
         
-        // Auto-scroll to bottom when new message appears
+        // Auto-scroll to bottom when new message appears (only if user is near bottom)
         setTimeout(() => {
           scrollViewRef.current?.scrollToEnd({ animated: true });
         }, 100);
@@ -150,16 +209,50 @@ const GameScreen = ({ route, navigation }) => {
       setIsTyping(false);
       typingOpacity.setValue(0);
     }
-  }, [messages, displayedMessageIndex]);
+  }, [messages, displayedMessageIndex, conversationHistory.length]);
 
-  // Auto-scroll when messages change
+  // Calculate displayed messages: show all history + new messages up to displayedMessageIndex
+  // If conversationHistory ends with the same messages as current messages, they're already in history
+  // Otherwise, historyLength is the number of messages before the current batch
+  const safeHistory = conversationHistory || [];
+  const safeMessages = messages || [];
+  const historyLength = Math.max(0, safeHistory.length - (safeMessages.length || 0));
+  const isInitialLoad = historyLength === 0 && safeHistory.length > 0 && safeMessages.length > 0;
+  
+  // Check if current messages are already at the end of history (when continuing a session)
+  const lastMessagesInHistory = safeHistory.slice(-safeMessages.length);
+  const messagesAlreadyInHistory = safeMessages.length > 0 && 
+    lastMessagesInHistory.length === safeMessages.length &&
+    lastMessagesInHistory.every((msg, idx) => msg.id === safeMessages[idx]?.id);
+  
+  const displayedMessages = isInitialLoad
+    ? safeMessages.slice(0, displayedMessageIndex) // Initial load: show messages with typing effect
+    : messagesAlreadyInHistory
+    ? safeHistory.slice(0, safeHistory.length) // All history (current messages already included)
+    : [
+        ...safeHistory.slice(0, historyLength), // All previous conversation history
+        ...safeMessages.slice(0, displayedMessageIndex) // New messages with typing effect
+      ];
+
+  // Auto-scroll when new messages appear (only if user hasn't scrolled up)
   useEffect(() => {
-    if (displayedMessageIndex > 0) {
+    if (displayedMessageIndex > 0 && displayedMessages && displayedMessages.length > 0) {
+      // Small delay to ensure message is rendered
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, 100);
+      }, 150);
     }
-  }, [displayedMessageIndex]);
+  }, [displayedMessageIndex, displayedMessages.length]);
+
+  // Save conversation history to storage whenever it changes
+  useEffect(() => {
+    if (conversationHistory && conversationHistory.length > 0 && currentNode) {
+      // Save conversation history to storage (async, don't block)
+      storyEngine.saveGameState(conversationHistory).catch(err => {
+        console.error('Error saving conversation history:', err);
+      });
+    }
+  }, [conversationHistory, currentNode]);
 
   const handleChoice = async (choiceId) => {
     setIsLoading(true);
@@ -173,27 +266,31 @@ const GameScreen = ({ route, navigation }) => {
       Analytics.trackGameChoice(choiceId, choiceLabel, currentNode?.nodeId);
       choiceCountRef.current += 1;
       
+      // Create a player message so the selected choice appears in the thread
+      const playerMessage = {
+        id: `choice_${choiceId}_${Date.now()}`,
+        from: 'player',
+        type: 'chat',
+        text: choiceLabel,
+      };
+
+      // Add player message to conversation history immediately
+      setConversationHistory(prev => [...prev, playerMessage]);
+      
       // Add a small delay for better UX
       await new Promise(resolve => setTimeout(resolve, 300));
       
       const nextNode = storyEngine.makeChoice(choiceId);
       
       if (nextNode) {
-        // Create a player message so the selected choice appears in the thread
-        const playerMessage = {
-          id: `choice_${choiceId}_${Date.now()}`,
-          from: 'player',
-          type: 'chat',
-          text: choiceLabel,
-        };
-
-        // Prepend the player message to the next node's messages so it shows right before the AI/narrator replies
-        const combinedMessages = [playerMessage, ...(nextNode.messages || [])];
+        // Add the new AI/narrator messages to conversation history
+        const newMessages = nextNode.messages || [];
+        setConversationHistory(prev => [...prev, ...newMessages]);
 
         setCurrentNode(nextNode);
-        setMessages(combinedMessages);
+        setMessages(newMessages);
         setChoices(nextNode.choices);
-        setDisplayedMessageIndex(0);
+        setDisplayedMessageIndex(0); // Reset to show new messages with typing effect
         
         // Track node visit
         if (nextNode.nodeId) {
@@ -207,9 +304,6 @@ const GameScreen = ({ route, navigation }) => {
         setTimeout(() => {
           processNodeInteractiveElements(nextNode, 500);
         }, 800);
-
-        // Save game state after making a choice
-        await storyEngine.saveGameState();
       } else {
         console.error('Failed to load next node');
       }
@@ -238,6 +332,10 @@ const GameScreen = ({ route, navigation }) => {
     setCurrentNode(initialNode);
     setMessages(initialNode.messages);
     setChoices(initialNode.choices);
+    
+    // Reset conversation history with initial messages
+    setConversationHistory(initialNode.messages || []);
+    historyStartIndexRef.current = 0;
     setDisplayedMessageIndex(0);
     
     // Track new game start
@@ -247,8 +345,9 @@ const GameScreen = ({ route, navigation }) => {
       nodeVisitCountRef.current = 1;
     }
 
-    // Save initial state
-    await storyEngine.saveGameState();
+    // Save initial state with conversation history
+    const historyToSave = initialNode.messages || [];
+    await storyEngine.saveGameState(historyToSave);
   };
 
   const handleBackToHome = () => {
@@ -256,10 +355,9 @@ const GameScreen = ({ route, navigation }) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate('Start');
   };
-
-  const displayedMessages = messages.slice(0, displayedMessageIndex);
-  const showChoices = displayedMessageIndex >= messages.length && choices.length > 0 && !isLoading;
-  const isEnding = currentNode?.isEnding && displayedMessageIndex >= messages.length;
+  
+  const showChoices = displayedMessageIndex >= safeMessages.length && choices && choices.length > 0 && !isLoading;
+  const isEnding = currentNode?.isEnding && displayedMessageIndex >= safeMessages.length;
 
   // Track ending when reached
   useEffect(() => {
@@ -321,21 +419,23 @@ const GameScreen = ({ route, navigation }) => {
         </Animated.View>
 
         {/* Status bar - processing/typing indicator */}
-        <StatusBar isTyping={isTyping} statusText={displayedMessageIndex < messages.length ? 'Processing…' : 'Waiting for your response'} />
+        <StatusBar isTyping={isTyping} statusText={displayedMessageIndex < safeMessages.length ? 'Processing…' : 'Waiting for your response'} />
 
-        {/* Chat area with scrollable messages */}
+        {/* Chat area with scrollable messages - full conversation history */}
         <Animated.View style={[styles.contentWrapper, { opacity: fadeAnim }]}>
           <ScrollView
             ref={scrollViewRef}
             style={styles.scrollView}
             contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={true}
+            scrollEnabled={true}
+            nestedScrollEnabled={true}
           >
             {displayedMessages.map((message, index) => {
-              const isLatest = index === displayedMessages.length - 1;
+              const isLatest = index === displayedMessages.length - 1 && displayedMessageIndex >= (safeMessages.length || 0);
               return (
                 <ChatMessage 
-                  key={message.id || index} 
+                  key={message.id || `msg_${index}`} 
                   message={message} 
                   isLatest={isLatest}
                 />

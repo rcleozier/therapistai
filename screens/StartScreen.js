@@ -494,8 +494,9 @@ const styles = StyleSheet.create({
   },
   heroContent: {
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: SESSION_THEME.heroPaddingVertical,
+    alignItems: 'flex-end', // Align items to bottom
+    paddingTop: SESSION_THEME.heroPaddingVertical, // Only top padding
+    paddingBottom: 0, // No bottom padding - avatar flush to bottom
     paddingHorizontal: SESSION_THEME.heroPaddingHorizontal,
     backgroundColor: SESSION_THEME.heroBackground,
   },
@@ -506,10 +507,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: SPACING.md + 4,
+    marginBottom: 0, // No bottom margin - fixed to bottom
     position: 'relative',
     borderWidth: SESSION_THEME.avatarBorderWidth,
     borderColor: SESSION_THEME.avatarBorderColor,
     backgroundColor: 'rgba(15, 17, 21, 0.6)',
+    overflow: 'hidden',
   },
   avatarGlow: {
     position: 'absolute',
@@ -527,7 +530,9 @@ const styles = StyleSheet.create({
   },
   heroTextBlock: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end', // Align text to bottom to match avatar
+    paddingBottom: 0, // No bottom padding
+    marginBottom: 0, // No bottom margin
   },
   heroTitleRow: {
     flexDirection: 'row',

@@ -130,7 +130,7 @@ class StoryEngine {
   }
 
   // Save game state
-  async saveGameState() {
+  async saveGameState(conversationHistory = null) {
     if (!this.storyLineId) {
       console.error('Cannot save game state: no story line loaded');
       return false;
@@ -143,6 +143,7 @@ class StoryEngine {
         visitedNodes: Array.from(this.visitedNodes),
         messageHistory: this.messageHistory,
         choices: this.choices,
+        conversationHistory: conversationHistory || [], // Save full conversation thread
         timestamp: Date.now(),
       };
       const key = this.getGameStateKey(this.storyLineId);
@@ -197,6 +198,11 @@ class StoryEngine {
       this.visitedNodes = new Set(gameState.visitedNodes || []);
       this.messageHistory = gameState.messageHistory || [];
       this.choices = gameState.choices || [];
+      
+      // Return conversation history if it exists (for backward compatibility)
+      if (!gameState.conversationHistory && gameState.messageHistory) {
+        gameState.conversationHistory = gameState.messageHistory;
+      }
       
       return gameState;
     } catch (error) {

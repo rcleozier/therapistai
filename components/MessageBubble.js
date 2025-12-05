@@ -152,13 +152,15 @@ const styles = StyleSheet.create({
   messageWrapper: {
     marginBottom: SPACING.md + 4, // More vertical spacing between messages
     paddingHorizontal: CHAT_CONTENT_PADDING, // Consistent with header
-    paddingVertical: SPACING.xs,
+    paddingTop: SPACING.xs, // Only top padding
+    paddingBottom: 0, // No bottom padding - avatar flush to bottom
   },
   aiWrapper: {
     // Legacy - kept for compatibility
   },
   playerWrapper: {
     alignItems: 'flex-end',
+    width: '100%',
   },
   narratorWrapper: {
     alignItems: 'center',
@@ -168,8 +170,10 @@ const styles = StyleSheet.create({
   // AI message group - avatar and bubble as single unit
   aiMessageGroup: {
     flexDirection: 'row',
-    alignItems: 'flex-start', // Start from top, avatar will center with bubble via marginTop
+    alignItems: 'flex-end', // Align avatar to bottom of container
     width: '100%',
+    marginBottom: 0, // No bottom margin
+    paddingBottom: 0, // No bottom padding
   },
   avatarContainer: {
     position: 'relative',
@@ -179,11 +183,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: AVATAR_BUBBLE_GUTTER, // Consistent horizontal gutter
-    marginTop: SPACING.xs + 2, // Vertically center with bubble (accounting for "Therapist" label)
+    marginBottom: 0, // No bottom margin - fixed to bottom
+    marginTop: 0, // No top margin
     borderWidth: 1,
     borderColor: 'rgba(242, 92, 77, 0.25)', // Thin border with accent color at low opacity
     backgroundColor: 'rgba(15, 17, 21, 0.6)',
     overflow: 'hidden',
+    alignSelf: 'flex-end', // Force to bottom
   },
   avatarImage: {
     width: AVATAR_SIZE - 6, // Slightly smaller to show border
@@ -201,6 +207,9 @@ const styles = StyleSheet.create({
   aiBubbleWrapper: {
     flex: 1,
     maxWidth: '80%', // Prevent bubble from getting too wide
+    justifyContent: 'flex-end', // Align bubble content to bottom
+    paddingBottom: 0, // No bottom padding
+    marginBottom: 0, // No bottom margin
   },
   therapistLabel: {
     ...FONTS.small,
@@ -212,22 +221,13 @@ const styles = StyleSheet.create({
   },
   bubbleWrapper: {
     // Wrapper for player/narrator bubbles
+    alignItems: 'flex-end',
+    width: '100%',
   },
   bubble: {
     paddingHorizontal: SPACING.md + 6, // More generous horizontal padding
     paddingVertical: SPACING.md + 4, // More generous vertical padding so text doesn't hug border
     borderRadius: BORDER_RADIUS.sm, // Tighter corner radius (12px) for more modern feel
-    borderWidth: 1,
-  },
-  aiContainer: {
-    backgroundColor: '#13151A', // Slightly lighter than screen background (#050608)
-    borderColor: COLORS.message.ai.border, // Desaturated red-orange at 40% opacity
-    // Subtle glow effect
-    shadowColor: COLORS.message.ai.borderGlow,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 2,
     borderWidth: 1,
   },
   playerContainer: {
@@ -239,6 +239,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
+    maxWidth: '75%', // More right-aligned, narrower than AI messages
+    alignSelf: 'flex-end', // Ensure right alignment
+  },
+  aiContainer: {
+    backgroundColor: '#13151A', // Slightly lighter than screen background (#050608)
+    borderColor: COLORS.message.ai.border, // Desaturated red-orange at 40% opacity
+    // Subtle glow effect
+    shadowColor: COLORS.message.ai.borderGlow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 2,
+    borderWidth: 1,
   },
   narratorContainer: {
     backgroundColor: 'transparent', // No background - just text floating
