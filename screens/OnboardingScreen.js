@@ -32,12 +32,37 @@ const GENDER_OPTIONS = [
   { id: 'prefer-not-to-say', label: 'Prefer not to say' },
 ];
 
-const OnboardingScreen = ({ navigation }) => {
+const OnboardingScreen = ({ navigation, route }) => {
+  const editMode = route?.params?.editMode || false;
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
   const [selectedAvatar, setSelectedAvatar] = useState(AVATAR_OPTIONS[0].id);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(editMode);
+
+  // Load existing profile if in edit mode
+  React.useEffect(() => {
+    if (editMode) {
+      loadExistingProfile();
+    }
+  }, [editMode]);
+
+  const loadExistingProfile = async () => {
+    try {
+      const profile = await userProfile.getProfile();
+      if (profile) {
+        setName(profile.name || '');
+        setAge(profile.age?.toString() || '');
+        setGender(profile.gender || '');
+        setSelectedAvatar(profile.avatar || AVATAR_OPTIONS[0].id);
+      }
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleNext = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -69,10 +94,15 @@ const OnboardingScreen = ({ navigation }) => {
     };
 
     await userProfile.saveProfile(profile);
-    await userProfile.setOnboardingComplete();
     
-    // Navigate to Start screen
-    navigation.replace('Start');
+    if (!editMode) {
+      await userProfile.setOnboardingComplete();
+      // Navigate to Start screen
+      navigation.replace('Start');
+    } else {
+      // In edit mode, just go back to settings
+      navigation.goBack();
+    }
   };
 
   const handleBack = () => {
@@ -199,12 +229,40 @@ const OnboardingScreen = ({ navigation }) => {
     </View>
   );
 
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+        <LinearGradient
+          colors={[COLORS.backgroundGradient.start, COLORS.backgroundGradient.end]}
+          style={StyleSheet.absoluteFill}
+        />
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <LinearGradient
         colors={[COLORS.backgroundGradient.start, COLORS.backgroundGradient.end]}
         style={StyleSheet.absoluteFill}
       />
+      
+      {/* Back button for edit mode */}
+      {editMode && (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            navigation.goBack();
+          }}
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+        >
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
+      )}
       
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -221,7 +279,7 @@ const OnboardingScreen = ({ navigation }) => {
             />
           </View>
           <Text style={styles.progressText}>
-            Step {currentStep} of 4
+            {editMode ? 'Edit Profile' : `Step ${currentStep} of 4`}
           </Text>
         </View>
 
@@ -251,7 +309,7 @@ const OnboardingScreen = ({ navigation }) => {
             disabled={!canProceed()}
           >
             <Text style={styles.buttonTextPrimary}>
-              {currentStep === 4 ? 'Start Therapy' : 'Next'}
+              {currentStep === 4 ? (editMode ? 'Save Changes' : 'Start Therapy') : 'Next'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -420,6 +478,33 @@ const styles = StyleSheet.create({
     ...FONTS.body,
     fontSize: 16,
     color: COLORS.text.primary,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    ...FONTS.body,
+    color: COLORS.text.secondary,
+    fontSize: 16,
+  },
+  backButton: {
+    position: 'absolute',
+    top: SPACING.lg + 8,
+    left: SPACING.lg,
+    zIndex: 10,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  backButtonText: {
+    ...FONTS.heading,
+    color: COLORS.accent.cyan,
+    fontSize: 24,
+    fontWeight: '300',
+    lineHeight: 28,
   },
 });
 

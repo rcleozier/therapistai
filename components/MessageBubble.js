@@ -9,16 +9,34 @@ const AVATAR_SIZE = 44; // 40-48px range
 // Horizontal gutter between avatar and bubble
 const AVATAR_BUBBLE_GUTTER = SPACING.md;
 
+// Avatar options for player (matching onboarding)
+const AVATAR_OPTIONS = [
+  { id: '1', emoji: '👤' },
+  { id: '2', emoji: '🧑' },
+  { id: '3', emoji: '👨' },
+  { id: '4', emoji: '👩' },
+  { id: '5', emoji: '🧑‍🦱' },
+  { id: '6', emoji: '🧑‍🦰' },
+];
+
 /**
  * ChatMessage component - premium styled chat messages with empathetic micro-interactions
  * Features refined styling with square character avatar for AI messages
  */
-const ChatMessage = ({ message, isLatest = false, shouldAnimate = true }) => {
+const ChatMessage = ({ message, isLatest = false, shouldAnimate = true, userProfile = null }) => {
   const { from, type, text } = message;
   
   const isAI = from === 'ai';
   const isNarrator = from === 'narrator';
   const isPlayer = from === 'player';
+  
+  // Get player avatar emoji
+  const playerAvatar = userProfile?.avatar 
+    ? AVATAR_OPTIONS.find(a => a.id === userProfile.avatar)?.emoji || AVATAR_OPTIONS[0].emoji
+    : AVATAR_OPTIONS[0].emoji;
+  
+  // Get player name
+  const playerName = userProfile?.name || 'You';
 
   const fadeAnim = useRef(new Animated.Value(shouldAnimate ? 0 : 1)).current; // Start visible if no animation
   const glowAnim = useRef(new Animated.Value(0.1)).current;
@@ -143,7 +161,23 @@ const ChatMessage = ({ message, isLatest = false, shouldAnimate = true }) => {
           </View>
         </View>
       )}
-      {!isAI && (
+      {isPlayer && (
+        <View style={styles.playerMessageGroup}>
+          {/* Message bubble aligned with avatar */}
+          <View style={styles.playerBubbleWrapper}>
+            <Text style={styles.playerLabel}>{playerName}</Text>
+            <View style={[styles.bubble, bubbleStyles.container]}>
+              <Text style={bubbleStyles.text}>{text}</Text>
+            </View>
+          </View>
+          {/* Player avatar */}
+          <View style={styles.playerAvatarContainer} pointerEvents="none">
+            <View style={styles.playerAvatarGlow} />
+            <Text style={styles.playerAvatarEmoji}>{playerAvatar}</Text>
+          </View>
+        </View>
+      )}
+      {isNarrator && (
         <View style={styles.bubbleWrapper}>
           <View style={[styles.bubble, bubbleStyles.container]}>
             <Text style={bubbleStyles.text}>{text}</Text>
@@ -167,6 +201,61 @@ const styles = StyleSheet.create({
   playerWrapper: {
     alignItems: 'flex-end',
     width: '100%',
+  },
+  // Player message group - bubble and avatar as single unit
+  playerMessageGroup: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    width: '100%',
+    justifyContent: 'flex-end',
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
+  playerBubbleWrapper: {
+    flex: 1,
+    maxWidth: '75%',
+    justifyContent: 'flex-end',
+    paddingBottom: 0,
+    marginBottom: 0,
+    alignItems: 'flex-end',
+  },
+  playerLabel: {
+    ...FONTS.small,
+    fontSize: 10,
+    color: COLORS.text.muted,
+    opacity: 0.6,
+    marginBottom: SPACING.xs,
+    letterSpacing: 0.3,
+    textAlign: 'right',
+  },
+  playerAvatarContainer: {
+    position: 'relative',
+    width: AVATAR_SIZE,
+    height: AVATAR_SIZE,
+    borderRadius: BORDER_RADIUS.avatar,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: AVATAR_BUBBLE_GUTTER,
+    marginBottom: 0,
+    marginTop: 0,
+    borderWidth: 1,
+    borderColor: 'rgba(74, 158, 158, 0.25)', // Cyan accent for player
+    backgroundColor: 'rgba(15, 17, 21, 0.6)',
+    overflow: 'hidden',
+    alignSelf: 'flex-end',
+  },
+  playerAvatarGlow: {
+    position: 'absolute',
+    width: AVATAR_SIZE + 6,
+    height: AVATAR_SIZE + 6,
+    borderRadius: BORDER_RADIUS.avatar + 1,
+    backgroundColor: COLORS.accent.cyan,
+    zIndex: 0,
+    opacity: 0.08,
+  },
+  playerAvatarEmoji: {
+    fontSize: AVATAR_SIZE - 12,
+    zIndex: 2,
   },
   narratorWrapper: {
     alignItems: 'center',

@@ -47,7 +47,11 @@ const Navigation = () => {
       }}
       initialRouteName={isOnboardingComplete ? "Start" : "Onboarding"}
     >
-      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+      <Stack.Screen 
+        name="Onboarding" 
+        component={OnboardingScreen}
+        options={{ presentation: 'modal' }}
+      />
       <Stack.Screen name="Start" component={StartScreen} />
       <Stack.Screen name="Game" component={GameScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />

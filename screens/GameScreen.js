@@ -561,6 +561,7 @@ const GameScreen = ({ route, navigation }) => {
                   message={processedMessage} 
                   isLatest={isLatest}
                   shouldAnimate={shouldAnimate}
+                  userProfile={userProfileData}
                 />
               );
             })}

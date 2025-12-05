@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -13,11 +14,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { COLORS, FONTS, SPACING, BORDER_RADIUS } from '../constants/colors';
 import { getAudioEnabled, setAudioEnabled } from '../utils/audioManager';
+import userProfile from '../utils/userProfile';
 import Constants from 'expo-constants';
+
+const GENDER_OPTIONS = [
+  { id: 'male', label: 'Male' },
+  { id: 'female', label: 'Female' },
+  { id: 'non-binary', label: 'Non-binary' },
+  { id: 'prefer-not-to-say', label: 'Prefer not to say' },
+];
 
 const SettingsScreen = ({ navigation }) => {
   const [audioEnabled, setAudioEnabledState] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [userProfileData, setUserProfileData] = useState(null);
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -31,10 +41,23 @@ const SettingsScreen = ({ navigation }) => {
     }).start();
   }, []);
 
+  // Reload profile when screen comes into focus (e.g., after editing)
+  useFocusEffect(
+    React.useCallback(() => {
+      const refreshProfile = async () => {
+        const profile = await userProfile.getProfile();
+        setUserProfileData(profile);
+      };
+      refreshProfile();
+    }, [])
+  );
+
   const loadSettings = async () => {
     try {
       const enabled = await getAudioEnabled();
       setAudioEnabledState(enabled);
+      const profile = await userProfile.getProfile();
+      setUserProfileData(profile);
     } catch (error) {
       console.error('Error loading settings:', error);
     } finally {
@@ -51,6 +74,11 @@ const SettingsScreen = ({ navigation }) => {
   const handleBack = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
+  };
+
+  const handleEditProfile = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.navigate('Onboarding', { editMode: true });
   };
 
   return (
@@ -75,6 +103,50 @@ const SettingsScreen = ({ navigation }) => {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
+          {/* Profile Section */}
+          <View style={styles.sectionCard}>
+            <Text style={styles.sectionTitle}>Profile</Text>
+            
+            {userProfileData ? (
+              <>
+                <View style={styles.infoRow}>
+                  <Text style={styles.infoLabel}>Name</Text>
+                  <Text style={styles.infoValue}>{userProfileData.name || 'Not set'}</Text>
+                </View>
+                <View style={styles.divider} />
+                <View style={styles.infoRow}>
+                  <Text style={styles.infoLabel}>Age</Text>
+                  <Text style={styles.infoValue}>{userProfileData.age || 'Not set'}</Text>
+                </View>
+                <View style={styles.divider} />
+                <View style={styles.infoRow}>
+                  <Text style={styles.infoLabel}>Gender</Text>
+                  <Text style={styles.infoValue}>
+                    {userProfileData.gender 
+                      ? GENDER_OPTIONS.find(g => g.id === userProfileData.gender)?.label || userProfileData.gender
+                      : 'Not set'}
+                  </Text>
+                </View>
+              </>
+            ) : (
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>No profile data</Text>
+              </View>
+            )}
+            
+            <View style={styles.divider} />
+            
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={handleEditProfile}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.editButtonText}>
+                {userProfileData ? 'Edit Profile' : 'Complete Profile'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           {/* Audio Settings Section */}
           <View style={styles.sectionCard}>
             <Text style={styles.sectionTitle}>Audio</Text>
@@ -269,6 +341,22 @@ const styles = StyleSheet.create({
     color: COLORS.text.muted,
     fontSize: 11,
     opacity: 0.5,
+    letterSpacing: 0.3,
+  },
+  editButton: {
+    backgroundColor: COLORS.accent.cyan,
+    borderRadius: BORDER_RADIUS.md,
+    paddingVertical: SPACING.md + 2,
+    paddingHorizontal: SPACING.lg,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: SPACING.sm,
+  },
+  editButtonText: {
+    ...FONTS.body,
+    color: '#000',
+    fontSize: 15,
+    fontWeight: '600',
     letterSpacing: 0.3,
   },
 });

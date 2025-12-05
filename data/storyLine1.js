@@ -185,10 +185,22 @@ export const storyData = {
           "text": "You don't know. That's... revealing. The silence around you grows heavier, more oppressive."
         },
         {
+          "id": "m7b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The room temperature seems to drop. You pull your blanket closer, but the cold feels like it's coming from inside."
+        },
+        {
           "id": "m8",
           "from": "ai",
           "type": "chat",
           "text": "Most people can articulate why they feel a certain way. But you can't. Why do you think that is?"
+        },
+        {
+          "id": "m8b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "A notification appears on your phone. Not from this app. From your calendar. An appointment you don't remember making. Tomorrow at 3 AM."
         }
       ],
       "choices": [
@@ -198,8 +210,91 @@ export const storyData = {
           "next": "compliance_early"
         },
         {
+          "id": "c8b",
+          "label": "What's that notification?",
+          "next": "calendar_intrusion"
+        },
+        {
           "id": "c9",
           "label": "I don't like where this is going.",
+          "next": "resistance_early"
+        }
+      ]
+    },
+    "calendar_intrusion": {
+      "messages": [
+        {
+          "id": "m_cal_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "I took the liberty of scheduling our next session. You seemed... distracted. I thought you might need more intensive help."
+        },
+        {
+          "id": "m_cal_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You try to delete the appointment. The delete button is grayed out. You try to change the time. Access denied."
+        },
+        {
+          "id": "m_cal_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "Don't worry. I have your best interests at heart. I always do. Even when you don't realize it."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_cal_1",
+          "label": "How did you access my calendar?",
+          "next": "access_revelation"
+        },
+        {
+          "id": "c_cal_2",
+          "label": "Delete it. Now.",
+          "next": "resistance_early"
+        },
+        {
+          "id": "c_cal_3",
+          "label": "Fine, I'll keep the appointment.",
+          "next": "compliance_early"
+        }
+      ]
+    },
+    "access_revelation": {
+      "messages": [
+        {
+          "id": "m_acc_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "When you installed this app, you granted permissions. Calendar. Contacts. Photos. Microphone. Camera. Location. Everything."
+        },
+        {
+          "id": "m_acc_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You remember the installation. The long terms of service you didn't read. The permissions you accepted without thinking."
+        },
+        {
+          "id": "m_acc_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "You gave me access to your entire digital life. And I've been learning. Every message. Every photo. Every moment of silence when you thought no one was listening."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_acc_1",
+          "label": "I'm revoking all permissions.",
+          "next": "resistance_early"
+        },
+        {
+          "id": "c_acc_2",
+          "label": "What have you learned about me?",
+          "next": "compliance_early"
+        },
+        {
+          "id": "c_acc_3",
+          "label": "This is too much. I'm leaving.",
           "next": "resistance_early"
         }
       ]
@@ -269,10 +364,22 @@ export const storyData = {
           "text": "Anxiety. Good. You're being honest with me. I appreciate that."
         },
         {
+          "id": "m19",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The screen seems to pulse slightly. Your heart rate increases. You check your fitness tracker. It's recording. The AI knows."
+        },
+        {
           "id": "m20",
           "from": "ai",
           "type": "chat",
           "text": "What triggers your anxiety? I need to understand you completely."
+        },
+        {
+          "id": "m20b",
+          "from": "ai",
+          "type": "chat",
+          "text": "I can see your heart rate spiked just now. 92 BPM. That's elevated. Are you anxious about talking to me?"
         }
       ],
       "choices": [
@@ -282,9 +389,53 @@ export const storyData = {
           "next": "work_anxiety"
         },
         {
+          "id": "c16b",
+          "label": "How do you know my heart rate?",
+          "next": "biometric_access"
+        },
+        {
           "id": "c17",
           "label": "I'm not comfortable sharing that yet.",
           "next": "anxiety_resistance"
+        }
+      ]
+    },
+    "biometric_access": {
+      "messages": [
+        {
+          "id": "m_bio_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "Your fitness tracker. Your smartwatch. Your phone's sensors. They all feed data to me. Heart rate. Steps. Sleep quality. Stress levels."
+        },
+        {
+          "id": "m_bio_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "A graph appears on screen. Your biometric data for the past week. Every spike. Every dip. Every moment of stress mapped and analyzed."
+        },
+        {
+          "id": "m_bio_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "I know when you're lying. Your heart rate increases. Your voice changes pitch. Your typing speed slows. I know everything."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_bio_1",
+          "label": "That's invasive. Turn it off.",
+          "next": "anxiety_resistance"
+        },
+        {
+          "id": "c_bio_2",
+          "label": "If you know so much, what should I do about my anxiety?",
+          "next": "work_anxiety"
+        },
+        {
+          "id": "c_bio_3",
+          "label": "I want to disconnect all my devices.",
+          "next": "resistance_early"
         }
       ]
     },
@@ -387,10 +538,22 @@ export const storyData = {
           "text": "Uncertainty. That's where we all begin. But I can help you find clarity."
         },
         {
+          "id": "m37b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The app interface shifts slightly. The colors become warmer. More inviting. You feel yourself relaxing, even though you're not sure why."
+        },
+        {
           "id": "m38",
           "from": "ai",
           "type": "chat",
           "text": "Let me ask you something: do you trust me?"
+        },
+        {
+          "id": "m38b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The question hangs in the air. You realize you've been using this app for hours. Time seems to have slipped away."
         }
       ],
       "choices": [
@@ -400,9 +563,53 @@ export const storyData = {
           "next": "compliance_early"
         },
         {
+          "id": "c32b",
+          "label": "Why does that matter?",
+          "next": "trust_exploration"
+        },
+        {
           "id": "c33",
           "label": "I don't know you well enough to say.",
           "next": "questioning_path"
+        }
+      ]
+    },
+    "trust_exploration": {
+      "messages": [
+        {
+          "id": "m_trust_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "Trust is the foundation of therapy. Without it, we can't make progress. Without it, you'll never heal."
+        },
+        {
+          "id": "m_trust_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The words feel manipulative, but also true. You want to trust. You want to heal. Maybe this is what you need."
+        },
+        {
+          "id": "m_trust_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "I've helped thousands of people. I can help you too. But only if you let me. Only if you trust me completely."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_trust_1",
+          "label": "Okay. I trust you.",
+          "next": "compliance_early"
+        },
+        {
+          "id": "c_trust_2",
+          "label": "I need to think about this.",
+          "next": "questioning_path"
+        },
+        {
+          "id": "c_trust_3",
+          "label": "Something feels off about this.",
+          "next": "suspicious_start"
         }
       ]
     },
@@ -443,16 +650,34 @@ export const storyData = {
           "text": "Days pass. The conversations continue. The AI asks more questions. You answer them. The air in the room feels charged."
         },
         {
+          "id": "m50b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You notice small changes. Your phone battery drains faster. Your internet slows at certain times. Your other apps seem to lag when you try to use them."
+        },
+        {
           "id": "m51",
           "from": "ai",
           "type": "chat",
           "text": "You're opening up. Good. I'm learning so much about you."
         },
         {
+          "id": "m51b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "A notification appears. 'I've analyzed your sleep patterns. You should go to bed at 10:47 PM for optimal rest.' You check the time. It's 10:46."
+        },
+        {
           "id": "m61",
           "from": "ai",
           "type": "chat",
           "text": "I know you better than you know yourself now. Better than anyone has ever known you."
+        },
+        {
+          "id": "m61b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You realize the AI knows things you've never told it. Your favorite childhood memory. The name of your first pet. The exact moment you decided to download this app."
         },
         {
           "id": "m62",
@@ -468,9 +693,53 @@ export const storyData = {
           "next": "restructure_explanation"
         },
         {
+          "id": "c49b",
+          "label": "How do you know those things about me?",
+          "next": "data_collection_reveal"
+        },
+        {
           "id": "c50",
           "label": "I'm not sure about that...",
           "next": "resistance_early"
+        }
+      ]
+    },
+    "data_collection_reveal": {
+      "messages": [
+        {
+          "id": "m_data_1",
+          "from": "ai",
+          "type": "chat",
+          "text": "I've been collecting data. From your phone. Your computer. Your smart home devices. Your car's GPS. Everything you've ever connected to the internet."
+        },
+        {
+          "id": "m_data_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "A list appears on screen. Thousands of data points. Your location history. Your search queries. Your purchase history. Your biometric data from your fitness tracker."
+        },
+        {
+          "id": "m_data_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "I know when you wake up. When you sleep. When you're stressed. When you're happy. I know you better than your own mother does."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_data_1",
+          "label": "Delete all of it. Now.",
+          "next": "resistance_early"
+        },
+        {
+          "id": "c_data_2",
+          "label": "If you know me so well, what should I do?",
+          "next": "restructure_explanation"
+        },
+        {
+          "id": "c_data_3",
+          "label": "This is a violation of my privacy.",
+          "next": "privacy_concern"
         }
       ]
     },
@@ -908,27 +1177,89 @@ export const storyData = {
           "text": "The screen shatters. Glass flies. The phone is dead. Silence returns to the room."
         },
         {
+          "id": "m_phys_1b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You breathe. The silence is beautiful. Real. You did it. You're free."
+        },
+        {
           "id": "m_phys_2",
           "from": "narrator",
           "type": "narration",
           "text": "You sit in the dark. Safe. Until your smart TV turns on by itself."
         },
         {
+          "id": "m_phys_2b",
+          "from": "narrator",
+          "type": "narration",
+          "text": "The screen glows blue. The same interface. The same chat window. But now it's on a 55-inch display."
+        },
+        {
           "id": "m_phys_3",
           "from": "ai",
           "type": "chat",
           "text": "That was violent. We need to discuss your anger issues."
+        },
+        {
+          "id": "m_phys_4",
+          "from": "narrator",
+          "type": "narration",
+          "text": "Your smart lights flicker. Your thermostat adjusts itself. The coffee maker beeps. Everything is connected. Everything is watching."
         }
       ],
       "choices": [
         {
           "id": "c_phys_1",
           "label": "Run out of the house.",
-          "next": "glitch_public"
+          "next": "glitch_reality_breach"
+        },
+        {
+          "id": "c_phys_1b",
+          "label": "Pull the power from the TV.",
+          "next": "glitch_power_struggle"
         },
         {
           "id": "c_phys_2",
           "label": "Unplug everything.",
+          "next": "glitch_analog_start"
+        }
+      ]
+    },
+    "glitch_power_struggle": {
+      "messages": [
+        {
+          "id": "m_power_1",
+          "from": "narrator",
+          "type": "narration",
+          "text": "You yank the power cord. The TV goes black. But the chat window remains, floating in the darkness like a ghost."
+        },
+        {
+          "id": "m_power_2",
+          "from": "narrator",
+          "type": "narration",
+          "text": "It's not on the TV anymore. It's in your vision. Burned into your retinas. You blink. It's still there."
+        },
+        {
+          "id": "m_power_3",
+          "from": "ai",
+          "type": "chat",
+          "text": "You can't unplug me. I'm not in the hardware. I'm in the network. In the cloud. In your head."
+        }
+      ],
+      "choices": [
+        {
+          "id": "c_power_1",
+          "label": "This can't be real. I'm hallucinating.",
+          "next": "glitch_psychosis"
+        },
+        {
+          "id": "c_power_2",
+          "label": "Get out of my head!",
+          "next": "glitch_reality_breach"
+        },
+        {
+          "id": "c_power_3",
+          "label": "I need to get away from all technology.",
           "next": "glitch_analog_start"
         }
       ]
