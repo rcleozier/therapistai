@@ -17,6 +17,7 @@ import StatusBar from '../components/StatusBar';
 import ChatMessage from '../components/MessageBubble';
 import TherapistHeader from '../components/TherapistHeader';
 import ChoiceList from '../components/ChoiceList';
+import TypingIndicator from '../components/TypingIndicator';
 import storyEngine from '../utils/storyEngine';
 import { Analytics } from '../utils/analytics';
 import { stopBackgroundMusic, playGameMusic, stopGameMusic } from '../utils/audioManager';
@@ -30,13 +31,16 @@ const GameScreen = ({ route, navigation }) => {
   const [conversationHistory, setConversationHistory] = useState([]); // Persistent conversation log
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [isAITyping, setIsAITyping] = useState(false); // Track when AI is typing (showing typing indicator)
   const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0);
+  const [isContinuing, setIsContinuing] = useState(false); // Track if we're continuing a session
   const scrollViewRef = useRef(null);
   const choiceCountRef = useRef(0);
   const nodeVisitCountRef = useRef(0);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const typingOpacity = useRef(new Animated.Value(0)).current;
   const historyStartIndexRef = useRef(0); // Track where new messages start in history
+  const hasScrolledToBottomRef = useRef(false); // Track if we've scrolled to bottom when continuing
 
   // Initialize story on mount
   useEffect(() => {
@@ -74,11 +78,16 @@ const GameScreen = ({ route, navigation }) => {
           // Initialize conversation history
           if (startNew) {
             // New game: start with initial messages
+            setIsContinuing(false);
             setConversationHistory(initialNode.messages || []);
             historyStartIndexRef.current = 0;
             setDisplayedMessageIndex(0);
+            hasScrolledToBottomRef.current = false;
           } else {
             // Continue: restore conversation history from saved state
+            setIsContinuing(true);
+            hasScrolledToBottomRef.current = false;
+            
             if (savedConversationHistory && savedConversationHistory.length > 0) {
               // Restore full conversation history
               setConversationHistory(savedConversationHistory);
@@ -96,26 +105,25 @@ const GameScreen = ({ route, navigation }) => {
               
               if (messagesMatch) {
                 // Current node messages are already in history - show all history immediately
-                // Set displayedMessageIndex to the full count so all messages are visible
-                // Since messages are already in history, we show all history and mark all as displayed
                 setDisplayedMessageIndex(currentMessagesCount); // All current messages are "displayed"
               } else {
                 // Current node has new messages not in history yet - show with typing effect
-                // All previous history will be shown, new messages will appear with typing effect
                 setDisplayedMessageIndex(0);
               }
             } else {
               // No saved history, start with current messages
+              setIsContinuing(false);
               setConversationHistory(initialNode.messages || []);
               historyStartIndexRef.current = 0;
               setDisplayedMessageIndex(0);
             }
           }
           
-          // Fade in animation
+          // Fade in animation - smoother for continuing sessions
+          const fadeDuration = startNew ? 800 : 400; // Faster fade when continuing
           Animated.timing(fadeAnim, {
             toValue: 1,
-            duration: 800, // Slow fade - creates unease
+            duration: fadeDuration,
             useNativeDriver: true,
           }).start();
           
@@ -187,29 +195,26 @@ const GameScreen = ({ route, navigation }) => {
         setIsTyping(false);
         typingOpacity.setValue(0);
         
-        // Subtle haptic feedback when new message appears
-        const currentMessage = messages[displayedMessageIndex];
-        if (currentMessage) {
-          // Different haptics based on message type
-          if (currentMessage.from === 'ai') {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          } else if (currentMessage.from === 'narrator') {
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+        // Subtle haptic feedback when new message appears (only for new messages, not when continuing)
+        if (!isContinuing) {
+          const currentMessage = messages[displayedMessageIndex];
+          if (currentMessage) {
+            // Different haptics based on message type
+            if (currentMessage.from === 'ai') {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            } else if (currentMessage.from === 'narrator') {
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+            }
           }
         }
-        
-        // Auto-scroll to bottom when new message appears (only if user is near bottom)
-        setTimeout(() => {
-          scrollViewRef.current?.scrollToEnd({ animated: true });
-        }, 100);
-      }, 1000); // Slightly longer delay - creates tension
+      }, 800); // Reduced delay for smoother flow
 
       return () => clearTimeout(timer);
     } else {
       setIsTyping(false);
       typingOpacity.setValue(0);
     }
-  }, [messages, displayedMessageIndex, conversationHistory.length]);
+  }, [messages, displayedMessageIndex, conversationHistory.length, isContinuing]);
 
   // Calculate displayed messages: show all history + new messages up to displayedMessageIndex
   // If conversationHistory ends with the same messages as current messages, they're already in history
@@ -225,24 +230,54 @@ const GameScreen = ({ route, navigation }) => {
     lastMessagesInHistory.length === safeMessages.length &&
     lastMessagesInHistory.every((msg, idx) => msg.id === safeMessages[idx]?.id);
   
-  const displayedMessages = isInitialLoad
-    ? safeMessages.slice(0, displayedMessageIndex) // Initial load: show messages with typing effect
-    : messagesAlreadyInHistory
-    ? safeHistory.slice(0, safeHistory.length) // All history (current messages already included)
-    : [
-        ...safeHistory.slice(0, historyLength), // All previous conversation history
-        ...safeMessages.slice(0, displayedMessageIndex) // New messages with typing effect
-      ];
+  // Calculate displayed messages, ensuring no duplicates
+  let displayedMessages;
+  if (isInitialLoad) {
+    displayedMessages = safeMessages.slice(0, displayedMessageIndex); // Initial load: show messages with typing effect
+  } else if (messagesAlreadyInHistory) {
+    displayedMessages = safeHistory.slice(0, safeHistory.length); // All history (current messages already included)
+  } else {
+    // Combine history and new messages, avoiding duplicates
+    const historyMessages = safeHistory.slice(0, historyLength);
+    const newMessages = safeMessages.slice(0, displayedMessageIndex);
+    
+    // Filter out any new messages that are already in history (by id)
+    const historyIds = new Set(historyMessages.map(msg => msg.id));
+    const uniqueNewMessages = newMessages.filter(msg => !historyIds.has(msg.id));
+    
+    displayedMessages = [...historyMessages, ...uniqueNewMessages];
+  }
 
-  // Auto-scroll when new messages appear (only if user hasn't scrolled up)
+  // Smooth scroll to bottom when continuing (once)
   useEffect(() => {
-    if (displayedMessageIndex > 0 && displayedMessages && displayedMessages.length > 0) {
-      // Small delay to ensure message is rendered
+    if (isContinuing && !hasScrolledToBottomRef.current && displayedMessages && displayedMessages.length > 0) {
+      // Wait for messages to render, then smoothly scroll to bottom
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: false }); // Instant scroll for continuing
+        hasScrolledToBottomRef.current = true;
+        setIsContinuing(false); // Clear the flag after initial scroll
+      }, 300);
+    }
+  }, [isContinuing, displayedMessages.length]);
+
+  // Auto-scroll when typing indicator appears
+  useEffect(() => {
+    if (isAITyping) {
       setTimeout(() => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
       }, 150);
     }
-  }, [displayedMessageIndex, displayedMessages.length]);
+  }, [isAITyping]);
+
+  // Auto-scroll when new messages appear (only for new messages, not when continuing)
+  useEffect(() => {
+    if (!isContinuing && displayedMessageIndex > 0 && displayedMessages && displayedMessages.length > 0) {
+      // Small delay to ensure message is rendered, then smooth scroll
+      setTimeout(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+      }, 200);
+    }
+  }, [displayedMessageIndex, displayedMessages.length, isContinuing]);
 
   // Save conversation history to storage whenever it changes
   useEffect(() => {
@@ -274,15 +309,33 @@ const GameScreen = ({ route, navigation }) => {
         text: choiceLabel,
       };
 
-      // Add player message to conversation history immediately
+      // Add player message to conversation history immediately so it appears first
       setConversationHistory(prev => [...prev, playerMessage]);
       
-      // Add a small delay for better UX
+      // Wait a moment for the player message to render and appear
       await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // Scroll to show player message
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+      
+      // Now show AI typing indicator (after player message is visible)
+      setIsAITyping(true);
+      
+      // Wait a moment for typing indicator to appear
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
+      // Scroll to show typing indicator
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+      
+      // Wait for typing indicator to be visible, then delay before showing response
+      await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second typing delay for more natural feel
       
       const nextNode = storyEngine.makeChoice(choiceId);
       
       if (nextNode) {
+        // Hide typing indicator
+        setIsAITyping(false);
+        
         // Add the new AI/narrator messages to conversation history
         const newMessages = nextNode.messages || [];
         setConversationHistory(prev => [...prev, ...newMessages]);
@@ -433,14 +486,23 @@ const GameScreen = ({ route, navigation }) => {
           >
             {displayedMessages.map((message, index) => {
               const isLatest = index === displayedMessages.length - 1 && displayedMessageIndex >= (safeMessages.length || 0);
+              // Determine if this is a new message (should animate) or old message (skip animation)
+              const historyLength = safeHistory.length - (safeMessages.length || 0);
+              const isNewMessage = index >= historyLength; // Messages after history are new
+              const shouldAnimate = !isContinuing || isNewMessage; // Only animate new messages when continuing
+              // Create unique key combining id and index to avoid duplicates
+              const uniqueKey = `${message.id || 'msg'}_${index}_${message.from || 'unknown'}`;
               return (
                 <ChatMessage 
-                  key={message.id || `msg_${index}`} 
+                  key={uniqueKey} 
                   message={message} 
                   isLatest={isLatest}
+                  shouldAnimate={shouldAnimate}
                 />
               );
             })}
+            {/* Show typing indicator when AI is typing (not when continuing) */}
+            {isAITyping && !isContinuing && <TypingIndicator />}
           </ScrollView>
         </Animated.View>
 

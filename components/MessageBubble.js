@@ -13,14 +13,14 @@ const AVATAR_BUBBLE_GUTTER = SPACING.md;
  * ChatMessage component - premium styled chat messages with empathetic micro-interactions
  * Features refined styling with square character avatar for AI messages
  */
-const ChatMessage = ({ message, isLatest = false }) => {
+const ChatMessage = ({ message, isLatest = false, shouldAnimate = true }) => {
   const { from, type, text } = message;
   
   const isAI = from === 'ai';
   const isNarrator = from === 'narrator';
   const isPlayer = from === 'player';
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(shouldAnimate ? 0 : 1)).current; // Start visible if no animation
   const glowAnim = useRef(new Animated.Value(0.1)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
@@ -28,8 +28,13 @@ const ChatMessage = ({ message, isLatest = false }) => {
   const isInitial = message.id === 'm1' || message.id === 'm2' || message.id === 'm3';
 
   useEffect(() => {
-    // Welcoming fade-in with gentle scale for initial messages
+    // Skip animations for old messages when continuing
+    if (!shouldAnimate) {
+      fadeAnim.setValue(1);
+      return;
+    }
     
+    // Welcoming fade-in with gentle scale for initial messages
     if (isInitial && isAI) {
       scaleAnim.setValue(0.96);
       Animated.parallel([
@@ -46,9 +51,10 @@ const ChatMessage = ({ message, isLatest = false }) => {
         }),
       ]).start();
     } else {
+      // Staggered fade-in for smoother conversation flow
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 400,
+        duration: 250, // Faster for smoother flow
         useNativeDriver: true,
       }).start();
     }
@@ -75,7 +81,7 @@ const ChatMessage = ({ message, isLatest = false }) => {
       // Set initial glow for non-latest messages
       glowAnim.setValue(isInitial ? 0.1 : 0.08);
     }
-  }, [isAI, isLatest, message.id, isInitial]);
+  }, [isAI, isLatest, message.id, isInitial, shouldAnimate]);
 
   const getStyles = () => {
     if (isAI) {
