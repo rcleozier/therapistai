@@ -275,11 +275,11 @@ const HeaderBrand = ({ logoPulse, activityDotOpacity }) => {
         {/* Square avatar with border and glow */}
         <View style={styles.avatarContainer}>
           <View style={styles.avatarGlow} />
-          <Animated.View style={{ transform: [{ scale: logoPulse }] }}>
+          <Animated.View style={{ transform: [{ scale: logoPulse }], width: '100%', height: '100%' }}>
             <Image
               source={require('../assets/character.png')}
               style={styles.avatarImage}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </Animated.View>
         </View>
@@ -524,8 +524,8 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   avatarImage: {
-    width: SESSION_THEME.avatarSize,
-    height: SESSION_THEME.avatarSize,
+    width: '100%',
+    height: '100%',
     zIndex: 2,
     borderRadius: SESSION_THEME.avatarBorderRadius,
   },
